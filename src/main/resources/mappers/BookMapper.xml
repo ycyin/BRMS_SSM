@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yyc.dao.BookMapper">
+    <resultMap id="book" type="com.yyc.entity.Book">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_price" property="bookPrice" jdbcType="DECIMAL"/>
+        <result column="book_author" property="bookAuthor" jdbcType="VARCHAR"/>
+        <result column="book_repertorySize" property="bookRepertorySize" jdbcType="INTEGER"/>
+        <result column="book_pub" property="bookPub" jdbcType="VARCHAR"/>
+        <result column="book_category" property="bookCategory" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="book_list">
+    id, book_name, book_price, book_author,book_repertorySize,book_pub,book_category
+  </sql>
+    <select id="selectAllBook" resultMap="book">
+        select
+        <include refid="book_list"/>
+        from t_book
+    </select>
+    <select id="selectAllBook2" resultMap="book">
+        select
+        <include refid="book_list"/>
+        from t_book
+        <if test="searchItem == 'book_name' and ''!= searchValue">
+         where book_name like CONCAT('%',#{searchValue},'%')
+        </if>
+        <if test="searchItem == 'book_category' and ''!= searchValue">
+            where book_category like CONCAT('%',#{searchValue},'%')
+        </if>
+        <if test="searchItem == 'book_author' and ''!= searchValue">
+            where book_author like CONCAT('%',#{searchValue},'%')
+        </if>
+        <if test="searchItem == 'book_pub' and ''!= searchValue">
+            where book_pub like CONCAT('%',#{searchValue},'%')
+        </if>
+    </select>
+
+    <insert id="insertBook" parameterType="com.yyc.entity.Book">
+    insert into t_book (book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
+    values (#{bookName,jdbcType=VARCHAR}, #{bookPrice,jdbcType=DECIMAL}, #{bookAuthor,jdbcType=VARCHAR},
+      #{bookRepertorySize,jdbcType=INTEGER},#{bookPub,jdbcType=VARCHAR},#{bookCategory,jdbcType=VARCHAR})
+  </insert>
+    <update id="updateBook" parameterType="com.yyc.entity.Book">
+        update t_book
+        <set>
+            <if test="bookName != null">
+                book_name = #{bookName,jdbcType=VARCHAR},
+            </if>
+            <if test="bookPrice != null">
+                book_price = #{bookPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="bookAuthor != null">
+                book_author = #{bookAuthor,jdbcType=VARCHAR},
+            </if>
+            <if test="bookRepertorySize != null">
+                book_repertorySize = #{bookRepertorySize,jdbcType=INTEGER},
+            </if>
+            <if test="bookPub != null">
+                book_pub = #{bookPub,jdbcType=VARCHAR},
+            </if>
+            <if test="bookCategory != null">
+                book_category = #{bookCategory,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteBookByPrimaryKey" parameterType="java.lang.Integer">
+        delete from t_book
+        where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <select id="selectBookPressData" resultType="java.util.HashMap">
+       SELECT count(*) as bookNumber,count(distinct(book_category)) as bookCategoryNumber,book_pub as bookPub from t_book GROUP BY book_pub ORDER BY book_pub desc;
+      </select>
+
+    <select id="selectBookNumberGroupByCategory" resultType="java.util.HashMap">
+       SELECT book_category as bookCategory,count(*) as bookNumber FROM t_book GROUP BY book_category
+    </select>
+
+    <insert id="insertBookForeach" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_book
+        (book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
+        values
+        <foreach collection="list" item="book" index="index" separator=",">
+            (
+            #{book.bookName},
+            #{book.bookPrice},
+            #{book.bookAuthor},
+            #{book.bookRepertorySize},
+            #{book.bookPub},
+            #{book.bookCategory}
+            )
+        </foreach>
+    </insert>
+</mapper>
