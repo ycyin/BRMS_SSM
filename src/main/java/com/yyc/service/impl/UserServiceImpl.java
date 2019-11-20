@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService {
 		UserInfo resUser = this.userInfoDao.selectByName(user.getUsername());
 		if (resUser !=null){
 			if (resUser.getPassword().equals(user.getPassword())){
-				// 生成token 有效时间 60 秒
-				String token = JWTUtils.createJWT(60,"yyc");
+				// 生成token 有效时间 600 秒
+				String token = JWTUtils.createJWT(600,"yyc");
 				Map<String,Object> map = new HashMap<>();
 				map.put("user",resUser);
 				map.put("token",token);

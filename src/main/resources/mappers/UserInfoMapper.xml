@@ -15,28 +15,28 @@
   <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
-    from user_t
+    from t_user
     where user_name = #{username,jdbcType=VARCHAR}
   </select>
 
   <select id="selectAllUser" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from user_t
+    from t_user
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from user_t
+    from t_user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user_t
+    delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insertUser" parameterType="com.yyc.entity.UserInfo" >
-    insert into user_t ( user_name, password,
+    insert into t_user ( user_name, password,
       age,nickname,role)
     values ( #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
        <if test="age != null">
@@ -48,7 +48,7 @@
       #{role,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yyc.entity.UserInfo" >
-    insert into user_t
+    insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -79,7 +79,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yyc.entity.UserInfo" >
-    update user_t
+    update t_user
     <set >
       <if test="username != null" >
         user_name = #{username,jdbcType=VARCHAR},
@@ -94,7 +94,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yyc.entity.UserInfo" >
-    update user_t
+    update t_user
     set user_name = #{username,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
       nickname = #{nickname,jdbcType=VARCHAR},
