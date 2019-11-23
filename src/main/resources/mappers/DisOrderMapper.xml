@@ -11,6 +11,7 @@
         <result column="ord_price" property="ordPrice" jdbcType="DECIMAL"/>
         <result column="ord_totalprice" property="ordTotalPrice" jdbcType="DECIMAL"/>
         <result column="ord_status" property="ordStatus" jdbcType="VARCHAR"/>
+        <result column="ord_enddatetime" property="ordEndDateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <insert id="insertDisOrder" parameterType="com.yyc.entity.DisOrder">

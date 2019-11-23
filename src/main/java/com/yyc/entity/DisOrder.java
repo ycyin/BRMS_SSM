@@ -18,6 +18,7 @@ public class DisOrder {
     private double ordPrice;
     private double ordTotalPrice;
     private String ordStatus;
+    private Date ordEndDateTime;
 
     public DisOrder(int disNo, int bookNo, Date ordDateTime, int ordNumber, int ordOperateUser,
                     double ordPrice, double ordTotalPrice, String ordStatus) {
@@ -101,6 +102,14 @@ public class DisOrder {
 
     public void setOrdStatus(String ordStatus) {
         this.ordStatus = ordStatus;
+    }
+
+    public Date getOrdEndDateTime() {
+        return ordEndDateTime;
+    }
+
+    public void setOrdEndDateTime(Date ordEndDateTime) {
+        this.ordEndDateTime = ordEndDateTime;
     }
 
     @Override

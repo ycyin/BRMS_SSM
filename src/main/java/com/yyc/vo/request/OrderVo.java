@@ -11,6 +11,7 @@ public class OrderVo {
     private int disNo;//分销商id
     private int orderNumber;//订单数量（本）
     private double bookPrice;//图书单价
+    private int bookRepertorySize;//更新前库存
 
     public int getId() {
         return id;
@@ -42,6 +43,14 @@ public class OrderVo {
 
     public void setBookPrice(double bookPrice) {
         this.bookPrice = bookPrice;
+    }
+
+    public int getBookRepertorySize() {
+        return bookRepertorySize;
+    }
+
+    public void setBookRepertorySize(int bookRepertorySize) {
+        this.bookRepertorySize = bookRepertorySize;
     }
 
     @Override
