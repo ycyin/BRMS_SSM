@@ -8,6 +8,7 @@ public  enum ResultEnum {
         UPDATE_SUCCESS(10004,"更新成功！"),
         ADD_SUCCESS(10005,"添加成功！"),
         IMPORT_SUCCESS(10006,"导入成功！"),
+        DISORDER_ADD_SUCCESS(10007,"分销订单添加成功！"),
         UNLOGIN(20000,"未登录！"),
         NAMEORPASS_EXCEPTION(20001,"登录失败，用户名或密码错误"),
         LOGIN_NAMEORPASS_NULL(20002,"登录失败，用户名或密码为空"),

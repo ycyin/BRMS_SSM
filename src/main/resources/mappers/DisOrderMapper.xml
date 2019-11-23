@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yyc.dao.DisOrderMapper">
+    <resultMap id="disOrder" type="com.yyc.entity.DisOrder">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="dis_no" property="disNo" jdbcType="INTEGER"/>
+        <result column="book_no" property="bookNo" jdbcType="INTEGER"/>
+        <result column="ord_datetime" property="ordDateTime" jdbcType="TIMESTAMP"/>
+        <result column="ord_number" property="ordNumber" jdbcType="INTEGER"/>
+        <result column="ord_operateuser" property="ordOperateUser" jdbcType="INTEGER"/>
+        <result column="ord_price" property="ordPrice" jdbcType="DECIMAL"/>
+        <result column="ord_totalprice" property="ordTotalPrice" jdbcType="DECIMAL"/>
+        <result column="ord_status" property="ordStatus" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <insert id="insertDisOrder" parameterType="com.yyc.entity.DisOrder">
+    insert into t_disorder (dis_no, book_no,ord_datetime,ord_number,ord_price,ord_totalprice,ord_status)
+    values (#{disNo,jdbcType=INTEGER}, #{bookNo,jdbcType=INTEGER}, #{ordDateTime,jdbcType=TIMESTAMP},
+      #{ordNumber,jdbcType=INTEGER},#{ordPrice,jdbcType=DECIMAL},#{ordTotalPrice,jdbcType=DECIMAL},#{ordStatus,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>
