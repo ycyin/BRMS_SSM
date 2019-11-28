@@ -12,7 +12,7 @@
     </resultMap>
     <sql id="book_list">
     id, book_name, book_price, book_author,book_repertorySize,book_pub,book_category
-  </sql>
+    </sql>
     <select id="selectAllBook" resultMap="book">
         select
         <include refid="book_list"/>
@@ -92,4 +92,11 @@
             )
         </foreach>
     </insert>
+
+    <select id="selectBookByPrimaryKey" resultMap="book" parameterType="java.lang.Integer">
+        select
+        <include refid="book_list"/>
+        from t_book
+        where  id = #{id,jdbcType=INTEGER}
+    </select>
 </mapper>

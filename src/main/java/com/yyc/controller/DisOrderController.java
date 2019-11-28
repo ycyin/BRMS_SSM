@@ -1,7 +1,7 @@
 package com.yyc.controller;
 
-import com.yyc.entity.DisOrder;
 import com.yyc.service.DisOrderService;
+import com.yyc.vo.PageVo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.OrderVo;
 import org.slf4j.Logger;
@@ -28,7 +28,30 @@ public class DisOrderController {
     @RequestMapping("/addOrder")
     @ResponseBody
     public RespMsg addOrder(OrderVo disOrder){
-        logger.info("getDisOrderInfo...>>>>>>>>>>>"+disOrder);
+        logger.info("addOrder...>>>>>>>>>>>"+disOrder);
         return  this.disOrderService.addOrder(disOrder);
+    }
+
+    @RequestMapping("/getOrderList")
+    @ResponseBody
+    public RespMsg getOrderList(PageVo pageVo){
+        logger.info("getOrderList...>>>>>>>>>>>"+pageVo);
+        return  this.disOrderService.getOrderList(pageVo);
+    }
+
+
+    @RequestMapping("/cancelOrder")
+    @ResponseBody
+    public RespMsg cancelOrder(Integer id){
+        logger.info("cancelOrder...>>>>>>>>>>>"+id);
+        return  this.disOrderService.cancelOrder(id);
+    }
+
+
+    @RequestMapping("/modifyOrderStatus")
+    @ResponseBody
+    public RespMsg modifyOrderStatus(Integer id){
+        logger.info("modifyOrderStatus...>>>>>>>>>>>"+id);
+        return  this.disOrderService.modifyOrderStatus(id);
     }
 }

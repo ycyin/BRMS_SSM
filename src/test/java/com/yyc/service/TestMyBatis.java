@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.alibaba.fastjson.JSON;  
-
-import com.yyc.entity.UserInfo;
-
 /**************************************
 * @author 尹以操 E-mail:34782655@qq.com
 * @version 创建时间：2017年6月23日 下午10:14:21

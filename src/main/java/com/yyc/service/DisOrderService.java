@@ -1,5 +1,6 @@
 package com.yyc.service;
 
+import com.yyc.vo.PageVo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.OrderVo;
 
@@ -11,4 +12,7 @@ import com.yyc.vo.request.OrderVo;
  **/
 public interface DisOrderService {
     RespMsg addOrder(OrderVo book);
+    RespMsg getOrderList(PageVo pageVo);
+    RespMsg cancelOrder(Integer id);
+    RespMsg modifyOrderStatus(Integer id);
 }

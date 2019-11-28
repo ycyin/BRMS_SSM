@@ -9,6 +9,8 @@ public  enum ResultEnum {
         ADD_SUCCESS(10005,"添加成功！"),
         IMPORT_SUCCESS(10006,"导入成功！"),
         DISORDER_ADD_SUCCESS(10007,"分销订单添加成功！"),
+        DISORDER_MODIFY_STATUS_SUCCESS(10008,"修改状态成功！"),
+        DISORDER_CANCEL_SUCCESS(10009,"订单取消成功！"),
         UNLOGIN(20000,"未登录！"),
         NAMEORPASS_EXCEPTION(20001,"登录失败，用户名或密码错误"),
         LOGIN_NAMEORPASS_NULL(20002,"登录失败，用户名或密码为空"),
@@ -24,7 +26,11 @@ public  enum ResultEnum {
         UPDATE_FAILD_HAS_BOOK_DUPLICATE(20010,"更新失败,该本书已存在！"),
         UPDATE_FAILD_UNKNOW(20011,"更新失败,未知错误！"),
         ADD_FAILD_HAS_USER_DUPLICATE(20008,"添加失败,该用户名已存在！"),
-        UPDATE_FAILD_HAS_USER_DUPLICATE(20010,"更新失败,该用户名已存在！")
+        UPDATE_FAILD_HAS_USER_DUPLICATE(20010,"更新失败,该用户名已存在！"),
+        THIS_ORDER_NOT_CANCEL(20011,"该订单已结束，不可取消！"),
+        THIS_ORDER_NOT_MODIFY(20012,"该订单已结束，不可修改！"),
+        DISORDER_MODIFY_STATUS_FAILED(20013,"修改状态失败，请重试！"),
+        DISORDER_CANCEL_FAILED(20014,"订单取消失败，请重试！"),
         ;
         private Integer code;
         private String msg;

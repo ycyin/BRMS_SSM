@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yyc.dao.DisOrderMapper">
-    <resultMap id="disOrder" type="com.yyc.entity.DisOrder">
+    <resultMap id="disOrder" type="com.yyc.entity.DisOrder"><!--需要实体类有无参构造方法-->
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="dis_no" property="disNo" jdbcType="INTEGER"/>
         <result column="book_no" property="bookNo" jdbcType="INTEGER"/>
@@ -12,7 +12,11 @@
         <result column="ord_totalprice" property="ordTotalPrice" jdbcType="DECIMAL"/>
         <result column="ord_status" property="ordStatus" jdbcType="VARCHAR"/>
         <result column="ord_enddatetime" property="ordEndDateTime" jdbcType="TIMESTAMP"/>
+        <result column="isCancel" property="isCancel" jdbcType="INTEGER"/>
     </resultMap>
+    <sql id="disOrder_list">
+    id, book_no, book_no, ord_datetime,ord_number,ord_operateuser,ord_price,ord_totalprice,ord_status,ord_enddatetime,isCancel
+    </sql>
 
     <insert id="insertDisOrder" parameterType="com.yyc.entity.DisOrder">
     insert into t_disorder (dis_no, book_no,ord_datetime,ord_number,ord_price,ord_totalprice,ord_status)
@@ -20,4 +24,30 @@
       #{ordNumber,jdbcType=INTEGER},#{ordPrice,jdbcType=DECIMAL},#{ordTotalPrice,jdbcType=DECIMAL},#{ordStatus,jdbcType=VARCHAR})
   </insert>
 
+    <select id="selectOrderById" resultMap="disOrder" parameterType="java.lang.Integer">
+        select
+        <include refid="disOrder_list"/>
+        from t_disorder
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateCancelOrder" parameterType="java.lang.Integer">
+        UPDATE t_book,
+         t_disorder
+        SET book_repertorySize = book_repertorySize + t_disorder.ord_number,
+         isCancel = 1,
+         ord_enddatetime = NOW(),
+         ord_status = '已取消'
+        WHERE
+            t_book.id = t_disorder.book_no
+        AND isCancel = 0
+        AND t_disorder.id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateOrderStatus" parameterType="java.lang.Integer">
+        UPDATE t_disorder
+        SET ord_status = '已完成',
+        ord_enddatetime = NOW()
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

@@ -19,4 +19,6 @@ public interface BookMapper {
 
     //批量插入数据
     int insertBookForeach(List<Book> books);
+
+    Book selectBookByPrimaryKey(Integer id);
 }

@@ -19,6 +19,10 @@ public class DisOrder {
     private double ordTotalPrice;
     private String ordStatus;
     private Date ordEndDateTime;
+    private int isCancel; //是否已经取消订单
+
+    public DisOrder() { //需要实体类有无参构造方法,否者MyBatis会报nested exception is org.apache.ibatis.executor.ExecutorException: No constructor found in com.yyc.entity.DisOrder matching
+    }
 
     public DisOrder(int disNo, int bookNo, Date ordDateTime, int ordNumber, int ordOperateUser,
                     double ordPrice, double ordTotalPrice, String ordStatus) {
@@ -30,6 +34,22 @@ public class DisOrder {
         this.ordPrice = ordPrice;
         this.ordTotalPrice = ordTotalPrice;
         this.ordStatus = ordStatus;
+    }
+
+    public DisOrder(int id, int disNo, int bookNo, Date ordDateTime, int ordNumber,
+                    int ordOperateUser, double ordPrice, double ordTotalPrice, String ordStatus,
+                    Date ordEndDateTime, int isCancel) {
+        this.id = id;
+        this.disNo = disNo;
+        this.bookNo = bookNo;
+        this.ordDateTime = ordDateTime;
+        this.ordNumber = ordNumber;
+        this.ordOperateUser = ordOperateUser;
+        this.ordPrice = ordPrice;
+        this.ordTotalPrice = ordTotalPrice;
+        this.ordStatus = ordStatus;
+        this.ordEndDateTime = ordEndDateTime;
+        this.isCancel = isCancel;
     }
 
     public int getId() {
@@ -110,6 +130,14 @@ public class DisOrder {
 
     public void setOrdEndDateTime(Date ordEndDateTime) {
         this.ordEndDateTime = ordEndDateTime;
+    }
+
+    public int getIsCancel() {
+        return isCancel;
+    }
+
+    public void setIsCancel(int isCancel) {
+        this.isCancel = isCancel;
     }
 
     @Override
