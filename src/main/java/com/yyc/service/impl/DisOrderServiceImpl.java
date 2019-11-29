@@ -6,6 +6,7 @@ import com.yyc.dao.BookMapper;
 import com.yyc.dao.DisOrderDTOMapper;
 import com.yyc.dao.DisOrderMapper;
 import com.yyc.dto.DisOrderDTO;
+import com.yyc.dto.DisOrderInterval7DayDTO;
 import com.yyc.entity.Book;
 import com.yyc.entity.DisOrder;
 import com.yyc.service.DisOrderService;
@@ -119,4 +120,29 @@ public class DisOrderServiceImpl implements DisOrderService {
         }
         return new RespMsg(ResultEnum.HAS_NULL,null);
     }
+
+    @Override
+    public RespMsg getDisOrderInterval7DayData() {
+        int day = 7;//7天的数据
+        int[] orderNumbers = new int[day];
+        int[] orderBookNumbers = new int[day];
+        Date[] date = new Date[day];
+        List<DisOrderInterval7DayDTO> orderCount =
+                disOrderDTOMapper.selectDisOrderInterval7DayByOrderCount();
+        List<DisOrderInterval7DayDTO> orderSumBook =
+                disOrderDTOMapper.selectDisOrderInterval7DayByOrderSumBook();
+
+        for (int i = day -1; i >=0 ; i--) {
+            date[day-i-1]=orderCount.get(i).getOrdDate();
+            orderNumbers[day-i-1] = orderCount.get(i).getCount();
+            orderBookNumbers[day-i-1] = orderSumBook.get(i).getCount();
+        }
+
+        Map<String,Object> data = new HashMap<>();
+        data.put("orderNumbers",orderNumbers);
+        data.put("orderBookNumbers",orderBookNumbers);
+        data.put("date",date);
+        return new RespMsg(ResultEnum.SELECT_SUCCESS,data);
+    }
+
 }

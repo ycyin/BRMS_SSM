@@ -1,6 +1,7 @@
 package com.yyc.dao;
 
 import com.yyc.dto.DisOrderDTO;
+import com.yyc.dto.DisOrderInterval7DayDTO;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ import java.util.List;
  **/
 public interface DisOrderDTOMapper {
     List<DisOrderDTO> selectAllOrder();
+    List<DisOrderInterval7DayDTO> selectDisOrderInterval7DayByOrderCount();
+    List<DisOrderInterval7DayDTO> selectDisOrderInterval7DayByOrderSumBook();
 }

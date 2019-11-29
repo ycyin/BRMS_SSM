@@ -13,14 +13,97 @@
         <result column="ord_datetime" property="orderDate" jdbcType="TIMESTAMP"/>
         <result column="ord_enddatetime" property="orderEndDate" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <resultMap id="disOrderInterval7Day" type="com.yyc.dto.DisOrderInterval7DayDTO">
+        <result column="ord_date" property="ordDate" jdbcType="TIMESTAMP"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+    </resultMap>
+
     <sql id="disOrder_list">
     id, dis_name, book_name,nickname,ord_number,ord_price,ord_totalprice,ord_status,ord_datetime,ord_enddatetime
     </sql>
+
 
     <select id="selectAllOrder" resultMap="disOrder">
         select
         <include refid="disOrder_list"/>
         from view_disorder_book_distributor
+    </select>
+
+    <select id="selectDisOrderInterval7DayByOrderCount" resultMap="disOrderInterval7Day">
+        SELECT
+            a.ord_date,
+            IFNULL(b.count, 0) AS count
+        FROM
+            (
+                SELECT
+                    curdate() AS ord_date
+                UNION ALL
+                    SELECT
+                        date_sub(curdate(), INTERVAL 1 DAY) AS ord_date
+                    UNION ALL
+                        SELECT
+                            date_sub(curdate(), INTERVAL 2 DAY) AS ord_date
+                        UNION ALL
+                            SELECT
+                                date_sub(curdate(), INTERVAL 3 DAY) AS ord_date
+                            UNION ALL
+                                SELECT
+                                    date_sub(curdate(), INTERVAL 4 DAY) AS ord_date
+                                UNION ALL
+                                    SELECT
+                                        date_sub(curdate(), INTERVAL 5 DAY) AS ord_date
+                                    UNION ALL
+                                        SELECT
+                                            date_sub(curdate(), INTERVAL 6 DAY) AS ord_date
+            ) a
+        LEFT JOIN (
+            SELECT
+                date(ord_datetime) AS ord_date,
+                count(*) AS count
+            FROM
+                t_disorder
+            GROUP BY
+                date(ord_datetime)
+        ) b ON a.ord_date = b.ord_date
+    </select>
+
+    <select id="selectDisOrderInterval7DayByOrderSumBook" resultMap="disOrderInterval7Day">
+        SELECT
+            a.ord_date,
+            IFNULL(b.count, 0) AS count
+        FROM
+            (
+                SELECT
+                    curdate() AS ord_date
+                UNION ALL
+                    SELECT
+                        date_sub(curdate(), INTERVAL 1 DAY) AS ord_date
+                    UNION ALL
+                        SELECT
+                            date_sub(curdate(), INTERVAL 2 DAY) AS ord_date
+                        UNION ALL
+                            SELECT
+                                date_sub(curdate(), INTERVAL 3 DAY) AS ord_date
+                            UNION ALL
+                                SELECT
+                                    date_sub(curdate(), INTERVAL 4 DAY) AS ord_date
+                                UNION ALL
+                                    SELECT
+                                        date_sub(curdate(), INTERVAL 5 DAY) AS ord_date
+                                    UNION ALL
+                                        SELECT
+                                            date_sub(curdate(), INTERVAL 6 DAY) AS ord_date
+            ) a
+        LEFT JOIN (
+            SELECT
+                date(ord_datetime) AS ord_date,
+                sum(ord_number) AS count
+            FROM
+                t_disorder
+            GROUP BY
+                date(ord_datetime)
+        ) b ON a.ord_date = b.ord_date
     </select>
 
 </mapper>

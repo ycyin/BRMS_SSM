@@ -15,4 +15,5 @@ public interface DisOrderService {
     RespMsg getOrderList(PageVo pageVo);
     RespMsg cancelOrder(Integer id);
     RespMsg modifyOrderStatus(Integer id);
+    RespMsg getDisOrderInterval7DayData();
 }

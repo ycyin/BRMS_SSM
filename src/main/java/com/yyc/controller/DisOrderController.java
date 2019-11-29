@@ -54,4 +54,10 @@ public class DisOrderController {
         logger.info("modifyOrderStatus...>>>>>>>>>>>"+id);
         return  this.disOrderService.modifyOrderStatus(id);
     }
+
+    @RequestMapping("/getDisOrderInterval7DayData")
+    @ResponseBody
+    public RespMsg getDisOrderInterval7DayData(){
+        return  this.disOrderService.getDisOrderInterval7DayData();
+    }
 }
