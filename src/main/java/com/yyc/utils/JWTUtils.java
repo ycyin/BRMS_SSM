@@ -4,11 +4,19 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import java.util.Date;
 
 public class JWTUtils {
+
+    /**
+     * 创建JWT
+     * @param expiresTime
+     * @param userId
+     * @return
+     */
     public static String createJWT(long expiresTime,String userId) {
 
         String token = null;
@@ -26,6 +34,12 @@ public class JWTUtils {
         return token;
     }
 
+    /**
+     * 验证JWT
+     * @param token
+     * @param userId
+     * @return
+     */
     public static DecodedJWT verifyJWT(String token,String userId) {
         DecodedJWT jwt = null;
         try {
@@ -40,5 +54,21 @@ public class JWTUtils {
         }
         return jwt;
     }
+
+    /**
+     * JWT解码
+     * @param token
+     * @return
+     */
+    public static DecodedJWT decodedJWT(String token){
+        DecodedJWT jwt = null;
+        try {
+            jwt = JWT.decode(token);
+        } catch (JWTDecodeException exception){
+            //Invalid token
+        }
+        return jwt;
+    }
+
 
 }

@@ -47,10 +47,16 @@ public class TokenCheckFilter implements Filter {
         System.out.println(requestURI);
 
         String token = Optional.ofNullable(req.getHeader("token")).orElse("NOT FOUNT");
-        DecodedJWT decodedJWT = JWTUtils.verifyJWT(token,"yyc");
+        DecodedJWT jwt = JWTUtils.decodedJWT(token);
+        String userId = "";
+        if (null != jwt){
+             userId = Optional.ofNullable(jwt.getIssuer()).orElse("FAILED");
+        }
+
+        DecodedJWT verifyJWT = JWTUtils.verifyJWT(token,userId);
 
         JSONObject jsonObject = new JSONObject();
-        if (decodedJWT == null) { //token无效
+        if (verifyJWT == null) { //token无效
             if (requestURI.contains("/login")||requestURI.endsWith("/SSM_war/")){ //登录操作不过滤
                 chain.doFilter(req, resp);
             }else{
