@@ -6,8 +6,8 @@ public class Book {
     private Double bookPrice;
     private String bookAuthor;
     private Integer bookRepertorySize;
-    private String bookPub;
-    private String bookCategory;
+    private Integer bookPub;
+    private Integer bookCategory;
 
     public Integer getId() {
         return id;
@@ -49,19 +49,19 @@ public class Book {
         this.bookRepertorySize = bookRepertorySize;
     }
 
-    public String getBookPub() {
+    public Integer getBookPub() {
         return bookPub;
     }
 
-    public void setBookPub(String bookPub) {
+    public void setBookPub(Integer bookPub) {
         this.bookPub = bookPub;
     }
 
-    public String getBookCategory() {
+    public Integer getBookCategory() {
         return bookCategory;
     }
 
-    public void setBookCategory(String bookCategory) {
+    public void setBookCategory(Integer bookCategory) {
         this.bookCategory = bookCategory;
     }
 

@@ -22,14 +22,14 @@
         <if test="searchItem == 'book_name' and ''!= searchValue">
          where book_name like CONCAT('%',#{searchValue},'%')
         </if>
-        <if test="searchItem == 'book_category' and ''!= searchValue">
-            where book_category like CONCAT('%',#{searchValue},'%')
-        </if>
         <if test="searchItem == 'book_author' and ''!= searchValue">
             where book_author like CONCAT('%',#{searchValue},'%')
         </if>
         <if test="searchItem == 'book_pub' and ''!= searchValue">
-            where book_pub like CONCAT('%',#{searchValue},'%')
+            where pub_name like CONCAT('%',#{searchValue},'%')
+        </if>
+        <if test="searchItem == 'book_category' and ''!= searchValue">
+            where category_name like CONCAT('%',#{searchValue},'%')
         </if>
     </select>
 <!--    <select id="selectBookPressData" resultType="java.util.HashMap">-->
