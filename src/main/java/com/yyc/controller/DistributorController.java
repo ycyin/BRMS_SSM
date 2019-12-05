@@ -19,7 +19,7 @@ public class DistributorController {
     @Autowired
     private DistributorService distributorService;
 
-    @RequestMapping("/getSelectValueAndLabel")
+    @RequestMapping("/getDistributorSelectValueAndLabel")
     @ResponseBody
     public RespMsg getSelectValueAndLabel(){
         return distributorService.getSelectValueAndLabel();
