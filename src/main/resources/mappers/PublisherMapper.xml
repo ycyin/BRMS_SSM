@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yyc.dao.PublisherMapper">
+    <resultMap id="publisher" type="com.yyc.entity.Publisher">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="pub_name" property="pubName" jdbcType="VARCHAR"/>
+        <result column="pub_addr" property="pubAddr" jdbcType="VARCHAR"/>
+        <result column="pub_phone" property="pubPhone" jdbcType="VARCHAR"/>
+        <result column="pub_count" property="pubCount" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="publisher_list">
+    id, pub_name, pub_addr, pub_phone,pub_count
+    </sql>
+    <select id="selectAllPublisher" resultMap="publisher">
+        select
+        <include refid="publisher_list"/>
+        from t_publisher
+    </select>
+</mapper>

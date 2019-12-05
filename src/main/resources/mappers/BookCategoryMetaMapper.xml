@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yyc.dao.BookCategoryMetaMapper">
+    <resultMap id="bookCategoryMeta" type="com.yyc.entity.BookCategoryMeta">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="bookCategoryMeta_list">
+    id, category_name, description
+    </sql>
+    <select id="selectAllBookCategoryMeta" resultMap="bookCategoryMeta">
+        select
+        <include refid="bookCategoryMeta_list"/>
+        from t_book_category_meta
+    </select>
+</mapper>
