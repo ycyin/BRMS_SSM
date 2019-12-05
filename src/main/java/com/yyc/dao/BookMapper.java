@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BookMapper {
-    List<Book> selectAllBook();
-    List<Book> selectAllBook2(SearchAndPageVo searchAndPageVo);
+    List<Book> selectAllBook(SearchAndPageVo searchAndPageVo);
     Integer insertBook(Book book);
     Integer updateBook(Book book);
     Integer deleteBookByPrimaryKey(Integer id);

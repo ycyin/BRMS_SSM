@@ -23,7 +23,7 @@ public class BookController {
     @ResponseBody
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo){
 //        logger.info("getBookList...>>>>>>>>>"+searchAndPageVo);
-        return  this.bookService.getBookList2(searchAndPageVo);
+        return  this.bookService.getBookList(searchAndPageVo);
     }
 
     @RequestMapping("/addBook")

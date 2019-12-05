@@ -8,8 +8,7 @@ import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
 
 public interface BookService {
-    RespMsg getBookList(PageVo pageVo);
-    RespMsg getBookList2(SearchAndPageVo searchAndPageVo);
+    RespMsg getBookList(SearchAndPageVo searchAndPageVo);
     RespMsg addBook(Book book);
     RespMsg modifyBookByPrimaryKey(Book book);
     RespMsg removeBookByPrimaryKey(Integer id);

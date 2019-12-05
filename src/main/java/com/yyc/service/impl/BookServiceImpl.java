@@ -3,7 +3,9 @@ package com.yyc.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.yyc.dao.BookDTOMapper;
 import com.yyc.dao.BookMapper;
+import com.yyc.dto.BookDTO;
 import com.yyc.entity.Book;
 import com.yyc.service.BookService;
 import com.yyc.vo.PageVo;
@@ -28,22 +30,16 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookMapper bookMapper;
-    @Override
-    public RespMsg getBookList(PageVo pageVo) {
-        logger.info("PageVO-->>>"+pageVo);
-        Page<Object> page = PageHelper.startPage(pageVo.getCurrentPage(), pageVo.getPageSize());
-        List<Book> books = this.bookMapper.selectAllBook();
-        Map<String,Object> res = new HashMap<>();
-        res.put("total",page.getTotal());
-        res.put("result",books);
-        return new RespMsg(ResultEnum.SELECT_SUCCESS,res);
-    }
+
+    @Autowired
+    private BookDTOMapper bookDTOMapper;
 
     @Override
-    public RespMsg getBookList2(SearchAndPageVo searchAndPageVo) {
+    public RespMsg getBookList(SearchAndPageVo searchAndPageVo) {
         logger.info("SearchAndPageVo-->>>"+searchAndPageVo);
         Page<Object> page = PageHelper.startPage(searchAndPageVo.getCurrentPage(), searchAndPageVo.getPageSize());
-        List<Book> books = this.bookMapper.selectAllBook2(searchAndPageVo);
+//        List<Book> books = this.bookMapper.selectAllBook(searchAndPageVo);
+        List<BookDTO> books = this.bookDTOMapper.selectAllBook(searchAndPageVo);
         Map<String,Object> res = new HashMap<>();
         res.put("total",page.getTotal());
         res.put("result",books);
