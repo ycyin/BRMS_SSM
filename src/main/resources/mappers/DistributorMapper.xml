@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yyc.dao.DistributorMapper">
+    <resultMap id="distributor" type="com.yyc.entity.Distributor">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="dis_name" property="disName" jdbcType="VARCHAR"/>
+        <result column="dis_addr" property="disAddr" jdbcType="VARCHAR"/>
+        <result column="dis_phone" property="disPhone" jdbcType="VARCHAR"/>
+        <result column="dis_count" property="disCount" jdbcType="INTEGER"/>
+        <result column="dis_rank" property="disRank" jdbcType="INTEGER"/>
+        <result column="dis_parent" property="disParent" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="distributor_list">
+    id, dis_name, dis_addr, dis_phone,dis_count,dis_rank,dis_parent
+    </sql>
+    <select id="selectAllDistributor" resultMap="distributor">
+        select
+        <include refid="distributor_list"/>
+        from t_distributors
+<!--        <if test="searchItem == 'dis_name' and ''!= searchValue">-->
+<!--         where dis_name like CONCAT('%',#{searchValue},'%')-->
+<!--        </if>-->
+    </select>
+</mapper>
