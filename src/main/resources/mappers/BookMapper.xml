@@ -70,11 +70,11 @@
         where id = #{id,jdbcType=INTEGER}
   </delete>
     <select id="selectBookPressData" resultType="java.util.HashMap">
-       SELECT count(*) as bookNumber,count(distinct(book_category)) as bookCategoryNumber,book_pub as bookPub from t_book GROUP BY book_pub ORDER BY book_pub desc;
-      </select>
+       SELECT count(*) as bookNumber,count(distinct(book_category)) as bookCategoryNumber,pub_name as bookPub from t_book join t_publisher on t_book.book_pub = t_publisher.id GROUP BY pub_name;
+    </select>
 
     <select id="selectBookNumberGroupByCategory" resultType="java.util.HashMap">
-       SELECT book_category as bookCategory,count(*) as bookNumber FROM t_book GROUP BY book_category
+       SELECT category_name as bookCategory,count(*) as bookNumber FROM t_book,t_book_category_meta where t_book.book_category = t_book_category_meta.id GROUP BY book_category
     </select>
 
     <insert id="insertBookForeach" parameterType="java.util.List" useGeneratedKeys="true">
