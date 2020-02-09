@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace是对应的mapper接口文件 -->
+<mapper namespace="com.yyc.dao.IUserInfoMapper">
+	<!-- id与接口文件中的方法名相同 -->
+	<select id="findByUsername" resultType="com.yyc.entity.UserInfo">
+        SELECT
+            user_info.uid,
+            user_info.`name`,
+            user_info.`password`,
+            user_info.salt,
+            user_info.state,
+            user_info.username
+        FROM
+            user_info
+        WHERE username=#{username}
+    </select>
+
+</mapper>
