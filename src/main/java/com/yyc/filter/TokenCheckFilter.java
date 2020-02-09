@@ -17,9 +17,9 @@ import java.util.Optional;
  * Token验证过滤器
  */
 //@Component   //在启动类加了@ServletComponentScan无需加这个了(springboot)
-@Order(4)//设置优先级加载
+//@Order(4)//设置优先级加载
 //@ServletComponentScan  //加载启动类上了(springboot)
-@WebFilter(urlPatterns = "/*",filterName = "TokenCheckFilter")
+//@WebFilter(urlPatterns = "/*",filterName = "TokenCheckFilter")
 public class TokenCheckFilter implements Filter {
  
     /**

@@ -5,14 +5,17 @@ import com.yyc.service.BookService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/book")
 public class BookController {
     private static Logger logger = LoggerFactory.getLogger(BookController.class);
 
@@ -20,7 +23,6 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping("/getBookList")
-    @ResponseBody
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo){
 //        logger.info("getBookList...>>>>>>>>>"+searchAndPageVo);
         return  this.bookService.getBookList(searchAndPageVo);
@@ -47,6 +49,7 @@ public class BookController {
         return  this.bookService.modifyBookByPrimaryKey(book);
     }
 
+    @RequiresPermissions("getBookPressData")
     @RequestMapping("/getBookPressData")
     @ResponseBody
     public RespMsg getBookPressData(){
@@ -54,6 +57,7 @@ public class BookController {
         return  this.bookService.getBookPressData();
     }
 
+    @RequiresPermissions("getBookCategoryData")
     @RequestMapping("/getBookCategoryData")
     @ResponseBody
     public RespMsg getBookCategoryData(){

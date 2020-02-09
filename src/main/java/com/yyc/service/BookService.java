@@ -6,6 +6,7 @@ import com.yyc.vo.PageVo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 
 public interface BookService {
     RespMsg getBookList(SearchAndPageVo searchAndPageVo);

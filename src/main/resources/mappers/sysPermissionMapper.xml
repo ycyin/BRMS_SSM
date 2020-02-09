@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace是对应的mapper接口文件 -->
+<mapper namespace="com.yyc.dao.ISysPermissionMapper">
+	<!-- id与接口文件中的方法名相同 -->
+	<select id="findPermissionByRoleId"
+		resultType="com.yyc.entity.SysPermission">
+		SELECT
+		t_role.id,
+		t_role.available,
+		t_role.description,
+		t_role.role,
+		t_permission.`name`,
+		t_permission.permission,
+		t_permission.url
+		FROM
+		(t_permission, t_role)
+		RIGHT JOIN t_role_permission ON t_permission.id =
+		t_role_permission.permission_id
+		AND t_role_permission.role_id = t_role.id
+		WHERE t_role.id=#{roleId}
+	</select>
+
+	<select id="findAllPermission"
+		resultType="com.yyc.entity.SysPermission">
+		SELECT
+		*
+		FROM
+		t_permission
+		Order BY id desc
+	</select>
+
+</mapper>

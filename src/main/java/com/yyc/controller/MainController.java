@@ -2,15 +2,16 @@
 package com.yyc.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.yyc.entity.UserInfo;
 import com.yyc.utils.JWTUtils;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
+import com.yyc.vo.ivo.Login;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.yyc.entity.UserInfo;
 import com.yyc.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,44 +44,52 @@ public class MainController {
 	private UserService userService;
 
 
-	@RequestMapping(value="/getUserInfo/{userId}")
+//	@RequestMapping(value="/getUserInfo/{userId}")
+//	@ResponseBody
+//	public RespMsg getUserInfoById(@PathVariable("userId") Integer userId){
+//		logger.info("getUserInfoById-->>>"+userId);
+//		return  this.userService.getUserById(userId);
+//	}
+//
+//	@RequestMapping(value="/getUserList")
+//	@ResponseBody
+//	public RespMsg getUserList(){
+//		return  this.userService.getALLUser();
+//	}
+
+//	@RequestMapping(value="/updateUserInfo")
+//	@ResponseBody
+//	public RespMsg updateUserInfo(UserInfo userInfo){
+//		return this.userService.modifyUser(userInfo);
+//	}
+//
+//	@RequestMapping(value="/addUserInfo")
+//	@ResponseBody
+//	public RespMsg addUserInfo(UserInfo userInfo){
+//		return this.userService.insertUser(userInfo);
+//	}
+
+//	@RequestMapping(value="/deleteUser")
+//	@ResponseBody
+//	public RespMsg deleteUser(Integer id){
+//		return this.userService.removeUserByPrimaryKey(id);
+//	}
+
+
+
+//	@RequestMapping(value="/login")
+//	@ResponseBody
+//	public RespMsg login(UserInfo userInfo){
+//		logger.info(userInfo.getPassword()+"----->>>>"+userInfo.getUsername());
+//		return userService.getUserByName(userInfo);
+//	}
+	/**
+	 * 真正的登录方法
+	 */
+	@RequestMapping(value = "/login")
 	@ResponseBody
-	public RespMsg getUserInfoById(@PathVariable("userId") Integer userId){
-		logger.info("getUserInfoById-->>>"+userId);
-		return  this.userService.getUserById(userId);
-	}
-
-	@RequestMapping(value="/getUserList")
-	@ResponseBody
-	public RespMsg getUserList(){
-		return  this.userService.getALLUser();
-	}
-
-	@RequestMapping(value="/updateUserInfo")
-	@ResponseBody
-	public RespMsg updateUserInfo(UserInfo userInfo){
-		return this.userService.modifyUser(userInfo);
-	}
-
-	@RequestMapping(value="/addUserInfo")
-	@ResponseBody
-	public RespMsg addUserInfo(UserInfo userInfo){
-		return this.userService.insertUser(userInfo);
-	}
-
-	@RequestMapping(value="/deleteUser")
-	@ResponseBody
-	public RespMsg deleteUser(Integer id){
-		return this.userService.removeUserByPrimaryKey(id);
-	}
-
-
-
-	@RequestMapping(value="/login")
-	@ResponseBody
-	public RespMsg login(UserInfo userInfo){
-		logger.info(userInfo.getPassword()+"----->>>>"+userInfo.getUsername());
-		return userService.getUserByName(userInfo);
+	public Object login(Login user) {
+		return userService.login(user);
 	}
 
 	@RequestMapping(value="/checkToken")

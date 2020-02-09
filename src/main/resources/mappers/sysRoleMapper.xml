@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!--namespace是对应的mapper接口文件 -->
-<mapper namespace="com.yyc.dao.IUserInfoMapper">
+<mapper namespace="com.yyc.dao.ISysRoleMapper">
 	<!-- id与接口文件中的方法名相同 -->
-	<select id="findByUsername" resultType="com.yyc.entity.UserInfo">
-        SELECT
+	<select id="findRoleByUsername" resultType="com.yyc.entity.SysRole">
+          SELECT
             t_user.id,
             t_user.`name`,
             t_user.`password`,
             t_user.salt,
             t_user.state,
-            t_user.username
+            t_user.username,
+            t_role.id,
+            t_role.available,
+            t_role.description,
+            t_role.role
         FROM
             t_user
+        RIGHT JOIN t_user_role ON t_user.id = t_user_role.user_id
+        LEFT JOIN t_role ON t_user_role.role_id = t_role.id
         WHERE username=#{username}
     </select>
 
