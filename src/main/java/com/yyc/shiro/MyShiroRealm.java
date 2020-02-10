@@ -32,8 +32,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     ISysPermissionMapper sysPermissionMapper;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        log.error("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
-        System.err.println("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        log.info("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
         sysRoleMapper.findRoleByUsername(userInfo.getUsername()).stream().forEach(
@@ -55,8 +54,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-    	log.error("开始验证身份-->method:doGetAuthenticationInfo");
-        System.err.println("开始验证身份-->method:doGetAuthenticationInfo");
+    	log.info("开始验证身份-->method:doGetAuthenticationInfo");
     	//获取用户的输入的账号.
 //        String username = (String)token.getPrincipal();
 //        System.out.println(token.getCredentials());
