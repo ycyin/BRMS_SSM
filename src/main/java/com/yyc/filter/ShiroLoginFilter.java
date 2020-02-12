@@ -1,14 +1,12 @@
 package com.yyc.filter;
 import com.alibaba.fastjson.JSONObject;
 
-import com.yyc.shiro.RespShiroResult;
-import com.yyc.shiro.ShiroResultEnum;
+import com.yyc.vo.RespMsg;
+import com.yyc.vo.ResultEnum;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.springframework.core.annotation.Order;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -43,7 +41,7 @@ public class ShiroLoginFilter extends FormAuthenticationFilter {
     	HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        RespShiroResult resultData = new RespShiroResult(ShiroResultEnum.UNLOGIN);
+        RespMsg resultData = new RespMsg(ResultEnum.UNLOGIN);
         httpServletResponse.getWriter().write(JSONObject.toJSON(resultData).toString());
         return false;
     }

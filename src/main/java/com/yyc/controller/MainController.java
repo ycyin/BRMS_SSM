@@ -1,12 +1,9 @@
 
 package com.yyc.controller;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.yyc.entity.UserInfo;
-import com.yyc.utils.JWTUtils;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
-import com.yyc.vo.ivo.Login;
+import com.yyc.vo.request.LoginVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,22 +85,8 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/login")
 	@ResponseBody
-	public Object login(Login user) {
+	public Object login(LoginVo user) {
 		return userService.login(user);
 	}
 
-	@RequestMapping(value="/checkToken")
-	@ResponseBody
-	public RespMsg checkToken(@RequestHeader(value="Token") String token){
-		logger.info("checkToken----->>>>"+token);
-		DecodedJWT decodedJWT = JWTUtils.verifyJWT(token,"yyc");
-		Map<String,Object> map = new HashMap<>();
-		if (decodedJWT == null) { //token无效
-			map.put("isAuthorization",false);
-			return new RespMsg(ResultEnum.SELECT_SUCCESS,map);
-		}else{
-			map.put("isAuthorization",true);
-			return new RespMsg(ResultEnum.SELECT_SUCCESS,map);
-		}
-	}
 }

@@ -4,8 +4,7 @@
 package com.yyc.service;
 
 import com.yyc.entity.UserInfo;
-import com.yyc.vo.RespMsg;
-import com.yyc.vo.ivo.Login;
+import com.yyc.vo.request.LoginVo;
 
 /**************************************
 * @author 尹以操 E-mail:34782655@qq.com
@@ -27,7 +26,7 @@ public interface UserService {
 //	RespMsg removeUserByPrimaryKey(Integer id);
 
 	//登录
-	Object login(Login login);
+	Object login(LoginVo login);
 
 	//通过username查找用户信息
 	UserInfo findByUsername(String username);

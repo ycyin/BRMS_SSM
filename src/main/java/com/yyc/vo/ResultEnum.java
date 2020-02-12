@@ -1,8 +1,14 @@
 package com.yyc.vo;
 
 public  enum ResultEnum {
-        UNKNOW_ERROR(-1,"未知错误"),
-        LOGIN_SUCCESS(10001,"恭喜您！登录成功！"),
+        UNKNOW_ERROR(500,"未知错误"),
+        UNAUTHORIZED(401,"对不起，您无权限进行当前操作"),
+        LOGIN_SUCCESS(2000,"登录成功！"),
+        LOGINED(2001,"已登录"),
+        UNLOGIN(2002,"未登录！"),
+        NAMEORPASS_EXCEPTION(2003,"登录失败，用户名或密码错误"),
+        LOGIN_NAMEORPASS_NULL(2004,"登录失败，用户名或密码为空"),
+        LOGOUT_SUCCESS(2005,"退出登录成功！"),
         SELECT_SUCCESS(10002,"查询成功！"),
         DELETE_SUCCESS(10003,"删除成功！"),
         UPDATE_SUCCESS(10004,"更新成功！"),
@@ -11,9 +17,6 @@ public  enum ResultEnum {
         DISORDER_ADD_SUCCESS(10007,"分销订单添加成功！"),
         DISORDER_MODIFY_STATUS_SUCCESS(10008,"修改状态成功！"),
         DISORDER_CANCEL_SUCCESS(10009,"订单取消成功！"),
-        UNLOGIN(20000,"未登录！"),
-        NAMEORPASS_EXCEPTION(20001,"登录失败，用户名或密码错误"),
-        LOGIN_NAMEORPASS_NULL(20002,"登录失败，用户名或密码为空"),
         HAS_NULL(20005,"数据中有空值"),
         SELECT_FAILD(20003,"查询失败！"),
         DELETE_FAILD(20004,"删除失败！"),

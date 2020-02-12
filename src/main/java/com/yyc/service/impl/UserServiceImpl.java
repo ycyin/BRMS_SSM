@@ -2,12 +2,9 @@ package com.yyc.service.impl;
 
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.entity.UserInfo;
-import com.yyc.shiro.RespShiroResult;
-import com.yyc.shiro.ShiroResultEnum;
-import com.yyc.utils.JWTUtils;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
-import com.yyc.vo.ivo.Login;
+import com.yyc.vo.request.LoginVo;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -21,9 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.yyc.service.UserService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**************************************
 * @author 尹以操 E-mail:34782655@qq.com
@@ -124,7 +119,7 @@ public class UserServiceImpl implements UserService {
 //	}
 
 	@Override
-	public Object login(Login login) {
+	public Object login(LoginVo login) {
 		String loginname = login.getLoginname().trim();
 		String password = login.getPassword().trim();
 		Boolean rememberme = login.getRememberme();
@@ -149,7 +144,7 @@ public class UserServiceImpl implements UserService {
 //			HashedMap data = new HashedMap();
 //			data.put("loginname", loginname);
 //			data.put("roleNames", roleNames);
-			return new RespShiroResult(ShiroResultEnum.LOGIN_SUCCESS, null);
+			return new RespMsg(ResultEnum.LOGIN_SUCCESS,null);
 		} catch (UnknownAccountException uae) {
 			logger.warn("对用户[" + loginname + "]进行登录验证..验证未通过,未知账户");
 			errmessage = "未知账户";
@@ -169,7 +164,8 @@ public class UserServiceImpl implements UserService {
 			ae.printStackTrace();
 			errmessage = "未知错误，请联系管理员！";
 		}
-		return new RespShiroResult(ShiroResultEnum.ERROR, errmessage,null);
+
+		return new RespMsg(500, errmessage,null);
 	}
 
 	@Override

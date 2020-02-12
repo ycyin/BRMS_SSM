@@ -1,18 +1,15 @@
 package com.yyc.exception;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yyc.shiro.RespShiroResult;
-import com.yyc.shiro.ShiroResultEnum;
+import com.yyc.vo.RespMsg;
+import com.yyc.vo.ResultEnum;
 import org.apache.shiro.authz.AuthorizationException;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 
 /**
  * 自定义异常捕获，主要捕获没有权限异常
@@ -24,7 +21,7 @@ public class NoPermissionException extends SimpleMappingExceptionResolver {
         if (ex instanceof  AuthorizationException || ex instanceof UnauthorizedException){
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
-            RespShiroResult resultData = new RespShiroResult(ShiroResultEnum.UNAUTHORIZED);
+            RespMsg resultData = new RespMsg(ResultEnum.UNAUTHORIZED);
             try {
                 response.getWriter().write(JSONObject.toJSON(resultData).toString());
             } catch (IOException e) {

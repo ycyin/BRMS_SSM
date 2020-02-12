@@ -1,6 +1,6 @@
-package com.yyc.vo.ivo;
+package com.yyc.vo.request;
 
-public class Login {
+public class LoginVo {
 
 	private String loginname;
 	private String password;

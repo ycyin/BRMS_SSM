@@ -20,6 +20,10 @@ public class RespMsg implements Serializable {
         this.msg = renum.getMsg();
         this.data = data;
     }
+    public RespMsg(ResultEnum renum) {
+        this.code = renum.getCode();
+        this.msg = renum.getMsg();
+    }
 
     public Integer getCode() {
         return code;
