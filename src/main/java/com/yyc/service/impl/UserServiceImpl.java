@@ -1,5 +1,6 @@
 package com.yyc.service.impl;
 
+import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.entity.UserInfo;
 import com.yyc.vo.RespMsg;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.yyc.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**************************************
@@ -33,6 +35,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	IUserInfoMapper userInfoMapper;
+	@Autowired
+	ISysRoleMapper sysRoleMapper;
 	
 //	/**
 //	 * create by yyc 2017年6月23日下午10:10:43
@@ -138,13 +142,13 @@ public class UserServiceImpl implements UserService {
 			Session session = currentUser.getSession();
 			session.setAttribute("loginname", loginname);
 //			// 认证成功，返回角色信息
-//			roleNames = roleRepository.findRoleName(loginname);
+			roleNames = sysRoleMapper.findRoleNameByUsername(loginname);
 			session.setAttribute("role", roleNames);
 			session.setTimeout(1000 * 60 * 60 * 2);//设置会话过期时间，2小时
-//			HashedMap data = new HashedMap();
-//			data.put("loginname", loginname);
-//			data.put("roleNames", roleNames);
-			return new RespMsg(ResultEnum.LOGIN_SUCCESS,null);
+			HashMap data = new HashMap();
+			data.put("loginname", loginname);
+			data.put("roleNames", roleNames);
+			return new RespMsg(ResultEnum.LOGIN_SUCCESS,data);
 		} catch (UnknownAccountException uae) {
 			logger.warn("对用户[" + loginname + "]进行登录验证..验证未通过,未知账户");
 			errmessage = "未知账户";

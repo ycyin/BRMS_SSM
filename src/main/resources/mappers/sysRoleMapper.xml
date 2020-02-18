@@ -22,4 +22,13 @@
         WHERE username=#{username}
     </select>
 
+    <select id="findRoleNameByUsername" resultType="java.lang.String">
+        SELECT
+            t_role.role
+        FROM
+            t_user,t_role,t_user_role
+        WHERE t_user.id = t_user_role.user_id
+        AND t_user_role.role_id = t_role.id
+        AND username=#{username}
+    </select>
 </mapper>
