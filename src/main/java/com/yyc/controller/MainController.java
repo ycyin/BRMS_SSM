@@ -4,6 +4,7 @@ package com.yyc.controller;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.LoginVo;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,12 +48,14 @@ public class MainController {
 //		logger.info("getUserInfoById-->>>"+userId);
 //		return  this.userService.getUserById(userId);
 //	}
-//
-//	@RequestMapping(value="/getUserList")
-//	@ResponseBody
-//	public RespMsg getUserList(){
+
+	@RequiresRoles("admin")
+	@RequestMapping(value="/getUserList")
+	@ResponseBody
+	public RespMsg getUserList(){
 //		return  this.userService.getALLUser();
-//	}
+		return  new RespMsg(ResultEnum.SELECT_SUCCESS);
+	}
 
 //	@RequestMapping(value="/updateUserInfo")
 //	@ResponseBody
@@ -65,7 +68,7 @@ public class MainController {
 //	public RespMsg addUserInfo(UserInfo userInfo){
 //		return this.userService.insertUser(userInfo);
 //	}
-
+//
 //	@RequestMapping(value="/deleteUser")
 //	@ResponseBody
 //	public RespMsg deleteUser(Integer id){

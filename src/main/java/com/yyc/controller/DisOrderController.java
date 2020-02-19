@@ -4,6 +4,7 @@ import com.yyc.service.DisOrderService;
 import com.yyc.vo.PageVo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.OrderVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,7 @@ public class DisOrderController {
         return  this.disOrderService.modifyOrderStatus(id);
     }
 
+    @RequiresPermissions("disOrder:getDisOrderInterval7DayData")
     @RequestMapping("/getDisOrderInterval7DayData")
     @ResponseBody
     public RespMsg getDisOrderInterval7DayData(){

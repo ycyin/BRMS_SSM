@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -39,8 +41,8 @@ public class ShiroLoginFilter extends FormAuthenticationFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
     	System.err.println("-----------------ShiroLoginFilter---onAccessDenied-------------------");
     	HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setCharacterEncoding("UTF-8");
-        httpServletResponse.setContentType("application/json");
+    	httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         RespMsg resultData = new RespMsg(ResultEnum.UNLOGIN);
         httpServletResponse.getWriter().write(JSONObject.toJSON(resultData).toString());
         return false;

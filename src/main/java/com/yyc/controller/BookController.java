@@ -22,12 +22,16 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
+    @RequiresPermissions("book:getBookList")
     @RequestMapping("/getBookList")
+    @ResponseBody
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo){
 //        logger.info("getBookList...>>>>>>>>>"+searchAndPageVo);
+
         return  this.bookService.getBookList(searchAndPageVo);
     }
 
+    @RequiresPermissions("book:addBook")
     @RequestMapping("/addBook")
     @ResponseBody
     public RespMsg addBook(Book book){
@@ -35,6 +39,7 @@ public class BookController {
         return  this.bookService.addBook(book);
     }
 
+    @RequiresPermissions("book:removeBook")
     @RequestMapping("/removeBook")
     @ResponseBody
     public RespMsg removeBook(Integer id){
@@ -42,6 +47,7 @@ public class BookController {
         return  this.bookService.removeBookByPrimaryKey(id);
     }
 
+    @RequiresPermissions("book:modifyBook")
     @RequestMapping("/modifyBook")
     @ResponseBody
     public RespMsg modifyBook(Book book){
@@ -49,7 +55,7 @@ public class BookController {
         return  this.bookService.modifyBookByPrimaryKey(book);
     }
 
-    @RequiresPermissions("getBookPressData")
+    @RequiresPermissions("book:getBookPressData")
     @RequestMapping("/getBookPressData")
     @ResponseBody
     public RespMsg getBookPressData(){
@@ -57,7 +63,7 @@ public class BookController {
         return  this.bookService.getBookPressData();
     }
 
-    @RequiresPermissions("getBookCategoryData")
+    @RequiresPermissions("book:getBookCategoryData")
     @RequestMapping("/getBookCategoryData")
     @ResponseBody
     public RespMsg getBookCategoryData(){
@@ -66,6 +72,7 @@ public class BookController {
     }
 
 
+    @RequiresPermissions("book:importBookListData")
     @RequestMapping("/importBookListData")
     @ResponseBody
     public RespMsg importBookListData(BookListVo datas){

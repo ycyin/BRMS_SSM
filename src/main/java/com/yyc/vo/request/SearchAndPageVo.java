@@ -7,6 +7,16 @@ public class SearchAndPageVo{
     private Integer currentPage;
     private Integer pageSize;
 
+    public SearchAndPageVo() {
+    }
+
+    public SearchAndPageVo(String searchItem, String searchValue, Integer currentPage, Integer pageSize) {
+        this.searchItem = searchItem;
+        this.searchValue = searchValue;
+        this.currentPage = currentPage;
+        this.pageSize = pageSize;
+    }
+
     public Integer getCurrentPage() {
         return currentPage;
     }

@@ -16,4 +16,12 @@
         WHERE username=#{username}
     </select>
 
+    <select id="findNameByUsername" resultType="java.lang.String">
+        SELECT
+            t_user.`name`
+        FROM
+            t_user
+        WHERE username=#{username}
+    </select>
+
 </mapper>

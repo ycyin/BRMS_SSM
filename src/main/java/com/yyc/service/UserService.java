@@ -4,6 +4,7 @@
 package com.yyc.service;
 
 import com.yyc.entity.UserInfo;
+import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.LoginVo;
 
 /**************************************
@@ -13,16 +14,14 @@ import com.yyc.vo.request.LoginVo;
 ***************************************
 */
 public interface UserService {
-//	RespMsg getUserById(Integer userId);
 
-//	RespMsg getUserByName(UserInfo user);
 
 //	RespMsg getALLUser();
-
+//
 //	RespMsg modifyUser(UserInfo userinfo);
-
+//
 //	RespMsg insertUser(UserInfo userinfo);
-
+//
 //	RespMsg removeUserByPrimaryKey(Integer id);
 
 	//登录

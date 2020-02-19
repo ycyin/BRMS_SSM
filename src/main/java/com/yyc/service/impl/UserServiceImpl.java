@@ -37,44 +37,11 @@ public class UserServiceImpl implements UserService {
 	IUserInfoMapper userInfoMapper;
 	@Autowired
 	ISysRoleMapper sysRoleMapper;
-	
-//	/**
-//	 * create by yyc 2017年6月23日下午10:10:43
-//	 */
-//	@Override
-//	public RespMsg getUserById(Integer userId) {
-//		RespMsg  rm = null;
-//		if (userId == null) {
-//			return new RespMsg(ResultEnum.HAS_NULL,userId);
-//		}
-//		UserInfo userInfo = this.userInfoDao.selectByPrimaryKey(userId);
-//		return new RespMsg(ResultEnum.SELECT_SUCCESS,userInfo);
-//	}
-//
-//	@Override
-//	public RespMsg getUserByName(UserInfo user) {
-//		RespMsg  rm = null;
-//		UserInfo resUser = this.userInfoDao.selectByName(user.getUsername());
-//		if (resUser !=null){
-//			if (resUser.getPassword().equals(user.getPassword())){
-//				// 生成token 有效时间 600 秒
-//				String token = JWTUtils.createJWT(600,resUser.getUsername().trim());
-//				Map<String,Object> map = new HashMap<>();
-//				map.put("user",resUser);
-//				map.put("token",token);
-//				rm = new RespMsg(ResultEnum.LOGIN_SUCCESS,map);
-//			}else {
-//				rm = new RespMsg(ResultEnum.NAMEORPASS_EXCEPTION,resUser);
-//			}
-//		}else{
-//			rm = new RespMsg(ResultEnum.NAMEORPASS_EXCEPTION,user);
-//		}
-//		return rm;
-//	}
-//
+
+
 //	@Override
 //	public RespMsg getALLUser() {
-//		List<UserInfo> userInfos = this.userInfoDao.selectAllUser();
+//		List<UserInfo> userInfos = this.userInfoMapper.selectAllUser();
 //		return new RespMsg(ResultEnum.SELECT_SUCCESS,userInfos);
 //	}
 //
@@ -82,7 +49,7 @@ public class UserServiceImpl implements UserService {
 //	public RespMsg modifyUser(UserInfo userinfo) {
 //		Integer res = 0;
 //		try{
-//			res = this.userInfoDao.updateByPrimaryKey(userinfo);
+//			res = this.userInfoMapper.updateByPrimaryKey(userinfo);
 //			return res >=1?new RespMsg(ResultEnum.UPDATE_SUCCESS,res):new RespMsg(ResultEnum.UPDATE_FAILD,res);
 //		}catch (Exception e){
 //			if(res > 0){
@@ -96,12 +63,12 @@ public class UserServiceImpl implements UserService {
 //		}
 //
 //	}
-
+//
 //	@Override
 //	public RespMsg insertUser(UserInfo userinfo) {
 //		Integer res = 0;
 //		try{
-//			res = this.userInfoDao.insertUser(userinfo);
+//			res = this.userInfoMapper.insertUser(userinfo);
 //			return res >=1?new RespMsg(ResultEnum.ADD_SUCCESS,res):new RespMsg(ResultEnum.ADD_SUCCESS,res);
 //		}catch (Exception e){
 //			if(res > 0){
@@ -117,7 +84,7 @@ public class UserServiceImpl implements UserService {
 //
 //	@Override
 //	public RespMsg removeUserByPrimaryKey(Integer id) {
-//		Integer res = this.userInfoDao.deleteByPrimaryKey(id);
+//		Integer res = this.userInfoMapper.deleteByPrimaryKey(id);
 //		return res >= 1 ? new RespMsg(ResultEnum.DELETE_SUCCESS,res):
 //				new RespMsg(ResultEnum.DELETE_FAILD,res);
 //	}
@@ -129,6 +96,7 @@ public class UserServiceImpl implements UserService {
 		Boolean rememberme = login.getRememberme();
 		String errmessage = "";
 		List<String> roleNames = null;
+		String userName = null;
 		// 1、获取Subject实例对象
 		Subject currentUser = SecurityUtils.getSubject();
 
@@ -143,11 +111,13 @@ public class UserServiceImpl implements UserService {
 			session.setAttribute("loginname", loginname);
 //			// 认证成功，返回角色信息
 			roleNames = sysRoleMapper.findRoleNameByUsername(loginname);
+			userName = userInfoMapper.findNameByUsername(loginname);
 			session.setAttribute("role", roleNames);
 			session.setTimeout(1000 * 60 * 60 * 2);//设置会话过期时间，2小时
 			HashMap data = new HashMap();
+			data.put("username",userName);
 			data.put("loginname", loginname);
-			data.put("roleNames", roleNames);
+			data.put("rolenames", roleNames);
 			return new RespMsg(ResultEnum.LOGIN_SUCCESS,data);
 		} catch (UnknownAccountException uae) {
 			logger.warn("对用户[" + loginname + "]进行登录验证..验证未通过,未知账户");
