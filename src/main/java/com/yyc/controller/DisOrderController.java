@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  **/
 
 @Controller
+@RequestMapping("/disOrder")
 public class DisOrderController {
     private static Logger logger = LoggerFactory.getLogger(DisOrderController.class);
 
     @Autowired
     private DisOrderService disOrderService;
 
+    @RequiresPermissions("disOrder:add")
     @RequestMapping("/addOrder")
     @ResponseBody
     public RespMsg addOrder(OrderVo disOrder){
@@ -33,6 +35,7 @@ public class DisOrderController {
         return  this.disOrderService.addOrder(disOrder);
     }
 
+    @RequiresPermissions("disOrder:get")
     @RequestMapping("/getOrderList")
     @ResponseBody
     public RespMsg getOrderList(PageVo pageVo){
@@ -40,7 +43,7 @@ public class DisOrderController {
         return  this.disOrderService.getOrderList(pageVo);
     }
 
-
+    @RequiresPermissions("disOrder:cancel")
     @RequestMapping("/cancelOrder")
     @ResponseBody
     public RespMsg cancelOrder(Integer id){
@@ -48,7 +51,7 @@ public class DisOrderController {
         return  this.disOrderService.cancelOrder(id);
     }
 
-
+    @RequiresPermissions("disOrder:modify")
     @RequestMapping("/modifyOrderStatus")
     @ResponseBody
     public RespMsg modifyOrderStatus(Integer id){
@@ -56,7 +59,7 @@ public class DisOrderController {
         return  this.disOrderService.modifyOrderStatus(id);
     }
 
-    @RequiresPermissions("disOrder:getDisOrderInterval7DayData")
+    @RequiresPermissions("disOrder:get")
     @RequestMapping("/getDisOrderInterval7DayData")
     @ResponseBody
     public RespMsg getDisOrderInterval7DayData(){

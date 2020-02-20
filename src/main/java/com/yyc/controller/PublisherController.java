@@ -2,6 +2,7 @@ package com.yyc.controller;
 
 import com.yyc.service.PublisherService;
 import com.yyc.vo.RespMsg;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  **/
 
 @Controller
+@RequestMapping("/publisher")
 public class PublisherController {
 
     @Autowired
     private PublisherService publisherService;
 
+    @RequiresPermissions("publisher:get")
     @RequestMapping("/getPublisherServiceSelectValueAndLabel")
     @ResponseBody
     public RespMsg getSelectValueAndLabel(){

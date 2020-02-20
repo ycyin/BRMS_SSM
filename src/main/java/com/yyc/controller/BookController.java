@@ -1,6 +1,7 @@
 package com.yyc.controller;
 
 import com.yyc.entity.Book;
+import com.yyc.service.BookCategoryMetaService;
 import com.yyc.service.BookService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.BookListVo;
@@ -22,7 +23,17 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @RequiresPermissions("book:getBookList")
+    @Autowired
+    private BookCategoryMetaService bookCategoryMetaService;
+
+    @RequiresPermissions("book:get")
+    @RequestMapping("/getBookCategoryMetaValueAndLabel")
+    @ResponseBody
+    public RespMsg getSelectValueAndLabel(){
+        return bookCategoryMetaService.getSelectValueAndLabel();
+    }
+
+    @RequiresPermissions("book:get")
     @RequestMapping("/getBookList")
     @ResponseBody
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo){
@@ -31,7 +42,7 @@ public class BookController {
         return  this.bookService.getBookList(searchAndPageVo);
     }
 
-    @RequiresPermissions("book:addBook")
+    @RequiresPermissions("book:add")
     @RequestMapping("/addBook")
     @ResponseBody
     public RespMsg addBook(Book book){
@@ -39,7 +50,7 @@ public class BookController {
         return  this.bookService.addBook(book);
     }
 
-    @RequiresPermissions("book:removeBook")
+    @RequiresPermissions("book:remove")
     @RequestMapping("/removeBook")
     @ResponseBody
     public RespMsg removeBook(Integer id){
@@ -47,7 +58,7 @@ public class BookController {
         return  this.bookService.removeBookByPrimaryKey(id);
     }
 
-    @RequiresPermissions("book:modifyBook")
+    @RequiresPermissions("book:modify")
     @RequestMapping("/modifyBook")
     @ResponseBody
     public RespMsg modifyBook(Book book){
@@ -55,7 +66,7 @@ public class BookController {
         return  this.bookService.modifyBookByPrimaryKey(book);
     }
 
-    @RequiresPermissions("book:getBookPressData")
+    @RequiresPermissions("book:get")
     @RequestMapping("/getBookPressData")
     @ResponseBody
     public RespMsg getBookPressData(){
@@ -63,7 +74,7 @@ public class BookController {
         return  this.bookService.getBookPressData();
     }
 
-    @RequiresPermissions("book:getBookCategoryData")
+    @RequiresPermissions("book:get")
     @RequestMapping("/getBookCategoryData")
     @ResponseBody
     public RespMsg getBookCategoryData(){
@@ -72,7 +83,7 @@ public class BookController {
     }
 
 
-    @RequiresPermissions("book:importBookListData")
+    @RequiresPermissions("book:add")
     @RequestMapping("/importBookListData")
     @ResponseBody
     public RespMsg importBookListData(BookListVo datas){
