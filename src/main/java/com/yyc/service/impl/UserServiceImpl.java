@@ -2,6 +2,7 @@ package com.yyc.service.impl;
 
 import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
+import com.yyc.dto.UserDTO;
 import com.yyc.entity.UserInfo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
@@ -21,6 +22,7 @@ import com.yyc.service.UserService;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**************************************
 * @author 尹以操 E-mail:34782655@qq.com
@@ -39,11 +41,16 @@ public class UserServiceImpl implements UserService {
 	ISysRoleMapper sysRoleMapper;
 
 
-//	@Override
-//	public RespMsg getALLUser() {
-//		List<UserInfo> userInfos = this.userInfoMapper.selectAllUser();
-//		return new RespMsg(ResultEnum.SELECT_SUCCESS,userInfos);
-//	}
+	@Override
+	public RespMsg getALLUser() {
+		List<UserDTO> userInfos = this.userInfoMapper.selectAllUser();
+		Session session = SecurityUtils.getSubject().getSession();
+		String loginname = (String) session.getAttribute("loginname");
+		// 过滤掉登录名是admin的用户（只有admin用户才有权限访问这个方法）
+		List<UserDTO> collect = userInfos.stream().filter(u -> !u.getUserName()
+				.equalsIgnoreCase(loginname)).collect(Collectors.toList());
+		return new RespMsg(ResultEnum.SELECT_SUCCESS,collect);
+	}
 //
 //	@Override
 //	public RespMsg modifyUser(UserInfo userinfo) {

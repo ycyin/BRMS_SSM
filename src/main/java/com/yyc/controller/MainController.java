@@ -49,13 +49,7 @@ public class MainController {
 //		return  this.userService.getUserById(userId);
 //	}
 
-	@RequiresRoles("admin")
-	@RequestMapping(value="/getUserList")
-	@ResponseBody
-	public RespMsg getUserList(){
-//		return  this.userService.getALLUser();
-		return  new RespMsg(ResultEnum.SELECT_SUCCESS);
-	}
+
 
 //	@RequestMapping(value="/updateUserInfo")
 //	@ResponseBody

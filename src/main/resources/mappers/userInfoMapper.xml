@@ -2,8 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <!--namespace是对应的mapper接口文件 -->
 <mapper namespace="com.yyc.dao.IUserInfoMapper">
-	<!-- id与接口文件中的方法名相同 -->
-	<select id="findByUsername" resultType="com.yyc.entity.UserInfo">
+    <resultMap id="userDTO" type="com.yyc.dto.UserDTO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="nickname" property="nickName" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="BIT"/>
+        <result column="username" property="userName" jdbcType="VARCHAR"/>
+        <result column="role" property="role" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="user_list">
+    id, `name`, state, username,role
+    </sql>
+
+    <!-- id与接口文件中的方法名相同 -->
+    <select id="findByUsername" resultType="com.yyc.entity.UserInfo">
         SELECT
             t_user.id,
             t_user.`name`,
@@ -24,4 +35,16 @@
         WHERE username=#{username}
     </select>
 
+    <select id="selectAllUser" resultType="com.yyc.dto.UserDTO">
+        SELECT
+	        u.id,
+	        u.`name` as nickname,
+	        u.state,
+	        u.username,
+	        r.role
+        FROM
+	        t_user u
+        LEFT JOIN t_user_role u_r ON u.id = u_r.user_id
+        LEFT JOIN t_role r ON r.id = u_r.role_id
+    </select>
 </mapper>

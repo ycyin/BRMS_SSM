@@ -16,7 +16,7 @@ import com.yyc.vo.request.LoginVo;
 public interface UserService {
 
 
-//	RespMsg getALLUser();
+	RespMsg getALLUser();
 //
 //	RespMsg modifyUser(UserInfo userinfo);
 //
