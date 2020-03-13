@@ -4,10 +4,12 @@ import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.dto.UserDTO;
 import com.yyc.entity.UserInfo;
+import com.yyc.utils.GeneratePasswordAndSalt;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.LoginVo;
 
+import com.yyc.vo.request.UserVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.session.Session;
@@ -19,9 +21,12 @@ import org.springframework.stereotype.Service;
 
 
 import com.yyc.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**************************************
@@ -51,6 +56,40 @@ public class UserServiceImpl implements UserService {
 				.equalsIgnoreCase(loginname)).collect(Collectors.toList());
 		return new RespMsg(ResultEnum.SELECT_SUCCESS,collect);
 	}
+
+	@Transactional
+	@Override
+	public RespMsg insertUser(UserVo userVo) {
+		Map<String, String> passAndSalt = GeneratePasswordAndSalt.generate(userVo.getUsername(), userVo.getPassword());
+		String password = passAndSalt.get("password");
+		String salt = passAndSalt.get("salt");
+		UserInfo user = new UserInfo(userVo.getUsername(),userVo.getNickname(),password,salt,(byte)userVo.getState());
+		Integer res = 0,res2 = 0;
+		try {
+			res = userInfoMapper.insertUser(user);
+			//使用mybatis的selectKey标签可以返回添加后的ID
+			Integer userId = user.getId();
+			Integer roleId = userVo.getRole();
+			if (userId != null && roleId != null){
+				res2 = userInfoMapper.insertUserAndRole(userId, roleId);
+				return res >=1 && res2 >= 1?new RespMsg(ResultEnum.ADD_SUCCESS,res):new RespMsg(ResultEnum.ADD_SUCCESS,res);
+			}else {
+				return new RespMsg(ResultEnum.HAS_NULL,res);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			if(res > 0 && res2 > 0){
+				return new RespMsg(ResultEnum.ADD_SUCCESS,res);
+			}
+			//手动回滚事务，由于已经被捕获异常，故事务不会自动回滚
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			if(e.getCause().toString().contains("Duplicate")){
+				return new RespMsg(ResultEnum.ADD_FAILD_HAS_USER_DUPLICATE,res);
+			}else{
+				return new RespMsg(ResultEnum.ADD_FAILD_UNKNOW,res);
+			}
+		}
+	}
 //
 //	@Override
 //	public RespMsg modifyUser(UserInfo userinfo) {
@@ -71,23 +110,6 @@ public class UserServiceImpl implements UserService {
 //
 //	}
 //
-//	@Override
-//	public RespMsg insertUser(UserInfo userinfo) {
-//		Integer res = 0;
-//		try{
-//			res = this.userInfoMapper.insertUser(userinfo);
-//			return res >=1?new RespMsg(ResultEnum.ADD_SUCCESS,res):new RespMsg(ResultEnum.ADD_SUCCESS,res);
-//		}catch (Exception e){
-//			if(res > 0){
-//				return new RespMsg(ResultEnum.ADD_SUCCESS,res);
-//			}
-//			if(e.getCause().toString().contains("Duplicate")){
-//				return new RespMsg(ResultEnum.ADD_FAILD_HAS_USER_DUPLICATE,res);
-//			}else{
-//				return new RespMsg(ResultEnum.ADD_FAILD_UNKNOW,res);
-//			}
-//		}
-//	}
 //
 //	@Override
 //	public RespMsg removeUserByPrimaryKey(Integer id) {

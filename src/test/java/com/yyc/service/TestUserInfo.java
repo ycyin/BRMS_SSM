@@ -1,6 +1,7 @@
 package com.yyc.service;
 
 import com.yyc.vo.RespMsg;
+import com.yyc.vo.request.UserVo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -21,7 +22,6 @@ import javax.annotation.Resource;
 @ContextConfiguration(locations = {"classpath:spring-mybatis.xml"})
 public class TestUserInfo {
 
-    private static Logger logger = LoggerFactory.getLogger(TestUserInfo.class);
 
     @Resource
     private UserService userService;
@@ -29,6 +29,16 @@ public class TestUserInfo {
     @Test
     public void test1(){
         RespMsg allUser = this.userService.getALLUser();
-        logger.info(allUser.getMsg()+"--->"+allUser.getData());
+    }
+
+    @Test
+    public void test2(){
+        UserVo u = new UserVo();
+        u.setUsername("test");
+        u.setNickname("测试");
+        u.setPassword("ewqrewqrqwereqwq");
+        u.setRole(1);
+        u.setState(1);
+        userService.insertUser(u);
     }
 }

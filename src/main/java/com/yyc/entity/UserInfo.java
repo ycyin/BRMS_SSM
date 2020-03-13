@@ -13,7 +13,19 @@ public class UserInfo implements Serializable{
     String password;
     String salt;
     byte state;
-    /**
+
+	public UserInfo() {
+	}
+
+	public UserInfo(String username, String name, String password, String salt, byte state) {
+		this.username = username;
+		this.name = name;
+		this.password = password;
+		this.salt = salt;
+		this.state = state;
+	}
+
+	/**
      * 
      * @Title: getCredentialsSalt   
      * @Description: TODO(密码盐)   

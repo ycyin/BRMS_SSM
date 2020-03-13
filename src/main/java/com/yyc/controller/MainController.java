@@ -57,11 +57,7 @@ public class MainController {
 //		return this.userService.modifyUser(userInfo);
 //	}
 //
-//	@RequestMapping(value="/addUserInfo")
-//	@ResponseBody
-//	public RespMsg addUserInfo(UserInfo userInfo){
-//		return this.userService.insertUser(userInfo);
-//	}
+
 //
 //	@RequestMapping(value="/deleteUser")
 //	@ResponseBody

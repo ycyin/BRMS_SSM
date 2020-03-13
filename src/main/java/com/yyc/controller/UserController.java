@@ -3,6 +3,7 @@ package com.yyc.controller;
 import com.yyc.service.UserService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
+import com.yyc.vo.request.UserVo;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,4 +29,10 @@ public class UserController {
     public RespMsg getUserList(){
 		return  this.userService.getALLUser();
     }
+
+    @RequestMapping(value="/addUser")
+	@ResponseBody
+	public RespMsg addUser(UserVo userVo){
+		return this.userService.insertUser(userVo);
+	}
 }

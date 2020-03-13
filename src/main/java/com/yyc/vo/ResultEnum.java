@@ -28,7 +28,7 @@ public  enum ResultEnum {
         ADD_FAILD_UNKNOW(20009,"添加失败,未知错误！"),
         UPDATE_FAILD_HAS_BOOK_DUPLICATE(20010,"更新失败,该本书已存在！"),
         UPDATE_FAILD_UNKNOW(20011,"更新失败,未知错误！"),
-        ADD_FAILD_HAS_USER_DUPLICATE(20008,"添加失败,该用户名已存在！"),
+        ADD_FAILD_HAS_USER_DUPLICATE(20008,"添加失败,该登录名已存在！"),
         UPDATE_FAILD_HAS_USER_DUPLICATE(20010,"更新失败,该用户名已存在！"),
         THIS_ORDER_NOT_CANCEL(20011,"该订单已结束，不可取消！"),
         THIS_ORDER_NOT_MODIFY(20012,"该订单已结束，不可修改！"),

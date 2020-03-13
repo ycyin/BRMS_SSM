@@ -16,7 +16,7 @@ public class TestMD5Encryption {
     @Test
     public void Test(){
         String userName = "user1";
-        String pass = "a123456";
+        String pass = "dc483e80a7a0bd9ef71d8cf973673924";
         /*
          实际盐值：盐值=用户名+后缀。用户名作为盐值前缀，直接对用户名加密作为盐值的后缀
          存储盐值：数据库直接存储盐值后缀，读取出来再加前缀

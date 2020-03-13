@@ -60,7 +60,7 @@ public class ACAFilter implements Filter {
 
         chain.doFilter(req, resp);
 
-        System.out.println("to access control allow origin");
+        System.out.println("ACAFilter："+"to access control allow origin");
     }
  
     /**

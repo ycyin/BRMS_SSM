@@ -6,6 +6,7 @@ package com.yyc.service;
 import com.yyc.entity.UserInfo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.request.LoginVo;
+import com.yyc.vo.request.UserVo;
 
 /**************************************
 * @author 尹以操 E-mail:34782655@qq.com
@@ -20,7 +21,7 @@ public interface UserService {
 //
 //	RespMsg modifyUser(UserInfo userinfo);
 //
-//	RespMsg insertUser(UserInfo userinfo);
+	RespMsg insertUser(UserVo userVo);
 //
 //	RespMsg removeUserByPrimaryKey(Integer id);
 

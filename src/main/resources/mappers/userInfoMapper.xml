@@ -46,5 +46,21 @@
 	        t_user u
         LEFT JOIN t_user_role u_r ON u.id = u_r.user_id
         LEFT JOIN t_role r ON r.id = u_r.role_id
+        ORDER BY u.id
     </select>
+
+    <insert id="insertUser" parameterType="com.yyc.entity.UserInfo" useGeneratedKeys="true" keyProperty="id">
+        <!--AFTER :insert 先执行. -->
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            <!-- 获取最后一次执行insert语句的 key    UserInfo.getId()就可以获取id-->
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_user(`name`, password, salt, state, username)
+        values(#{name}, #{password},#{salt},#{state},#{username})
+    </insert>
+
+    <insert id="insertUserAndRole">
+        insert into t_user_role(user_id,role_id)
+        values (#{userId},#{roleId})
+    </insert>
 </mapper>

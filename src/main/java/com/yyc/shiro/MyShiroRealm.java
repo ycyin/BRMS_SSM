@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class MyShiroRealm extends AuthorizingRealm {
 	
-	private final static Logger log = LoggerFactory.getLogger(MyShiroRealm.class);
+	private final static Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
 	
     @Autowired
     UserService userService;
@@ -27,7 +27,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     ISysPermissionMapper sysPermissionMapper;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-        log.info("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
+        logger.info("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
         sysRoleMapper.findRoleByUsername(userInfo.getUsername()).stream().forEach(
@@ -40,16 +40,16 @@ public class MyShiroRealm extends AuthorizingRealm {
                     );
                 }
         );
-        
-		log.info("当前登录用户" + userInfo.getUsername() + "具有的角色:" + authorizationInfo.getRoles());
-		log.info("当前登录用户" + userInfo.getUsername() + "具有的权限：" + authorizationInfo.getStringPermissions());
+
+        logger.info("当前登录用户" + userInfo.getUsername() + "具有的角色:" + authorizationInfo.getRoles());
+        logger.info("当前登录用户" + userInfo.getUsername() + "具有的权限：" + authorizationInfo.getStringPermissions());
         
         return authorizationInfo;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-    	log.info("开始验证身份-->method:doGetAuthenticationInfo");
+        logger.info("开始验证身份-->method:doGetAuthenticationInfo");
     	//获取用户的输入的账号.
 //        String username = (String)token.getPrincipal();
 //        System.out.println(token.getCredentials());
@@ -61,7 +61,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         UserInfo userInfo = userService.findByUsername(username);
-        System.out.println("----->>userInfo="+userInfo);
+        logger.info("----->>userInfo="+userInfo);
         if(userInfo == null){
             throw new UnknownAccountException();// 用户不存在
         }else if(userInfo.getState() == 0) {
