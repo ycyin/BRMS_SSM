@@ -58,12 +58,7 @@ public class MainController {
 //	}
 //
 
-//
-//	@RequestMapping(value="/deleteUser")
-//	@ResponseBody
-//	public RespMsg deleteUser(Integer id){
-//		return this.userService.removeUserByPrimaryKey(id);
-//	}
+
 
 
 

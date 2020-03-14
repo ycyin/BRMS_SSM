@@ -35,4 +35,11 @@ public class UserController {
 	public RespMsg addUser(UserVo userVo){
 		return this.userService.insertUser(userVo);
 	}
+
+	@RequestMapping(value="/deleteUser")
+	@ResponseBody
+	public RespMsg deleteUser(Integer id){
+		return this.userService.removeUserAndRoleInfo(id);
+	}
+
 }

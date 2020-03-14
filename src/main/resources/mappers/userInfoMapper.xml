@@ -63,4 +63,14 @@
         insert into t_user_role(user_id,role_id)
         values (#{userId},#{roleId})
     </insert>
+
+    <delete id="deleteRoleByUserId">
+        delete from t_user_role
+        where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserByUserId">
+        delete from t_user
+        where id = #{userId}
+    </delete>
 </mapper>

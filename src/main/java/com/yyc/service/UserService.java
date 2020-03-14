@@ -23,7 +23,7 @@ public interface UserService {
 //
 	RespMsg insertUser(UserVo userVo);
 //
-//	RespMsg removeUserByPrimaryKey(Integer id);
+	RespMsg removeUserAndRoleInfo(Integer id);
 
 	//登录
 	Object login(LoginVo login);

@@ -111,12 +111,16 @@ public class UserServiceImpl implements UserService {
 //	}
 //
 //
-//	@Override
-//	public RespMsg removeUserByPrimaryKey(Integer id) {
-//		Integer res = this.userInfoMapper.deleteByPrimaryKey(id);
-//		return res >= 1 ? new RespMsg(ResultEnum.DELETE_SUCCESS,res):
-//				new RespMsg(ResultEnum.DELETE_FAILD,res);
-//	}
+	@Transactional
+	@Override
+	public RespMsg removeUserAndRoleInfo(Integer id) {
+		if (id ==  null)
+			return new RespMsg(ResultEnum.HAS_NULL);
+		Integer res1 = this.userInfoMapper.deleteRoleByUserId(id);
+		Integer res2 = this.userInfoMapper.deleteUserByUserId(id);
+		return res1 >= 1 && res2 >= 1 ? new RespMsg(ResultEnum.DELETE_SUCCESS,res2):
+				new RespMsg(ResultEnum.DELETE_FAILD,res2);
+	}
 
 	@Override
 	public Object login(LoginVo login) {

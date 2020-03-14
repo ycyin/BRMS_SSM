@@ -21,4 +21,10 @@ public interface IUserInfoMapper {
 
     //添加用户角色
     Integer insertUserAndRole(@Param("userId")Integer userId,@Param("roleId")Integer roleId);
+
+    //删除角色
+    Integer deleteRoleByUserId(@Param("userId") Integer userId);
+
+    //删除用户
+    Integer deleteUserByUserId(@Param("userId") Integer userId);
 }
