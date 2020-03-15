@@ -7,11 +7,30 @@ package com.yyc.vo.request;
  * @create: 2020-03-13 11:04
  **/
 public class UserVo {
+     private Integer id;
      private String username;//登录名
      private String nickname;//用户名
      private String password;//密码
      private int role;//角色
      private int state;//用户状态
+
+     public UserVo() {
+     }
+
+     public UserVo(String username, String nickname, int role, int state) {
+          this.username = username;
+          this.nickname = nickname;
+          this.role = role;
+          this.state = state;
+     }
+
+     public Integer getId() {
+          return id;
+     }
+
+     public void setId(Integer id) {
+          this.id = id;
+     }
 
      public String getUsername() {
           return username;

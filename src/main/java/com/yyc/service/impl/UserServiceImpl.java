@@ -90,27 +90,34 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
-//
-//	@Override
-//	public RespMsg modifyUser(UserInfo userinfo) {
-//		Integer res = 0;
-//		try{
-//			res = this.userInfoMapper.updateByPrimaryKey(userinfo);
-//			return res >=1?new RespMsg(ResultEnum.UPDATE_SUCCESS,res):new RespMsg(ResultEnum.UPDATE_FAILD,res);
-//		}catch (Exception e){
-//			if(res > 0){
-//				return new RespMsg(ResultEnum.UPDATE_SUCCESS,res);
-//			}
-//			if(e.getCause().toString().contains("Duplicate")){
-//				return new RespMsg(ResultEnum.UPDATE_FAILD_HAS_USER_DUPLICATE,res);
-//			}else{
-//				return new RespMsg(ResultEnum.UPDATE_FAILD_UNKNOW,res);
-//			}
-//		}
-//
-//	}
-//
-//
+
+	@Transactional
+	@Override
+	public RespMsg modifyUser(UserVo userVo) {
+		Integer res1 = 0;
+		Integer res2 = 0;
+		UserInfo user = new UserInfo(userVo.getId(),userVo.getUsername(),userVo.getNickname(),(byte)userVo.getState());
+		try{
+			res1 = this.userInfoMapper.updateUser(user);
+			res2 = this.userInfoMapper.updateUserAndRole(user.getId(), userVo.getRole());
+			return new RespMsg(ResultEnum.UPDATE_SUCCESS,res1);
+		}catch (Exception e){
+			e.printStackTrace();
+			if(res1 > 0 || res2 > 0){
+				return new RespMsg(ResultEnum.UPDATE_SUCCESS,res1);
+			}
+			//手动回滚事务，由于已经被捕获异常，故事务不会自动回滚
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			if(e.getCause().toString().contains("Duplicate")){
+				return new RespMsg(ResultEnum.UPDATE_FAILD_HAS_USER_DUPLICATE,res1);
+			}else{
+				return new RespMsg(ResultEnum.UPDATE_FAILD_UNKNOW,res1);
+			}
+		}
+
+	}
+
+
 	@Transactional
 	@Override
 	public RespMsg removeUserAndRoleInfo(Integer id) {
@@ -178,5 +185,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserInfo findByUsername(String username) {
 		return userInfoMapper.findByUsername(username);
+	}
+
+	@Override
+	public RespMsg findUserByUserId(Integer id) {
+		if (id ==  null)
+			return new RespMsg(ResultEnum.HAS_NULL);
+		UserDTO userDTO = this.userInfoMapper.selectUserByUserId(id);
+		UserVo uv = new UserVo(userDTO.getUserName(),userDTO.getNickName(),Integer.valueOf(userDTO.getRole()),userDTO.getState());
+		return userDTO != null ? new RespMsg(ResultEnum.SELECT_SUCCESS,uv):
+					new RespMsg(ResultEnum.SELECT_FAILD,uv);
 	}
 }

@@ -7,6 +7,7 @@ import com.yyc.vo.request.UserVo;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,6 +41,18 @@ public class UserController {
 	@ResponseBody
 	public RespMsg deleteUser(Integer id){
 		return this.userService.removeUserAndRoleInfo(id);
+	}
+
+	@RequestMapping(value="/getUserInfoById/{userId}")
+	@ResponseBody
+	public RespMsg getUserInfoById(@PathVariable("userId") Integer userId){
+		return this.userService.findUserByUserId(userId);
+	}
+
+	@RequestMapping(value="/updateUser")
+	@ResponseBody
+	public RespMsg updateUser(UserVo userVo){
+		return this.userService.modifyUser(userVo);
 	}
 
 }

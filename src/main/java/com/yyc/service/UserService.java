@@ -19,7 +19,7 @@ public interface UserService {
 
 	RespMsg getALLUser();
 //
-//	RespMsg modifyUser(UserInfo userinfo);
+	RespMsg modifyUser(UserVo userVo);
 //
 	RespMsg insertUser(UserVo userVo);
 //
@@ -30,4 +30,7 @@ public interface UserService {
 
 	//通过username查找用户信息
 	UserInfo findByUsername(String username);
+
+	//通过userId查找用户信息
+	RespMsg findUserByUserId(Integer id);
 }

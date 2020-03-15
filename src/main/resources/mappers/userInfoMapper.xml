@@ -73,4 +73,29 @@
         delete from t_user
         where id = #{userId}
     </delete>
+
+    <select id="selectUserByUserId" resultType="com.yyc.dto.UserDTO">
+        SELECT
+	        u.id,
+	        u.`name` as nickname,
+	        u.state,
+	        u.username,
+	        u_r.role_id as role
+        FROM
+	        t_user u
+        LEFT JOIN t_user_role u_r ON u.id = u_r.user_id
+        WHERE u.id=#{userId}
+    </select>
+
+    <update id="updateUser" parameterType="com.yyc.entity.UserInfo" >
+        update t_user
+        set `name` = #{name},state = #{state},username = #{username}
+        where id=#{id}
+    </update>
+
+    <update id="updateUserAndRole">
+        update t_user_role
+        set role_id = #{roleId}
+        where user_id=#{userId}
+    </update>
 </mapper>

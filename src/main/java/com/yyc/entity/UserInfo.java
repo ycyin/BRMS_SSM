@@ -25,7 +25,14 @@ public class UserInfo implements Serializable{
 		this.state = state;
 	}
 
-	/**
+    public UserInfo(Integer id,String username, String nickname, byte state) {
+		this.id = id;
+		this.username = username;
+		this.name = nickname;
+		this.state = state;
+    }
+
+    /**
      * 
      * @Title: getCredentialsSalt   
      * @Description: TODO(密码盐)   
