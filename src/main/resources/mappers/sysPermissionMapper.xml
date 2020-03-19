@@ -27,7 +27,7 @@
 		*
 		FROM
 		t_permission
-		Order BY id desc
+		Order BY id asc
 	</select>
 
 </mapper>
