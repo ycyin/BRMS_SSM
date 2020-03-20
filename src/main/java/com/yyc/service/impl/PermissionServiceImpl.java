@@ -31,4 +31,12 @@ public class PermissionServiceImpl implements PermissionService {
         List<SysPermission> allPermission = this.iSysPermissionMapper.findAllPermission();
         return new RespMsg(ResultEnum.SELECT_SUCCESS,allPermission);
     }
+
+    @Override
+    public RespMsg getPermissionIdsByRoleId(Integer roleId) {
+        if (roleId == null || roleId == 0)
+            return new RespMsg(ResultEnum.HAS_NULL);
+        List<Integer> permissionIds = this.iSysPermissionMapper.findPermissionIdsByRoleId(roleId);
+        return new RespMsg(ResultEnum.SELECT_SUCCESS,permissionIds);
+    }
 }

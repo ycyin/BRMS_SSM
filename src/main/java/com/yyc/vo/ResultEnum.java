@@ -30,6 +30,7 @@ public  enum ResultEnum {
         UPDATE_FAILD_UNKNOW(20011,"更新失败,未知错误！"),
         ADD_FAILD_HAS_USER_DUPLICATE(20008,"添加失败,该登录名已存在！"),
         UPDATE_FAILD_HAS_USER_DUPLICATE(20010,"更新失败,该用户名已存在！"),
+        OPTIONS_FAILD_HAS_ROLE_DUPLICATE(20011,"操作失败,该角色已存在！"),
         THIS_ORDER_NOT_CANCEL(20011,"该订单已结束，不可取消！"),
         THIS_ORDER_NOT_MODIFY(20012,"该订单已结束，不可修改！"),
         DISORDER_MODIFY_STATUS_FAILED(20013,"修改状态失败，请重试！"),

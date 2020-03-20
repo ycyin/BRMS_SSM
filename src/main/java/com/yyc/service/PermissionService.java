@@ -10,4 +10,5 @@ import com.yyc.vo.RespMsg;
  **/
 public interface PermissionService {
     RespMsg getAllPermission();
+    RespMsg getPermissionIdsByRoleId(Integer roleId);
 }

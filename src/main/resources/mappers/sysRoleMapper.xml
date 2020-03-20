@@ -31,4 +31,34 @@
         AND t_user_role.role_id = t_role.id
         AND username=#{username}
     </select>
+
+    <insert id="insertRole" useGeneratedKeys="true" keyProperty="id">
+        <!--AFTER :insert 先执行. -->
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            <!-- 获取最后一次执行insert语句的 key    SysRole.getId()就可以获取id-->
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_role(role,available,description)
+        values (#{role},#{available},#{description})
+    </insert>
+
+    <update id="updateRoleByRoleName" parameterType="com.yyc.entity.SysRole">
+        update t_role
+        set available = #{available},
+        description = #{description}
+        where role = #{role}
+    </update>
+
+    <insert id="insertRoleAndPermission">
+        insert into t_role_permission(role_id,permission_id)
+        values (#{roleId},#{permissionId})
+    </insert>
+
+    <select id="selectRoleByRoleName" resultType="com.yyc.entity.SysRole">
+        select * from t_role where role = #{roleName}
+    </select>
+
+    <select id="selectAllRole" resultType="com.yyc.entity.SysRole">
+        select * from t_role
+    </select>
 </mapper>

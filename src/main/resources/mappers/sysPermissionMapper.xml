@@ -30,4 +30,8 @@
 		Order BY id asc
 	</select>
 
+	<select id="findPermissionIdsByRoleId" resultType="java.lang.Integer">
+		select permission_id from t_role_permission where role_id=#{roleId}
+	</select>
+
 </mapper>

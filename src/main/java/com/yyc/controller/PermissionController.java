@@ -5,6 +5,7 @@ import com.yyc.vo.RespMsg;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,4 +30,11 @@ public class PermissionController {
     public RespMsg getAllPermission(){
         return  this.permissionService.getAllPermission();
     }
+
+    @RequestMapping("/getPermissionsByRoleId/{roleId}")
+    @ResponseBody
+    public RespMsg getPermissionsByRoleId(@PathVariable("roleId") Integer roleId){
+        return  this.permissionService.getPermissionIdsByRoleId(roleId);
+    }
+
 }
