@@ -27,7 +27,7 @@
 		*
 		FROM
 		t_permission
-		Order BY id asc
+		Order BY available desc,id asc
 	</select>
 
 	<select id="findPermissionIdsByRoleId" resultType="java.lang.Integer">
