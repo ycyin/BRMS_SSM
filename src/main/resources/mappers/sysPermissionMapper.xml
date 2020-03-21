@@ -34,4 +34,20 @@
 		select permission_id from t_role_permission where role_id=#{roleId}
 	</select>
 
+	<delete id="deletePermissionsByRoleId">
+		delete from t_role_permission where role_id=#{roleId}
+	</delete>
+
+	<insert id="insertPermissionsWithRoleId" parameterType="java.util.List">
+		insert into t_role_permission
+		(role_id,permission_id)
+		values
+		<foreach collection="list" item="rp" index="index" separator=",">
+			(
+			#{rp.roleId},
+			#{rp.permissionId}
+			)
+		</foreach>
+	</insert>
+
 </mapper>

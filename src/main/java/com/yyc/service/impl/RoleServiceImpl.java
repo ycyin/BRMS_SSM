@@ -1,6 +1,8 @@
 package com.yyc.service.impl;
 
+import com.yyc.dao.ISysPermissionMapper;
 import com.yyc.dao.ISysRoleMapper;
+import com.yyc.entity.RolePermission;
 import com.yyc.entity.SysRole;
 import com.yyc.service.RoleService;
 import com.yyc.vo.RespMsg;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,31 +30,51 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private ISysRoleMapper roleMapper;
+    @Autowired
+    private ISysPermissionMapper permissMapper;
 
 
 
     @Transactional
     @Override
-    public RespMsg addRoleAndPermission(RoleAndPermissionVo rp) {
-        if (null ==rp.getRoleName() || null == rp.getRoleDesc() || rp.getExistingPermissions().isEmpty())
+    public RespMsg addRoleAndPermission(RoleAndPermissionVo rpVo) {
+        if (null ==rpVo.getRoleName() || null == rpVo.getRoleDesc() || rpVo.getExistingPermissions().isEmpty())
             return new RespMsg(ResultEnum.HAS_NULL);
         try {
 
-        String roleName = rp.getRoleName();
+        String roleName = rpVo.getRoleName();
         SysRole sysRole = this.roleMapper.selectRoleByRoleName(roleName);
-        if (sysRole != null) { //说明是修改
-
-
+        if (sysRole != null && sysRole.getId() != null) { //说明是修改
+            Integer roleId = sysRole.getId();
+            //修改角色信息
+            SysRole sr = new SysRole();
+            sr.setRole(rpVo.getRoleName());
+            sr.setDescription(rpVo.getRoleDesc());
+            sr.setAvailable((byte) 1);
+            Integer res1 = this.roleMapper.updateRoleByRoleName(sr);
+            //删除现有角色权限信息
+            Integer res2 = this.permissMapper.deletePermissionsByRoleId(roleId);
+            //添加修改后的角色权限信息
+            List<Integer> permissions = rpVo.getExistingPermissions();
+            List<RolePermission> list  =  new ArrayList<>();
+            permissions.stream().forEach(permissionId ->{
+                RolePermission rp = new RolePermission();
+                rp.setRoleId(roleId);
+                rp.setPermissionId(permissionId);
+                list.add(rp);
+            });
+            Integer res3 = this.permissMapper.insertPermissionsWithRoleId(list);
+            return new RespMsg(ResultEnum.UPDATE_SUCCESS);
         }else{//添加
             SysRole sr = new SysRole();
             sr.setAvailable((byte) 1);
-            sr.setRole(rp.getRoleName());
-            sr.setDescription(rp.getRoleDesc());
+            sr.setRole(rpVo.getRoleName());
+            sr.setDescription(rpVo.getRoleDesc());
             Integer res1 = this.roleMapper.insertRole(sr);
             //使用mybatis的selectKey标签可以返回添加后的ID
             Integer roleId = sr.getId();
             System.out.println("----------"+sr.getId());
-            List<Integer> permissions = rp.getExistingPermissions();
+            List<Integer> permissions = rpVo.getExistingPermissions();
             permissions.stream().forEach(permissionId ->{
                 this.roleMapper.insertRoleAndPermission(roleId,permissionId);
             });
@@ -70,7 +93,6 @@ public class RoleServiceImpl implements RoleService {
                 return new RespMsg(ResultEnum.ADD_FAILD_UNKNOW);
             }
         }
-        return null;
     }
 
     @Override
