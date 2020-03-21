@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2020-03-17 13:50:00
+Date: 2020-03-21 13:48:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -201,24 +201,33 @@ DROP TABLE IF EXISTS `t_permission`;
 CREATE TABLE `t_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `permission` varchar(255) NOT NULL COMMENT '权限',
+  `name` varchar(50) DEFAULT NULL COMMENT '权限名',
   `url` varchar(255) NOT NULL COMMENT '权限URL',
-  `name` varchar(255) DEFAULT NULL COMMENT '权限名',
+  `available` bit(1) NOT NULL COMMENT '是否有效',
+  `description` varchar(255) DEFAULT NULL COMMENT '权限描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-INSERT INTO `t_permission` VALUES ('1', 'book:get', '/book/getBookList,/book/getBookCategoryData,/book/getBookPressData,/book/getBookCategoryMetaValueAndLabel', '获取图书列表（导出）,获取图书类别图表信息,获取图书出版社图表信息,获取图书类别元信息');
-INSERT INTO `t_permission` VALUES ('2', 'book:add', '/book/addBook,/book/importBookListData', '添加图书,导入图书信息（批量添加）');
-INSERT INTO `t_permission` VALUES ('3', 'book:remove', '/book/removeBook', '删除图书');
-INSERT INTO `t_permission` VALUES ('4', 'book:modify', '/book/modifyBook', '修改图书');
-INSERT INTO `t_permission` VALUES ('5', 'publisher:get', '/publisher/getPublisherServiceSelectValueAndLabel', '获取出版社元信息');
-INSERT INTO `t_permission` VALUES ('6', 'distributor:get', '/distributor/getDistributorSelectValueAndLabel', '获取分销商元信息');
-INSERT INTO `t_permission` VALUES ('7', 'disOrder:add', '/disOrder/addOrder', '添加订单');
-INSERT INTO `t_permission` VALUES ('8', 'disOrder:get', '/disOrder/getOrderList,/disOrder/getDisOrderInterval7DayData', '获取订单列表,获取近7天订单数据');
-INSERT INTO `t_permission` VALUES ('9', 'disOrder:cancel', '/disOrder/cancelOrder', '取消订单');
-INSERT INTO `t_permission` VALUES ('10', 'disOrder:modify', '/disOrder/modifyOrderStatus', '修改订单状态');
+INSERT INTO `t_permission` VALUES ('1', 'book:get', '查询图书', '/book/getBookList,/book/getBookCategoryData,/book/getBookPressData,/book/getBookCategoryMetaValueAndLabel', '', '获取图书列表（导出）,获取图书类别图表信息,获取图书出版社图表信息,获取图书类别元信息');
+INSERT INTO `t_permission` VALUES ('2', 'book:add', '添加图书', '/book/addBook,/book/importBookListData', '', '添加/导入图书');
+INSERT INTO `t_permission` VALUES ('3', 'book:remove', '删除图书', '/book/removeBook', '', '删除图书');
+INSERT INTO `t_permission` VALUES ('4', 'book:modify', '修改图书', '/book/modifyBook', '', '修改图书');
+INSERT INTO `t_permission` VALUES ('5', 'publisher:get', '查询出版社', '/publisher/getPublisherServiceSelectValueAndLabel', '', '获取出版社元信息');
+INSERT INTO `t_permission` VALUES ('6', 'distributor:get', '查询分销商', '/distributor/getDistributorSelectValueAndLabel', '', '获取分销商元信息');
+INSERT INTO `t_permission` VALUES ('7', 'disOrder:add', '添加订单', '/disOrder/addOrder', '', '添加订单');
+INSERT INTO `t_permission` VALUES ('8', 'disOrder:get', '查询订单', '/disOrder/getOrderList,/disOrder/getDisOrderInterval7DayData', '', '获取订单列表,获取近7天订单数据');
+INSERT INTO `t_permission` VALUES ('9', 'disOrder:cancel', '取消订单', '/disOrder/cancelOrder', '', '取消订单');
+INSERT INTO `t_permission` VALUES ('10', 'disOrder:modify', '修改订单', '/disOrder/modifyOrderStatus', '', '修改订单状态');
+INSERT INTO `t_permission` VALUES ('11', 'permiss:get', '查询权限信息', '/permission/getAllPermission/,/permission/getPermissionsByRoleId', '', '获取所有权限信息,根据角色id获取权限');
+INSERT INTO `t_permission` VALUES ('12', 'user:get', '查询用户信息', '/user/getUserInfoById,/user/getUserList', '', '根据ID获取用户信息，获取用户信息列表');
+INSERT INTO `t_permission` VALUES ('13', 'user:modify', '修改用户信息', '/user/updateUser', '', '修改用户信息');
+INSERT INTO `t_permission` VALUES ('14', 'user:add', '添加用户信息', '/user/addUser', '', '添加用户信息');
+INSERT INTO `t_permission` VALUES ('15', 'user:remove', '删除用户信息', '/user/deleteUser', '', '删除用户信息');
+INSERT INTO `t_permission` VALUES ('16', 'role:get', '查询角色信息', '/role/getRoleList', '', '获取角色列表');
+INSERT INTO `t_permission` VALUES ('17', 'role:add', '添加角色权限', '/role/addOrUpdateRoleAndPermission', '', '添加角色和角色权限');
 
 -- ----------------------------
 -- Table structure for t_publisher
@@ -252,13 +261,14 @@ CREATE TABLE `t_role` (
   `available` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否可用',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'admin', '', '管理员');
+INSERT INTO `t_role` VALUES ('1', 'admin', '\0', '管理员');
 INSERT INTO `t_role` VALUES ('2', 'user', '', '普通用户');
+INSERT INTO `t_role` VALUES ('3', 'test', '', '测试账号');
 
 -- ----------------------------
 -- Table structure for t_role_permission
@@ -271,21 +281,35 @@ CREATE TABLE `t_role_permission` (
   KEY `pk_permission_id` (`permission_id`),
   CONSTRAINT `pk_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`),
   CONSTRAINT `t_role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role_permission
 -- ----------------------------
 INSERT INTO `t_role_permission` VALUES ('1', '1');
+INSERT INTO `t_role_permission` VALUES ('2', '1');
 INSERT INTO `t_role_permission` VALUES ('1', '2');
 INSERT INTO `t_role_permission` VALUES ('1', '3');
 INSERT INTO `t_role_permission` VALUES ('1', '4');
 INSERT INTO `t_role_permission` VALUES ('1', '5');
+INSERT INTO `t_role_permission` VALUES ('2', '5');
 INSERT INTO `t_role_permission` VALUES ('1', '6');
+INSERT INTO `t_role_permission` VALUES ('2', '6');
 INSERT INTO `t_role_permission` VALUES ('1', '7');
 INSERT INTO `t_role_permission` VALUES ('1', '8');
+INSERT INTO `t_role_permission` VALUES ('2', '8');
 INSERT INTO `t_role_permission` VALUES ('1', '9');
 INSERT INTO `t_role_permission` VALUES ('1', '10');
+INSERT INTO `t_role_permission` VALUES ('1', '11');
+INSERT INTO `t_role_permission` VALUES ('2', '11');
+INSERT INTO `t_role_permission` VALUES ('1', '12');
+INSERT INTO `t_role_permission` VALUES ('2', '12');
+INSERT INTO `t_role_permission` VALUES ('1', '13');
+INSERT INTO `t_role_permission` VALUES ('1', '14');
+INSERT INTO `t_role_permission` VALUES ('1', '15');
+INSERT INTO `t_role_permission` VALUES ('1', '16');
+INSERT INTO `t_role_permission` VALUES ('2', '16');
+INSERT INTO `t_role_permission` VALUES ('1', '17');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -300,7 +324,7 @@ CREATE TABLE `t_user` (
   `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_user_index` (`username`) USING BTREE COMMENT 'user_name唯一索引'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
@@ -308,6 +332,7 @@ CREATE TABLE `t_user` (
 INSERT INTO `t_user` VALUES ('1', '管理员', 'bb4ddf91bd2d054a266564e84a683694', '43442676c74ae59f219c2d87fd6bad52', '', 'admin');
 INSERT INTO `t_user` VALUES ('2', '普通用户', 'a735b96199226d9d40a8f6b27d305aa8', 'e6ec8e78f1d07cc4a687be4a0c3b8400', '', 'user');
 INSERT INTO `t_user` VALUES ('3', '普通用户2', 'b31d340fb4dcfd1c96b6fa6de6f3a772', '877007b5b8d6918ac2ebc38ab2898086', '\0', 'user1');
+INSERT INTO `t_user` VALUES ('4', '测试账户', 'f73d30aa6583dfaac9234d96f89dc29f', '60cd54a928cbbcbb6e7b5595bab46a9e', '\0', 'test');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -327,6 +352,8 @@ CREATE TABLE `t_user_role` (
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('1', '1');
 INSERT INTO `t_user_role` VALUES ('2', '2');
+INSERT INTO `t_user_role` VALUES ('3', '3');
+INSERT INTO `t_user_role` VALUES ('3', '4');
 
 -- ----------------------------
 -- View structure for view_book_category_publisher
