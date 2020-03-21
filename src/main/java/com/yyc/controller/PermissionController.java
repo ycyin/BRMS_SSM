@@ -24,13 +24,14 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
-//    @RequiresPermissions("publisher:get")
+    @RequiresPermissions("permiss:get")
     @RequestMapping("/getAllPermission")
     @ResponseBody
     public RespMsg getAllPermission(){
         return  this.permissionService.getAllPermission();
     }
 
+    @RequiresPermissions("permiss:get")
     @RequestMapping("/getPermissionsByRoleId/{roleId}")
     @ResponseBody
     public RespMsg getPermissionsByRoleId(@PathVariable("roleId") Integer roleId){

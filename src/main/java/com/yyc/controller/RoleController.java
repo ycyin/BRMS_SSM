@@ -4,6 +4,7 @@ import com.yyc.service.RoleService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.RoleAndPermissionVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,14 @@ public class RoleController {
      * 添加或更新角色权限信息
      * @return
      */
+    @RequiresPermissions("role:add")
     @RequestMapping("/addOrUpdateRoleAndPermission")
     @ResponseBody
     public RespMsg addRoleAndPermission(RoleAndPermissionVo rp){
         return  this.roleService.addRoleAndPermission(rp);
     }
 
+    @RequiresPermissions("role:get")
     @RequestMapping("/getRoleList")
     @ResponseBody
     public RespMsg getRoleList(){
