@@ -8,6 +8,9 @@ import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public interface BookService {
     RespMsg getBookList(SearchAndPageVo searchAndPageVo);
     RespMsg addBook(Book book);
@@ -16,4 +19,5 @@ public interface BookService {
     RespMsg getBookPressData();
     RespMsg getBookCategoryData();
     RespMsg addBookes(BookListVo bookListVo);
+    void exportAllBooksExcel(HttpServletResponse response) throws IOException;
 }

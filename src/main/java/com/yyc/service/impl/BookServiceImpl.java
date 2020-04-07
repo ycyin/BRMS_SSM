@@ -1,5 +1,9 @@
 package com.yyc.service.impl;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.metadata.style.WriteCellStyle;
+import com.alibaba.excel.write.metadata.style.WriteFont;
+import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -8,17 +12,20 @@ import com.yyc.dao.BookMapper;
 import com.yyc.dto.BookDTO;
 import com.yyc.entity.Book;
 import com.yyc.service.BookService;
-import com.yyc.vo.PageVo;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,6 +134,51 @@ public class BookServiceImpl implements BookService {
 
         }
 
+    }
+
+    @Override
+    public void exportAllBooksExcel(HttpServletResponse response) throws IOException  {
+        String fileName = "图书列表信息.xlsx";
+        String sheetName= "图书信息";
+        List<BookDTO> books = this.bookDTOMapper.selectAllBook(null);
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        try {
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+            // 前后端分离跨域时，前端axios无法获取后端自定义Header信息，需要加上下面这句,参考：https://blog.csdn.net/qq_35393869/article/details/88345841
+            response.setHeader("Access-Control-Expose-Headers","Content-fileName");
+            response.setHeader("Content-fileName", fileName);
+            // 这里需要设置不关闭流
+//            EasyExcel.write(response.getOutputStream(), BookDTO.class).autoCloseStream(Boolean.FALSE).sheet("模板")
+//                    .doWrite(books);
+            // 头的策略
+            WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+            // 背景设置为红色
+            headWriteCellStyle.setFillForegroundColor(IndexedColors.SKY_BLUE.getIndex());
+            WriteFont headWriteFont = new WriteFont();
+            headWriteFont.setFontHeightInPoints((short)12);
+            headWriteCellStyle.setWriteFont(headWriteFont);
+            headWriteCellStyle.setShrinkToFit(true);
+            headWriteCellStyle.setLocked(true);
+            // 内容的策略,这里没设置
+            WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+            // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
+            HorizontalCellStyleStrategy horizontalCellStyleStrategy =
+                    new HorizontalCellStyleStrategy(headWriteCellStyle,contentWriteCellStyle);
+
+            EasyExcel.write(response.getOutputStream(), BookDTO.class)
+                    .autoCloseStream(Boolean.FALSE)
+                    .registerWriteHandler(horizontalCellStyleStrategy)
+                    .sheet(sheetName).doWrite(books);
+        } catch (Exception e) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().println(
+                    JSON.toJSONString(new RespMsg(ResultEnum.EXPORT_FILE_FAILED)));
+        }
     }
 
 }

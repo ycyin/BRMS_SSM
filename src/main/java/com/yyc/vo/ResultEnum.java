@@ -35,6 +35,7 @@ public  enum ResultEnum {
         THIS_ORDER_NOT_MODIFY(20012,"该订单已结束，不可修改！"),
         DISORDER_MODIFY_STATUS_FAILED(20013,"修改状态失败，请重试！"),
         DISORDER_CANCEL_FAILED(20014,"订单取消失败，请重试！"),
+        EXPORT_FILE_FAILED(20015,"导出文件失败！"),
         ;
         private Integer code;
         private String msg;
