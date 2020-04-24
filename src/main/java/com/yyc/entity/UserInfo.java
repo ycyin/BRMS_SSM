@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable{
     /**   
-	 * @Fields serialVersionUID : TODO(implements Serializable以实现通过Ecache使用“记住我”)   
+	 * @Fields serialVersionUID : FIXME(implements Serializable以实现通过Ecache使用“记住我”)
 	 */   
 	private static final long serialVersionUID = -429496302208889298L;
 	Integer id;//用户id
@@ -35,7 +35,7 @@ public class UserInfo implements Serializable{
     /**
      * 
      * @Title: getCredentialsSalt   
-     * @Description: TODO(密码盐)   
+     * @Description: (密码盐)
      * @param: @return      
      * @return: String      
      * @throws

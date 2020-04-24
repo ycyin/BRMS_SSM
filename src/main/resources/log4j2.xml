@@ -28,12 +28,12 @@
         </Console>
         -->
 
-        <!--这个输出控制台的配置，所有级别的日志都不输出到System.out-->
+        <!--这个输出控制台的配置，所有info级别的日志都输出到System.out-->
         <Console name="console_out_appender" target="SYSTEM_OUT">
             <!-- 控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch)
                 优先级，即ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF
             -->
-            <ThresholdFilter level="ALL" onMatch="DENY" onMismatch="ACCEPT"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <!-- 输出日志的格式 -->
             <PatternLayout pattern="%5p [%t] %d{yyyy-MM-dd HH:mm:ss} (%F:%L) %m%n"/>
         </Console>

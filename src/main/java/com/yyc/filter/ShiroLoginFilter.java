@@ -15,7 +15,7 @@ import java.io.IOException;
 
 /**
  * @ClassName:  ShiroLoginFilter   
- * @Description:TODO(登录认证过滤器，未登录则拦截并向前端发送json数据提示未登录
+ * @Description: (登录认证过滤器，未登录则拦截并向前端发送json数据提示未登录
  * 不可以在shiro配置中设置shiroFilterFactoryBean.setLoginUrl("/nologin");
  * 因为这种setLoginUrl方式只能做后端跳转。
  * 在前后端分离情况下，前端会报302/301强制重定向警告。

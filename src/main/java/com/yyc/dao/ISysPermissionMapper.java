@@ -21,4 +21,9 @@ public interface ISysPermissionMapper {
 
     //批量插入角色权限表
     Integer insertPermissionsWithRoleId(List<RolePermission> list);
+
+    /**
+     * 根据角色名查询拥有的权限字符串
+     */
+    List<String> findPermissionsByRoleNames(@Param("roleNames")List<String> roleNames);
 }

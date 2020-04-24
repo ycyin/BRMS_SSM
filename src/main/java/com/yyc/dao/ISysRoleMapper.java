@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ISysRoleMapper {
-    //通过username查找用户角色信息
+    /**
+     * 通过username查找用户角色信息
+     */
     List<SysRole> findRoleByUsername(@Param("username") String username);
 
     //通过username查找用户所有角色名
@@ -26,4 +28,6 @@ public interface ISysRoleMapper {
 
     //查询所有的角色
     List<SysRole> selectAllRole();
+
+
 }

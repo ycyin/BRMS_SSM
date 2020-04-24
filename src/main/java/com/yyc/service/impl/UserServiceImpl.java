@@ -1,5 +1,6 @@
 package com.yyc.service.impl;
 
+import com.yyc.dao.ISysPermissionMapper;
 import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.dto.UserDTO;
@@ -44,6 +45,8 @@ public class UserServiceImpl implements UserService {
 	IUserInfoMapper userInfoMapper;
 	@Autowired
 	ISysRoleMapper sysRoleMapper;
+	@Autowired
+	ISysPermissionMapper sysPermissionMapper;
 
 
 	@Override
@@ -136,6 +139,7 @@ public class UserServiceImpl implements UserService {
 		Boolean rememberme = login.getRememberme();
 		String errmessage = "";
 		List<String> roleNames = null;
+		List<String> permissions = null;
 		String userName = null;
 		// 1、获取Subject实例对象
 		Subject currentUser = SecurityUtils.getSubject();
@@ -146,18 +150,22 @@ public class UserServiceImpl implements UserService {
 		UsernamePasswordToken token = new UsernamePasswordToken(loginname, password, rememberme);
 		// 4、认证
 		try {
-			currentUser.login(token);// 传到MyShiroRealm类中的方法进行认证
+			// 传到MyShiroRealm类中的方法进行认证
+			currentUser.login(token);
 			Session session = currentUser.getSession();
 			session.setAttribute("loginname", loginname);
 //			// 认证成功，返回角色信息
 			roleNames = sysRoleMapper.findRoleNameByUsername(loginname);
+			permissions = sysPermissionMapper.findPermissionsByRoleNames(roleNames);
 			userName = userInfoMapper.findNameByUsername(loginname);
 			session.setAttribute("role", roleNames);
-			session.setTimeout(1000 * 60 * 60 * 2);//设置会话过期时间，2小时
+			// 设置会话过期时间，2小时
+			session.setTimeout(1000 * 60 * 60 * 2);
 			HashMap data = new HashMap();
 			data.put("username",userName);
 			data.put("loginname", loginname);
 			data.put("rolenames", roleNames);
+			data.put("permissions",permissions);
 			return new RespMsg(ResultEnum.LOGIN_SUCCESS,data);
 		} catch (UnknownAccountException uae) {
 			logger.warn("对用户[" + loginname + "]进行登录验证..验证未通过,未知账户");
