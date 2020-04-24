@@ -30,8 +30,10 @@ public class MyShiroRealm extends AuthorizingRealm {
         logger.info("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
+        logger.info("用户名--->"+userInfo.getUsername());
         sysRoleMapper.findRoleByUsername(userInfo.getUsername()).stream().forEach(
                 sysRole -> {
+                    logger.info("角色ID--->"+sysRole.getId());
                     authorizationInfo.addRole(sysRole.getRole());
                     sysPermissionMapper.findPermissionByRoleId(sysRole.getId()).stream().forEach(
                             sysPermission -> {

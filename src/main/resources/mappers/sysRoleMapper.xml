@@ -4,21 +4,15 @@
 <mapper namespace="com.yyc.dao.ISysRoleMapper">
 	<!-- id与接口文件中的方法名相同 -->
 	<select id="findRoleByUsername" resultType="com.yyc.entity.SysRole">
-          SELECT
-            t_user.id,
-            t_user.`name`,
-            t_user.`password`,
-            t_user.salt,
-            t_user.state,
-            t_user.username,
-            t_role.id,
-            t_role.available,
-            t_role.description,
-            t_role.role
+       SELECT
+	        t_role.id,
+	        t_role.available,
+	        t_role.description,
+	        t_role.role
         FROM
-            t_user
-        RIGHT JOIN t_user_role ON t_user.id = t_user_role.user_id
-        LEFT JOIN t_role ON t_user_role.role_id = t_role.id
+	        t_role
+        JOIN t_user_role ON t_role.id = t_user_role.role_id
+        JOIN t_user ON t_user_role.user_id = t_user.id
         WHERE username=#{username}
     </select>
 
