@@ -1,8 +1,13 @@
 package com.yyc.vo;
 
+/**
+ * 返回结果信息枚举类
+ * @author yyc
+ */
+
 public  enum ResultEnum {
         UNKNOW_ERROR(500,"未知错误"),
-        UNAUTHORIZED(401,"对不起，您无权限进行当前操作"),
+        UNAUTHORIZED(401,"您无权限进行当前操作,请联系管理员！"),
         LOGIN_SUCCESS(2000,"登录成功！"),
         LOGINED(2001,"已登录"),
         UNLOGIN(2002,"未登录！"),

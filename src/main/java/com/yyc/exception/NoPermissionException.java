@@ -16,13 +16,15 @@ import java.io.IOException;
 
 /**
  * 自定义异常捕获，主要捕获没有权限异常
+ * @author yyc
  */
 public class NoPermissionException extends SimpleMappingExceptionResolver {
 
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         if (ex instanceof  AuthorizationException || ex instanceof UnauthorizedException){
-            ModelAndView mv = new ModelAndView();//必须返回一个MV,否则setStatus无效!!【未知原因】
+            // 必须返回一个MV,否则setStatus无效!!【未知原因】
+            ModelAndView mv = new ModelAndView();
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
             RespMsg resultData = new RespMsg(ResultEnum.UNAUTHORIZED);

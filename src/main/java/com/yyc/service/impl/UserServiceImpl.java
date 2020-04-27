@@ -54,13 +54,14 @@ public class UserServiceImpl implements UserService {
 		List<UserDTO> userInfos = this.userInfoMapper.selectAllUser();
 		Session session = SecurityUtils.getSubject().getSession();
 		String loginname = (String) session.getAttribute("loginname");
-		// 过滤掉登录名是admin的用户（只有admin用户才有权限访问这个方法）
-		List<UserDTO> collect = userInfos.stream().filter(u -> !u.getUserName()
-				.equalsIgnoreCase(loginname)).collect(Collectors.toList());
+		// 过滤掉角色是admin的用户和登录名是自身的用户
+		List<UserDTO> collect = userInfos.stream().filter(u ->
+		!u.getUserName().equalsIgnoreCase(loginname)&&
+		!"admin".equalsIgnoreCase(u.getRole())).collect(Collectors.toList());
 		return new RespMsg(ResultEnum.SELECT_SUCCESS,collect);
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public RespMsg insertUser(UserVo userVo) {
 		Map<String, String> passAndSalt = GeneratePasswordAndSalt.generate(userVo.getUsername(), userVo.getPassword());

@@ -15,12 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.*;
 
+/**
+ * @author yyc
+ */
 @RestController
 @RequestMapping("/book")
 public class BookController {
@@ -55,8 +55,7 @@ public class BookController {
     @RequestMapping("/getBookList")
     @ResponseBody
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo){
-//        logger.info("getBookList...>>>>>>>>>"+searchAndPageVo);
-
+        logger.info("getBookList...>>>>>>>>>"+searchAndPageVo);
         return  this.bookService.getBookList(searchAndPageVo);
     }
 
@@ -84,7 +83,7 @@ public class BookController {
         return  this.bookService.modifyBookByPrimaryKey(book);
     }
 
-    @RequiresPermissions("book:get")
+    @RequiresPermissions("bookPressData:get")
     @RequestMapping("/getBookPressData")
     @ResponseBody
     public RespMsg getBookPressData(){
@@ -92,7 +91,7 @@ public class BookController {
         return  this.bookService.getBookPressData();
     }
 
-    @RequiresPermissions("book:get")
+    @RequiresPermissions("bookCategoryData:get")
     @RequestMapping("/getBookCategoryData")
     @ResponseBody
     public RespMsg getBookCategoryData(){
