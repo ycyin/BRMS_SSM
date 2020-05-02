@@ -4,6 +4,7 @@ import com.yyc.dao.ISysPermissionMapper;
 import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.dto.UserDTO;
+import com.yyc.entity.SysPermission;
 import com.yyc.entity.UserInfo;
 import com.yyc.utils.GeneratePasswordAndSalt;
 import com.yyc.vo.RespMsg;
@@ -141,6 +142,7 @@ public class UserServiceImpl implements UserService {
 		String errmessage = "";
 		List<String> roleNames = null;
 		List<String> permissions = null;
+		List<String> permissionNames = null;
 		String userName = null;
 		// 1、获取Subject实例对象
 		Subject currentUser = SecurityUtils.getSubject();
@@ -159,6 +161,7 @@ public class UserServiceImpl implements UserService {
 			roleNames = sysRoleMapper.findRoleNameByUsername(loginname);
 			permissions = sysPermissionMapper.findPermissionsByRoleNames(roleNames);
 			userName = userInfoMapper.findNameByUsername(loginname);
+			permissionNames = sysPermissionMapper.findPermissionNamesByRoleNames(roleNames);
 			session.setAttribute("role", roleNames);
 			// 设置会话过期时间，2小时
 			session.setTimeout(1000 * 60 * 60 * 2);
@@ -167,6 +170,7 @@ public class UserServiceImpl implements UserService {
 			data.put("loginname", loginname);
 			data.put("rolenames", roleNames);
 			data.put("permissions",permissions);
+			data.put("permissionNames",permissionNames);
 			return new RespMsg(ResultEnum.LOGIN_SUCCESS,data);
 		} catch (UnknownAccountException uae) {
 			logger.warn("对用户[" + loginname + "]进行登录验证..验证未通过,未知账户");

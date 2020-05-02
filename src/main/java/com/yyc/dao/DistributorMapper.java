@@ -12,4 +12,10 @@ import java.util.List;
  **/
 public interface DistributorMapper {
     List<Distributor> selectAllDistributor();
+
+    /**
+     * 统计分销商总数
+     * @return
+     */
+    Integer selectCountAll();
 }

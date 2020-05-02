@@ -98,4 +98,16 @@
         set role_id = #{roleId}
         where user_id=#{userId}
     </update>
+
+    <select id="selectCountShopKeeper" resultType="java.lang.Integer">
+        select count(ur.user_id) from t_role r ,t_user_role ur where r.id = ur.role_id and r.role = 'shopkeeper';
+    </select>
+
+    <select id="selectCountDistributor" resultType="java.lang.Integer">
+        select count(ur.user_id) from t_role r ,t_user_role ur where r.id = ur.role_id and r.role = 'distributor';
+    </select>
+
+    <select id="selectCountShopBoy" resultType="java.lang.Integer">
+        select count(ur.user_id) from t_role r ,t_user_role ur where r.id = ur.role_id and r.role = 'shopboy';
+    </select>
 </mapper>

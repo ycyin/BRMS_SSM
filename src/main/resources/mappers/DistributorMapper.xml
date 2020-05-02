@@ -21,4 +21,8 @@
 <!--         where dis_name like CONCAT('%',#{searchValue},'%')-->
 <!--        </if>-->
     </select>
+
+    <select id="selectCountAll" resultType="java.lang.Integer">
+        select count(id) from t_distributors;
+    </select>
 </mapper>

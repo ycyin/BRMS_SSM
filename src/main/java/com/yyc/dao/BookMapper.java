@@ -20,4 +20,10 @@ public interface BookMapper {
     int insertBookForeach(List<Book> books);
 
     Book selectBookByPrimaryKey(Integer id);
+
+    /**
+     * 统计图书总数
+     * @return
+     */
+    Integer selectCountAll();
 }

@@ -37,4 +37,21 @@ public interface IUserInfoMapper {
     //更新角色
     Integer updateUserAndRole(@Param("userId") Integer userId, @Param("roleId") Integer roleId);
 
+    /**
+     * 统计店长总数
+     * @return
+     */
+    Integer selectCountShopKeeper();
+
+    /**
+     * 统计分销员总数
+     * @return
+     */
+    Integer selectCountDistributor();
+
+    /**
+     * 统计普通店员总数
+     * @return
+     */
+    Integer selectCountShopBoy();
 }

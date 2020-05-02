@@ -104,4 +104,8 @@
         from t_book
         where  id = #{id,jdbcType=INTEGER}
     </select>
+
+    <select id="selectCountAll" resultType="java.lang.Integer">
+        SELECT count(id) from t_book;
+    </select>
 </mapper>

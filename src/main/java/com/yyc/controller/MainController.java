@@ -1,6 +1,7 @@
 
 package com.yyc.controller;
 
+import com.yyc.service.MainService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.LoginVo;
@@ -38,18 +39,20 @@ public class MainController {
 		 如果注解写在setter方法上默认取属性名进行装配。 当找不到与名称匹配的bean时才按照类型进行装配。
 		 但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。
 	 */
-	@Autowired
 	private UserService userService;
+	private MainService mainService;
 
-
-//	@RequestMapping(value="/getUserInfo/{userId}")
+	@Autowired
+	public MainController(UserService userService, MainService mainService) {
+		this.userService = userService;
+		this.mainService = mainService;
+	}
+	//	@RequestMapping(value="/getUserInfo/{userId}")
 //	@ResponseBody
 //	public RespMsg getUserInfoById(@PathVariable("userId") Integer userId){
 //		logger.info("getUserInfoById-->>>"+userId);
 //		return  this.userService.getUserById(userId);
 //	}
-
-
 
 //	@RequestMapping(value="/updateUserInfo")
 //	@ResponseBody
@@ -57,10 +60,6 @@ public class MainController {
 //		return this.userService.modifyUser(userInfo);
 //	}
 //
-
-
-
-
 
 //	@RequestMapping(value="/login")
 //	@ResponseBody
@@ -75,6 +74,21 @@ public class MainController {
 	@ResponseBody
 	public Object login(LoginVo user) {
 		return userService.login(user);
+	}
+
+	/**
+	 * 返回站点信息，包括：
+	 * 本站图书总数
+	 * 本站分销点总数
+	 * 本站店长总数
+	 * 本站分销员总数
+	 * 本站普通店员总数
+	 * @return
+	 */
+	@RequestMapping(value = "/getSiteData")
+	@ResponseBody
+	public RespMsg getSiteData(){
+		return mainService.getSiteData();
 	}
 
 }

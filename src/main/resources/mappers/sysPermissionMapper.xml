@@ -33,6 +33,18 @@
 			#{roleName}
 		</foreach>
 	</select>
+	<select id="findPermissionNamesByRoleNames" parameterType="java.util.List" resultType="java.lang.String">
+		SELECT
+		`name`
+		FROM
+		t_permission p
+		JOIN t_role_permission rp ON p.id = rp.permission_id
+		join t_role r ON r.id = rp.role_id
+		where r.role in
+		<foreach collection="roleNames" item="roleName" index="index" open="(" close=")" separator=",">
+			#{roleName}
+		</foreach>
+	</select>
 
 	<select id="findAllPermission"
 		resultType="com.yyc.entity.SysPermission">
