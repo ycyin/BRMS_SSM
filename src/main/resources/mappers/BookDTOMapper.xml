@@ -4,6 +4,7 @@
     <resultMap id="bookDTO" type="com.yyc.dto.BookDTO">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
+        <result column="book_isbn" property="bookIsbn" jdbcType="VARCHAR"/>
         <result column="book_price" property="bookPrice" jdbcType="DECIMAL"/>
         <result column="book_author" property="bookAuthor" jdbcType="VARCHAR"/>
         <result column="book_repertorySize" property="bookRepertorySize" jdbcType="INTEGER"/>
@@ -13,7 +14,7 @@
         <result column="book_pub" property="bookPub" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="book_list">
-    id, book_name, book_price, book_author,book_repertorySize,pub_name,category_name,book_category,book_pub
+    id,book_isbn, book_name, book_price, book_author,book_repertorySize,pub_name,category_name,book_category,book_pub
     </sql>
     <select id="selectAllBook" resultMap="bookDTO">
         select

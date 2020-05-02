@@ -45,6 +45,9 @@
     <update id="updateBook" parameterType="com.yyc.entity.Book">
         update t_book
         <set>
+            <if test="bookIsbn != null">
+                book_isbn = #{bookIsbn,jdbcType=VARCHAR},
+            </if>
             <if test="bookName != null">
                 book_name = #{bookName,jdbcType=VARCHAR},
             </if>
@@ -80,10 +83,11 @@
 
     <insert id="insertBookForeach" parameterType="java.util.List" useGeneratedKeys="true">
         insert into t_book
-        (book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
+        (book_isbn,book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
         values
         <foreach collection="list" item="book" index="index" separator=",">
             (
+            #{book.bookIsbn},
             #{book.bookName},
             #{book.bookPrice},
             #{book.bookAuthor},

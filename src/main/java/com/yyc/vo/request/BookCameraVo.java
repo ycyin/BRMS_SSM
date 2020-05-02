@@ -8,13 +8,13 @@ package com.yyc.vo.request;
  **/
 public class BookCameraVo {
     private Integer id;
-    private String isbn;
+    private String bookIsbn;
     private String bookName;
     private Double bookPrice;
     private String bookAuthor;
     private Integer bookRepertorySize;
     private String bookPub;
-    private String bookCategory;
+    private Integer bookCategory;
 
 
     /**
@@ -35,22 +35,12 @@ public class BookCameraVo {
         this.id = id;
     }
 
-    /**
-     * 获取
-     *
-     * @return isbn
-     */
-    public String getIsbn() {
-        return this.isbn;
+    public String getBookIsbn() {
+        return bookIsbn;
     }
 
-    /**
-     * 设置
-     *
-     * @param isbn
-     */
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setBookIsbn(String bookIsbn) {
+        this.bookIsbn = bookIsbn;
     }
 
     /**
@@ -143,21 +133,11 @@ public class BookCameraVo {
         this.bookPub = bookPub;
     }
 
-    /**
-     * 获取
-     *
-     * @return bookCategory
-     */
-    public String getBookCategory() {
-        return this.bookCategory;
+    public Integer getBookCategory() {
+        return bookCategory;
     }
 
-    /**
-     * 设置
-     *
-     * @param bookCategory
-     */
-    public void setBookCategory(String bookCategory) {
+    public void setBookCategory(Integer bookCategory) {
         this.bookCategory = bookCategory;
     }
 
@@ -165,7 +145,7 @@ public class BookCameraVo {
     public String toString() {
         return "BookCameraVo{" +
                 "id=" + id +
-                ", isbn='" + isbn + '\'' +
+                ", bookIsbn='" + bookIsbn + '\'' +
                 ", bookName='" + bookName + '\'' +
                 ", bookPrice=" + bookPrice +
                 ", bookAuthor='" + bookAuthor + '\'' +

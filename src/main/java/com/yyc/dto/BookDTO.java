@@ -5,7 +5,6 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
-import org.apache.poi.ss.usermodel.FillPatternType;
 
 /**
  * @program: SSM
@@ -21,6 +20,8 @@ public class BookDTO {
 
     @ExcelProperty("编号")
     private Integer id;
+    @ExcelProperty("ISBN")
+    private String bookIsbn;
     @ExcelProperty("书名")
     private String bookName;
     @ExcelProperty("价格")
@@ -44,6 +45,14 @@ public class BookDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getBookIsbn() {
+        return bookIsbn;
+    }
+
+    public void setBookIsbn(String bookIsbn) {
+        this.bookIsbn = bookIsbn;
     }
 
     public String getBookName() {
@@ -108,5 +117,21 @@ public class BookDTO {
 
     public void setBookCategory(Integer bookCategory) {
         this.bookCategory = bookCategory;
+    }
+
+    @Override
+    public String toString() {
+        return "BookDTO{" +
+                "id=" + id +
+                ", bookIsbn='" + bookIsbn + '\'' +
+                ", bookName='" + bookName + '\'' +
+                ", bookPrice=" + bookPrice +
+                ", bookAuthor='" + bookAuthor + '\'' +
+                ", bookRepertorySize=" + bookRepertorySize +
+                ", pubName='" + pubName + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", bookPub=" + bookPub +
+                ", bookCategory=" + bookCategory +
+                '}';
     }
 }

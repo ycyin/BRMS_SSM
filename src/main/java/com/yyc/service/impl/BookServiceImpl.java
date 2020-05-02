@@ -58,9 +58,8 @@ public class BookServiceImpl implements BookService {
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo) {
         logger.info("SearchAndPageVo-->>>"+searchAndPageVo);
         Page<Object> page = PageHelper.startPage(searchAndPageVo.getCurrentPage(), searchAndPageVo.getPageSize());
-//        List<Book> books = this.bookMapper.selectAllBook(searchAndPageVo);
         List<BookDTO> books = this.bookDTOMapper.selectAllBook(searchAndPageVo);
-        Map<String,Object> res = new HashMap<>();
+        Map<String,Object> res = new HashMap<>(200);
         res.put("total",page.getTotal());
         res.put("result",books);
         return new RespMsg(ResultEnum.SELECT_SUCCESS,res);
@@ -90,26 +89,27 @@ public class BookServiceImpl implements BookService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public RespMsg addBookByCamera(BookCameraVo book) {
-        String bookCategory = book.getBookCategory().trim();
+//        String bookCategory = book.getBookCategory().trim();
         String bookPub = book.getBookPub().trim();
-        if (StringUtils.isEmpty(bookCategory) || StringUtils.isEmpty(bookPub)){
+        if (StringUtils.isEmpty(bookPub)){
             // 为空，添加失败
             return new RespMsg(ResultEnum.ADD_FAILD);
         }
         // 查询对应的图书类别和出版社数据库中是否存在
-        BookCategoryMeta bookCategoryMeta = bcmMapper.selectByCategoryName(bookCategory);
+//        BookCategoryMeta bookCategoryMeta = bcmMapper.selectByCategoryName(bookCategory);
         Publisher publisher = pubMapper.selectByPubName(bookPub);
-        Integer bcmId = null,pubId = null;
-        if (bookCategoryMeta == null){
-            // 图书类别不存在,添加入库并查询添加后的ID
-            BookCategoryMeta bcm = new BookCategoryMeta(bookCategory,bookCategory);
-            Integer integer = bcmMapper.insertBookCategoryMeta(bcm);
-            //使用mybatis的selectKey标签可以返回添加后的ID
-            bcmId = bcm.getId();
-        }else{
-            // 图书类别存在，直接获取ID
-            bcmId = bookCategoryMeta.getId();
-        }
+//        Integer bcmId = bookCategoryMeta.getId();
+        Integer pubId = null;
+//        if (bookCategoryMeta == null){
+//            // 图书类别不存在,添加入库并查询添加后的ID
+//            BookCategoryMeta bcm = new BookCategoryMeta(bookCategory,bookCategory);
+//            Integer integer = bcmMapper.insertBookCategoryMeta(bcm);
+//            //使用mybatis的selectKey标签可以返回添加后的ID
+//            bcmId = bcm.getId();
+//        }else{
+//            // 图书类别存在，直接获取ID
+//            bcmId = bookCategoryMeta.getId();
+//        }
         if (publisher == null){
             // 出版社不存在,添加入库并查询添加后的ID
             Publisher pub = new Publisher(bookPub);
@@ -120,13 +120,13 @@ public class BookServiceImpl implements BookService {
             pubId = publisher.getId();
         }
 
-        if(bcmId == null || pubId == null){
+        if(pubId == null){
             // 为空不能添加图书，直接返回添加失败
             return new RespMsg(ResultEnum.ADD_FAILD);
         }
 
-        Book insetBook = new Book(book.getIsbn(),book.getBookName(),book.getBookPrice(),
-                book.getBookAuthor(),book.getBookRepertorySize(),pubId,bcmId);
+        Book insetBook = new Book(book.getBookIsbn(),book.getBookName(),book.getBookPrice(),
+                book.getBookAuthor(),book.getBookRepertorySize(),pubId,book.getBookCategory());
 
         return this.addBook(insetBook);
     }
