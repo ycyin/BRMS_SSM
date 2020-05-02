@@ -13,6 +13,20 @@ public class Publisher {
     private String pubPhone;//出版社电话
     private Integer pubCount;//图书本书
 
+    public Publisher() {
+    }
+
+    public Publisher(String pubName) {
+        this.pubName = pubName;
+    }
+
+    public Publisher(String pubName, String pubAddr, String pubPhone, Integer pubCount) {
+        this.pubName = pubName;
+        this.pubAddr = pubAddr;
+        this.pubPhone = pubPhone;
+        this.pubCount = pubCount;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +65,16 @@ public class Publisher {
 
     public void setPubCount(Integer pubCount) {
         this.pubCount = pubCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Publisher{" +
+                "id=" + id +
+                ", pubName='" + pubName + '\'' +
+                ", pubAddr='" + pubAddr + '\'' +
+                ", pubPhone='" + pubPhone + '\'' +
+                ", pubCount=" + pubCount +
+                '}';
     }
 }

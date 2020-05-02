@@ -14,4 +14,21 @@
         <include refid="bookCategoryMeta_list"/>
         from t_book_category_meta
     </select>
+
+    <select id="selectByCategoryName" resultMap="bookCategoryMeta">
+        select
+        <include refid="bookCategoryMeta_list"/>
+        from t_book_category_meta
+        where category_name = #{categoryName}
+    </select>
+
+    <insert id="insertBookCategoryMeta" parameterType="com.yyc.entity.BookCategoryMeta" useGeneratedKeys="true" keyProperty="id">
+        <!--AFTER :insert 先执行. -->
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            <!-- 获取最后一次执行insert语句的 key    BookCategoryMeta.getId()就可以获取id-->
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_book_category_meta(category_name,description)
+        values(#{categoryName},#{description})
+    </insert>
 </mapper>

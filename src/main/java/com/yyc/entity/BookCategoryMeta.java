@@ -11,6 +11,14 @@ public class BookCategoryMeta {
     private String categoryName; //类别名
     private String description; //描述
 
+    public BookCategoryMeta() {
+    }
+
+    public BookCategoryMeta(String categoryName, String description) {
+        this.categoryName = categoryName;
+        this.description = description;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -33,5 +41,14 @@ public class BookCategoryMeta {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "BookCategoryMeta{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

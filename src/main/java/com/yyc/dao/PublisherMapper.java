@@ -12,4 +12,13 @@ import java.util.List;
  **/
 public interface PublisherMapper {
     List<Publisher> selectAllPublisher();
+
+    /**
+     * 根据出版社名查询
+     * @param pubName
+     * @return
+     */
+    Publisher selectByPubName(String pubName);
+
+    Integer insertPublisher(Publisher publisher);
 }

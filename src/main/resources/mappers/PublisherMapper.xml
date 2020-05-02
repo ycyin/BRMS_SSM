@@ -16,4 +16,19 @@
         <include refid="publisher_list"/>
         from t_publisher
     </select>
+    <select id="selectByPubName" resultMap="publisher">
+        select
+        <include refid="publisher_list"/>
+        from t_publisher
+        where  pub_name = #{pubName}
+    </select>
+    <insert id="insertPublisher" parameterType="com.yyc.entity.Publisher" useGeneratedKeys="true" keyProperty="id">
+        <!--AFTER :insert 先执行. -->
+        <selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer">
+            <!-- 获取最后一次执行insert语句的 key    Publisher.getId()就可以获取id-->
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_publisher(pub_name)
+        values(#{pubName})
+    </insert>
 </mapper>

@@ -12,4 +12,13 @@ import java.util.List;
  **/
 public interface BookCategoryMetaMapper {
     List<BookCategoryMeta> selectAllBookCategoryMeta();
+
+    /**
+     * 根据类别名查询
+     * @param categoryName
+     * @return
+     */
+    BookCategoryMeta selectByCategoryName(String categoryName);
+
+    Integer insertBookCategoryMeta(BookCategoryMeta bcm);
 }

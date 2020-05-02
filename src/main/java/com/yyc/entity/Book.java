@@ -2,6 +2,7 @@ package com.yyc.entity;
 
 public class Book {
     private Integer id;
+    private String bookIsbn;
     private String bookName;
     private Double bookPrice;
     private String bookAuthor;
@@ -9,12 +10,33 @@ public class Book {
     private Integer bookPub;
     private Integer bookCategory;
 
+    public Book() {
+    }
+
+    public Book(String bookIsbn, String bookName, Double bookPrice, String bookAuthor, Integer bookRepertorySize, Integer bookPub, Integer bookCategory) {
+        this.bookIsbn = bookIsbn;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+        this.bookAuthor = bookAuthor;
+        this.bookRepertorySize = bookRepertorySize;
+        this.bookPub = bookPub;
+        this.bookCategory = bookCategory;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getBookIsbn() {
+        return bookIsbn;
+    }
+
+    public void setBookIsbn(String bookIsbn) {
+        this.bookIsbn = bookIsbn;
     }
 
     public String getBookName() {
@@ -69,12 +91,13 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "id=" + id +
+                ", bookIsbn='" + bookIsbn + '\'' +
                 ", bookName='" + bookName + '\'' +
                 ", bookPrice=" + bookPrice +
                 ", bookAuthor='" + bookAuthor + '\'' +
                 ", bookRepertorySize=" + bookRepertorySize +
-                ", bookPub='" + bookPub + '\'' +
-                ", bookCategory='" + bookCategory + '\'' +
+                ", bookPub=" + bookPub +
+                ", bookCategory=" + bookCategory +
                 '}';
     }
 }

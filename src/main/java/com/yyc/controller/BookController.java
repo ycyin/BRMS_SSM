@@ -6,6 +6,7 @@ import com.yyc.entity.Book;
 import com.yyc.service.BookCategoryMetaService;
 import com.yyc.service.BookService;
 import com.yyc.vo.RespMsg;
+import com.yyc.vo.request.BookCameraVo;
 import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -65,6 +66,13 @@ public class BookController {
     public RespMsg addBook(Book book){
         logger.info("addBook...");
         return  this.bookService.addBook(book);
+    }
+    @RequiresPermissions("book:add")
+    @RequestMapping("/addBookByCamera")
+    @ResponseBody
+    public RespMsg addBookByCamera(BookCameraVo book){
+        logger.info("addBookByCamera...");
+        return  this.bookService.addBookByCamera(book);
     }
 
     @RequiresPermissions("book:remove")

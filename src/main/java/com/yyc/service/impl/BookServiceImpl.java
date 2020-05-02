@@ -7,13 +7,18 @@ import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.yyc.dao.BookCategoryMetaMapper;
 import com.yyc.dao.BookDTOMapper;
 import com.yyc.dao.BookMapper;
+import com.yyc.dao.PublisherMapper;
 import com.yyc.dto.BookDTO;
 import com.yyc.entity.Book;
+import com.yyc.entity.BookCategoryMeta;
+import com.yyc.entity.Publisher;
 import com.yyc.service.BookService;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
+import com.yyc.vo.request.BookCameraVo;
 import com.yyc.vo.request.BookListVo;
 import com.yyc.vo.request.SearchAndPageVo;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -22,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,11 +41,18 @@ import java.util.Map;
 public class BookServiceImpl implements BookService {
     private static Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    @Autowired
     private BookMapper bookMapper;
+    private BookDTOMapper bookDTOMapper;
+    private BookCategoryMetaMapper bcmMapper;
+    private PublisherMapper pubMapper;
 
     @Autowired
-    private BookDTOMapper bookDTOMapper;
+    public BookServiceImpl(BookMapper bookMapper, BookDTOMapper bookDTOMapper, BookCategoryMetaMapper bcmMapper, PublisherMapper pubMapper) {
+        this.bookMapper = bookMapper;
+        this.bookDTOMapper = bookDTOMapper;
+        this.bcmMapper = bcmMapper;
+        this.pubMapper = pubMapper;
+    }
 
     @Override
     public RespMsg getBookList(SearchAndPageVo searchAndPageVo) {
@@ -53,7 +66,7 @@ public class BookServiceImpl implements BookService {
         return new RespMsg(ResultEnum.SELECT_SUCCESS,res);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public RespMsg addBook(Book book) {
         Integer res = 0;
@@ -72,6 +85,50 @@ public class BookServiceImpl implements BookService {
             }
         }
 
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public RespMsg addBookByCamera(BookCameraVo book) {
+        String bookCategory = book.getBookCategory().trim();
+        String bookPub = book.getBookPub().trim();
+        if (StringUtils.isEmpty(bookCategory) || StringUtils.isEmpty(bookPub)){
+            // 为空，添加失败
+            return new RespMsg(ResultEnum.ADD_FAILD);
+        }
+        // 查询对应的图书类别和出版社数据库中是否存在
+        BookCategoryMeta bookCategoryMeta = bcmMapper.selectByCategoryName(bookCategory);
+        Publisher publisher = pubMapper.selectByPubName(bookPub);
+        Integer bcmId = null,pubId = null;
+        if (bookCategoryMeta == null){
+            // 图书类别不存在,添加入库并查询添加后的ID
+            BookCategoryMeta bcm = new BookCategoryMeta(bookCategory,bookCategory);
+            Integer integer = bcmMapper.insertBookCategoryMeta(bcm);
+            //使用mybatis的selectKey标签可以返回添加后的ID
+            bcmId = bcm.getId();
+        }else{
+            // 图书类别存在，直接获取ID
+            bcmId = bookCategoryMeta.getId();
+        }
+        if (publisher == null){
+            // 出版社不存在,添加入库并查询添加后的ID
+            Publisher pub = new Publisher(bookPub);
+            Integer integer = pubMapper.insertPublisher(pub);
+            //使用mybatis的selectKey标签可以返回添加后的ID
+            pubId = pub.getId();
+        }else{
+            pubId = publisher.getId();
+        }
+
+        if(bcmId == null || pubId == null){
+            // 为空不能添加图书，直接返回添加失败
+            return new RespMsg(ResultEnum.ADD_FAILD);
+        }
+
+        Book insetBook = new Book(book.getIsbn(),book.getBookName(),book.getBookPrice(),
+                book.getBookAuthor(),book.getBookRepertorySize(),pubId,bcmId);
+
+        return this.addBook(insetBook);
     }
 
     @Transactional

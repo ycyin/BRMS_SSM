@@ -3,6 +3,7 @@
 <mapper namespace="com.yyc.dao.BookMapper">
     <resultMap id="book" type="com.yyc.entity.Book">
         <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="book_isbn" property="bookIsbn" jdbcType="VARCHAR"/>
         <result column="book_name" property="bookName" jdbcType="VARCHAR"/>
         <result column="book_price" property="bookPrice" jdbcType="DECIMAL"/>
         <result column="book_author" property="bookAuthor" jdbcType="VARCHAR"/>
@@ -11,7 +12,7 @@
         <result column="book_category" property="bookCategory" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="book_list">
-    id, book_name, book_price, book_author,book_repertorySize,book_pub,book_category
+    id,book_isbn, book_name, book_price, book_author,book_repertorySize,book_pub,book_category
     </sql>
     <select id="selectAllBook" resultMap="book">
         select
@@ -37,8 +38,8 @@
     </select>
 
     <insert id="insertBook" parameterType="com.yyc.entity.Book">
-    insert into t_book (book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
-    values (#{bookName,jdbcType=VARCHAR}, #{bookPrice,jdbcType=DECIMAL}, #{bookAuthor,jdbcType=VARCHAR},
+    insert into t_book (book_isbn,book_name, book_price,book_author,book_repertorySize,book_pub,book_category)
+    values (#{bookIsbn,jdbcType=VARCHAR},#{bookName,jdbcType=VARCHAR}, #{bookPrice,jdbcType=DECIMAL}, #{bookAuthor,jdbcType=VARCHAR},
       #{bookRepertorySize,jdbcType=INTEGER},#{bookPub,jdbcType=INTEGER},#{bookCategory,jdbcType=INTEGER})
   </insert>
     <update id="updateBook" parameterType="com.yyc.entity.Book">
