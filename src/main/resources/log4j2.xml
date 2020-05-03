@@ -11,8 +11,8 @@
 
     <Properties>
         <!--配置日志文件输出目录，此配置将日志输出到tomcat根目录下的指定文件夹 -->
-<!--        <Property name="LOG_HOME">${sys:catalina.home}/WebAppLogs/SSM-BRMS</Property>-->
-        <Property name="LOG_HOME">/WebAppLogs/SSM-BRMS</Property>
+        <Property name="LOG_HOME">${sys:catalina.home}/WebAppLogs/SSM-BRMS</Property>
+<!--        <Property name="LOG_HOME">/WebAppLogs/SSM-BRMS</Property>-->
     </Properties>
 
     <Appenders>
