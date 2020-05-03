@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2020-03-21 13:48:44
+Date: 2020-05-03 14:58:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,97 +21,103 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `t_book`;
 CREATE TABLE `t_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `book_isbn` varchar(25) NOT NULL,
   `book_name` varchar(255) NOT NULL COMMENT '书名',
   `book_price` decimal(10,2) NOT NULL COMMENT '单价',
   `book_author` varchar(255) NOT NULL COMMENT '作者',
   `book_repertorySize` int(11) NOT NULL COMMENT '库存数量',
   `book_pub` int(11) NOT NULL COMMENT '出版社',
   `book_category` int(11) NOT NULL COMMENT '图书种类',
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`book_isbn`),
   UNIQUE KEY `t_book_index` (`book_name`) COMMENT '书名的唯一性',
   KEY `book_pub` (`book_pub`),
   KEY `book_category` (`book_category`),
   CONSTRAINT `t_book_ibfk_1` FOREIGN KEY (`book_pub`) REFERENCES `t_publisher` (`id`),
   CONSTRAINT `t_book_ibfk_2` FOREIGN KEY (`book_category`) REFERENCES `t_book_category_meta` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=424 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_book
 -- ----------------------------
-INSERT INTO `t_book` VALUES ('343', 'Java从入门到精通', '99.00', '尹以操', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('344', '测试1000', '10.00', '罗以健', '35', '3', '1');
-INSERT INTO `t_book` VALUES ('345', '测试1001', '10.00', '罗以健', '21', '3', '6');
-INSERT INTO `t_book` VALUES ('346', '测试1002', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('347', '测试1003', '10.00', '罗以健', '21', '4', '1');
-INSERT INTO `t_book` VALUES ('349', '测试1005', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('350', '测试1006', '10.00', '罗以健', '20', '1', '1');
-INSERT INTO `t_book` VALUES ('351', '测试1007', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('352', '测试1008', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('353', '测试1009', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('354', '测试1010', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('355', '测试1011', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('356', '测试1012', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('357', '测试1013', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('358', '测试1014', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('359', '测试1015', '10.00', '罗以健', '21', '2', '1');
-INSERT INTO `t_book` VALUES ('360', '测试1016', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('361', '测试1017', '10.00', '罗以健', '21', '4', '1');
-INSERT INTO `t_book` VALUES ('362', '测试1018', '10.00', '罗以健', '21', '5', '1');
-INSERT INTO `t_book` VALUES ('363', '测试1019', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('364', '测试1020', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('365', '测试1023', '23.00', '张山', '9', '1', '1');
-INSERT INTO `t_book` VALUES ('366', '测试1024', '23.00', '张山', '9', '2', '1');
-INSERT INTO `t_book` VALUES ('367', '测试1025', '99.00', '爱笔笔', '9', '1', '1');
-INSERT INTO `t_book` VALUES ('368', '测试1026', '78.00', '李国国', '100', '4', '1');
-INSERT INTO `t_book` VALUES ('369', '测试1027', '99.00', '尹以操', '20', '5', '1');
-INSERT INTO `t_book` VALUES ('370', 'Java从入门到精通1', '99.00', '尹以操', '20', '1', '1');
-INSERT INTO `t_book` VALUES ('371', '测试10228', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('372', '测试10229', '10.00', '罗以健', '21', '4', '1');
-INSERT INTO `t_book` VALUES ('373', '测试10230', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('374', '测试10231', '10.00', '罗以健', '21', '5', '1');
-INSERT INTO `t_book` VALUES ('375', '测试10232', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('376', '测试10233', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('377', '测试10234', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('378', '测试10235', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('379', '测试10236', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('380', '测试10237', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('381', '测试10238', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('382', '测试10239', '10.00', '罗以健', '21', '2', '1');
-INSERT INTO `t_book` VALUES ('383', '测试10240', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('384', '测试10241', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('385', '测试10242', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('386', '测试10243', '10.00', '罗以健', '21', '1', '1');
-INSERT INTO `t_book` VALUES ('387', '测试10244', '10.00', '罗以健', '21', '5', '1');
-INSERT INTO `t_book` VALUES ('388', '测试10245', '10.00', '罗以健', '21', '4', '1');
-INSERT INTO `t_book` VALUES ('389', '测试10246', '10.00', '罗以健', '21', '4', '1');
-INSERT INTO `t_book` VALUES ('390', '测试10247', '10.00', '罗以健', '21', '3', '1');
-INSERT INTO `t_book` VALUES ('391', '测试10248', '101.00', '罗以健', '21', '2', '1');
-INSERT INTO `t_book` VALUES ('392', '测试10251', '23.00', '张山', '9', '2', '1');
-INSERT INTO `t_book` VALUES ('393', '测试10252', '23.00', '张山', '9', '1', '1');
-INSERT INTO `t_book` VALUES ('394', '测试10253', '99.00', '啊和', '9', '5', '1');
-INSERT INTO `t_book` VALUES ('395', '测试10254', '78.00', '李国国', '100', '1', '1');
-INSERT INTO `t_book` VALUES ('396', '测试10255', '99.00', '尹以操', '20', '2', '1');
-INSERT INTO `t_book` VALUES ('397', '大学英语四级手册', '12.70', '彪三', '6', '1', '1');
-INSERT INTO `t_book` VALUES ('399', '测试', '123.00', '你猜', '4', '3', '1');
-INSERT INTO `t_book` VALUES ('400', '测试数据', '22.36', '张玲玲', '997', '2', '1');
-INSERT INTO `t_book` VALUES ('401', '大数据开发入门', '99.99', '王振山', '27', '5', '1');
-INSERT INTO `t_book` VALUES ('402', '大学不迷茫', '39.90', '佚名', '430', '4', '4');
-INSERT INTO `t_book` VALUES ('403', '地理从入门到放弃', '89.76', '张雯', '7', '2', '8');
-INSERT INTO `t_book` VALUES ('406', '大学不迷茫2', '20.00', '张三', '1', '1', '4');
-INSERT INTO `t_book` VALUES ('407', 'qweqweqw', '20.00', '张三', '22', '4', '2');
-INSERT INTO `t_book` VALUES ('408', '请问请问', '12.00', '张伟', '0', '1', '1');
-INSERT INTO `t_book` VALUES ('409', '请问', '123.00', '诚实', '16', '3', '4');
+INSERT INTO `t_book` VALUES ('343', '', 'Java从入门到精通', '99.00', '尹以操', '21', '3', '1');
+INSERT INTO `t_book` VALUES ('344', '', '测试1000', '10.00', '罗以健', '35', '3', '1');
+INSERT INTO `t_book` VALUES ('345', '', '测试1001', '10.00', '罗以健', '21', '3', '6');
+INSERT INTO `t_book` VALUES ('346', '', '测试1002', '10.00', '罗以健', '21', '3', '1');
+INSERT INTO `t_book` VALUES ('347', '', '测试1003', '10.00', '罗以健', '21', '4', '1');
+INSERT INTO `t_book` VALUES ('349', '', '测试1005', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('350', '', '测试1006', '10.00', '罗以健', '20', '1', '1');
+INSERT INTO `t_book` VALUES ('351', '', '测试1007', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('352', '', '测试1008', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('353', '', '测试1009', '10.00', '罗以健', '21', '1', '8');
+INSERT INTO `t_book` VALUES ('354', '', '测试1010', '10.00', '罗以健', '21', '1', '6');
+INSERT INTO `t_book` VALUES ('355', '', '测试1011', '10.00', '罗以健', '21', '1', '5');
+INSERT INTO `t_book` VALUES ('356', '', '测试1012', '10.00', '罗以健', '21', '1', '4');
+INSERT INTO `t_book` VALUES ('357', '', '测试1013', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('358', '', '测试1014', '10.00', '罗以健', '21', '1', '2');
+INSERT INTO `t_book` VALUES ('359', '', '测试1015', '10.00', '罗以健', '21', '2', '1');
+INSERT INTO `t_book` VALUES ('360', '', '测试1016', '10.00', '罗以健', '21', '3', '3');
+INSERT INTO `t_book` VALUES ('361', '', '测试1017', '10.00', '罗以健', '21', '4', '1');
+INSERT INTO `t_book` VALUES ('362', '', '测试1018', '10.00', '罗以健', '21', '5', '7');
+INSERT INTO `t_book` VALUES ('363', '', '测试1019', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('364', '', '测试1020', '10.00', '罗以健', '21', '1', '6');
+INSERT INTO `t_book` VALUES ('365', '', '测试1023', '23.00', '张山', '9', '1', '1');
+INSERT INTO `t_book` VALUES ('366', '', '测试1024', '23.00', '张山', '9', '2', '5');
+INSERT INTO `t_book` VALUES ('367', '', '测试1025', '99.00', '爱笔笔', '9', '1', '1');
+INSERT INTO `t_book` VALUES ('368', '', '测试1026', '78.00', '李国国', '100', '4', '7');
+INSERT INTO `t_book` VALUES ('369', '', '测试1027', '99.00', '尹以操', '20', '5', '8');
+INSERT INTO `t_book` VALUES ('370', '', 'Java从入门到精通1', '99.00', '尹以操', '20', '1', '1');
+INSERT INTO `t_book` VALUES ('371', '', '测试10228', '10.00', '罗以健', '21', '3', '1');
+INSERT INTO `t_book` VALUES ('372', '', '测试10229', '10.00', '罗以健', '21', '4', '1');
+INSERT INTO `t_book` VALUES ('373', '', '测试10230', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('374', '', '测试10231', '10.00', '罗以健', '21', '5', '1');
+INSERT INTO `t_book` VALUES ('375', '', '测试10232', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('376', '', '测试10233', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('377', '', '测试10234', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('378', '', '测试10235', '10.00', '罗以健', '21', '3', '1');
+INSERT INTO `t_book` VALUES ('379', '', '测试10236', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('380', '', '测试10237', '10.00', '罗以健', '21', '3', '1');
+INSERT INTO `t_book` VALUES ('381', '', '测试10238', '10.00', '罗以健', '21', '1', '3');
+INSERT INTO `t_book` VALUES ('382', '', '测试10239', '10.00', '罗以健', '21', '2', '1');
+INSERT INTO `t_book` VALUES ('383', '', '测试10240', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('384', '', '测试10241', '10.00', '罗以健', '21', '1', '5');
+INSERT INTO `t_book` VALUES ('385', '', '测试10242', '10.00', '罗以健', '21', '1', '7');
+INSERT INTO `t_book` VALUES ('386', '', '测试10243', '10.00', '罗以健', '21', '1', '1');
+INSERT INTO `t_book` VALUES ('387', '', '测试10244', '10.00', '罗以健', '21', '5', '1');
+INSERT INTO `t_book` VALUES ('388', '', '测试10245', '10.00', '罗以健', '21', '4', '1');
+INSERT INTO `t_book` VALUES ('389', '', '测试10246', '10.00', '罗以健', '21', '4', '1');
+INSERT INTO `t_book` VALUES ('390', '', '测试10247', '10.00', '罗以健', '21', '3', '8');
+INSERT INTO `t_book` VALUES ('391', '', '测试10248', '101.00', '罗以健', '21', '2', '7');
+INSERT INTO `t_book` VALUES ('392', '', '测试10251', '23.00', '张山', '9', '2', '1');
+INSERT INTO `t_book` VALUES ('393', '', '测试10252', '23.00', '张山', '9', '1', '4');
+INSERT INTO `t_book` VALUES ('394', '', '测试10253', '99.00', '啊和', '9', '5', '1');
+INSERT INTO `t_book` VALUES ('395', '', '测试10254', '78.00', '李国国', '100', '1', '2');
+INSERT INTO `t_book` VALUES ('396', '', '测试10255', '99.00', '尹以操', '20', '2', '1');
+INSERT INTO `t_book` VALUES ('397', '', '大学英语四级手册', '12.70', '彪三', '6', '1', '3');
+INSERT INTO `t_book` VALUES ('399', '', '测试', '123.00', '你猜', '4', '3', '8');
+INSERT INTO `t_book` VALUES ('400', '9787115320347', '测试数据', '22.36', '张玲玲', '997', '2', '3');
+INSERT INTO `t_book` VALUES ('401', '9787115320346', '大数据开发入门', '99.99', '王振山', '27', '5', '1');
+INSERT INTO `t_book` VALUES ('402', '9787115320345', '大学不迷茫', '39.90', '佚名', '430', '4', '4');
+INSERT INTO `t_book` VALUES ('403', '9787115320344', '地理从入门到放弃', '89.76', '张雯', '7', '2', '8');
+INSERT INTO `t_book` VALUES ('406', '9787115320343', '大学不迷茫2', '20.00', '张三', '1', '1', '4');
+INSERT INTO `t_book` VALUES ('407', '9787115320342', 'qweqweqw', '20.00', '张三', '21', '4', '2');
+INSERT INTO `t_book` VALUES ('408', '9787115320341', '请问请问', '12.00', '张伟', '0', '1', '1');
+INSERT INTO `t_book` VALUES ('409', '9787115320340', '请问', '123.00', '诚实', '16', '3', '4');
+INSERT INTO `t_book` VALUES ('414', '9787115320339', ':Android开发权威指南(第二版)', '99.00', '李宁', '5', '7', '1');
+INSERT INTO `t_book` VALUES ('416', '9787121002281', 'C#编程语言详解/.NET技术大系', '55.00', 'Anders Hejlsberg', '10', '6', '1');
+INSERT INTO `t_book` VALUES ('419', '9787513024976', '出土简帛与中国早期藏书研究', '58.00', '傅荣贤著', '99', '9', '8');
+INSERT INTO `t_book` VALUES ('420', '9789889955991', '庆祝中国共产党第十八次全国代表大会胜利召开：党', '58.60', '中共武汉市汉南区委党史办公室', '816', '8', '4');
+INSERT INTO `t_book` VALUES ('422', '9789810764289', '正版包票', '680.00', '张丽丽', '99', '9', '9');
 
 -- ----------------------------
 -- Table structure for t_book_category_meta
 -- ----------------------------
 DROP TABLE IF EXISTS `t_book_category_meta`;
 CREATE TABLE `t_book_category_meta` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(50) NOT NULL COMMENT '图书类别',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='图书类别元数据';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='图书类别元数据';
 
 -- ----------------------------
 -- Records of t_book_category_meta
@@ -124,6 +130,7 @@ INSERT INTO `t_book_category_meta` VALUES ('5', '科技', '科技类');
 INSERT INTO `t_book_category_meta` VALUES ('6', '数学', '数学类');
 INSERT INTO `t_book_category_meta` VALUES ('7', '美术', '美术类');
 INSERT INTO `t_book_category_meta` VALUES ('8', '地理', '地理类');
+INSERT INTO `t_book_category_meta` VALUES ('9', '其他', '其他');
 
 -- ----------------------------
 -- Table structure for t_disorder
@@ -146,7 +153,7 @@ CREATE TABLE `t_disorder` (
   KEY `pk_book` (`book_no`),
   CONSTRAINT `pk_book` FOREIGN KEY (`book_no`) REFERENCES `t_book` (`id`),
   CONSTRAINT `pk_dis` FOREIGN KEY (`dis_no`) REFERENCES `t_distributors` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='分销订单表';
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COMMENT='分销订单表';
 
 -- ----------------------------
 -- Records of t_disorder
@@ -170,8 +177,12 @@ INSERT INTO `t_disorder` VALUES ('23', '2', '403', '2019-12-29 21:15:51', '99', 
 INSERT INTO `t_disorder` VALUES ('24', '2', '403', '2019-12-29 21:16:58', '1', '1', '89.76', '89.76', '进行中', '2019-12-30 08:21:41', '0');
 INSERT INTO `t_disorder` VALUES ('25', '1', '403', '2019-12-29 21:17:57', '1', '1', '89.76', '89.76', '进行中', '2019-12-30 08:21:41', '0');
 INSERT INTO `t_disorder` VALUES ('26', '1', '407', '2019-12-30 10:44:11', '1', '1', '20.00', '20.00', '已完成', '2020-02-21 18:21:12', '0');
-INSERT INTO `t_disorder` VALUES ('27', '2', '408', '2020-02-21 18:22:33', '1', '1', '12.00', '12.00', '进行中', null, '0');
-INSERT INTO `t_disorder` VALUES ('28', '1', '409', '2020-03-11 10:23:20', '10', '1', '123.00', '1230.00', '进行中', null, '0');
+INSERT INTO `t_disorder` VALUES ('27', '2', '408', '2020-02-21 18:22:33', '1', '1', '12.00', '12.00', '已完成', '2020-04-26 08:25:36', '0');
+INSERT INTO `t_disorder` VALUES ('28', '1', '409', '2020-03-11 10:23:20', '10', '1', '123.00', '1230.00', '已完成', '2020-04-26 08:25:38', '0');
+INSERT INTO `t_disorder` VALUES ('29', '1', '407', '2020-04-26 08:25:22', '1', '1', '20.00', '20.00', '已完成', '2020-05-03 13:21:01', '0');
+INSERT INTO `t_disorder` VALUES ('30', '2', '420', '2020-05-02 15:24:48', '50', '1', '58.60', '2930.00', '已完成', '2020-05-03 13:20:58', '0');
+INSERT INTO `t_disorder` VALUES ('31', '1', '420', '2020-05-03 08:30:57', '1', '1', '58.60', '58.60', '已完成', '2020-05-03 13:21:03', '0');
+INSERT INTO `t_disorder` VALUES ('32', '1', '420', '2020-05-03 08:31:17', '33', '1', '58.60', '1933.80', '已完成', '2020-05-03 13:21:05', '0');
 
 -- ----------------------------
 -- Table structure for t_distributors
@@ -206,12 +217,12 @@ CREATE TABLE `t_permission` (
   `available` bit(1) NOT NULL COMMENT '是否有效',
   `description` varchar(255) DEFAULT NULL COMMENT '权限描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-INSERT INTO `t_permission` VALUES ('1', 'book:get', '查询图书', '/book/getBookList,/book/getBookCategoryData,/book/getBookPressData,/book/getBookCategoryMetaValueAndLabel', '', '获取图书列表（导出）,获取图书类别图表信息,获取图书出版社图表信息,获取图书类别元信息');
+INSERT INTO `t_permission` VALUES ('1', 'book:get', '查询图书', '/book/getBookList,/book/getBookCategoryMetaValueAndLabel', '', '获取图书列表（导出）,获取图书类别图表信息,获取图书出版社图表信息,获取图书类别元信息');
 INSERT INTO `t_permission` VALUES ('2', 'book:add', '添加图书', '/book/addBook,/book/importBookListData', '', '添加/导入图书');
 INSERT INTO `t_permission` VALUES ('3', 'book:remove', '删除图书', '/book/removeBook', '', '删除图书');
 INSERT INTO `t_permission` VALUES ('4', 'book:modify', '修改图书', '/book/modifyBook', '', '修改图书');
@@ -228,6 +239,8 @@ INSERT INTO `t_permission` VALUES ('14', 'user:add', '添加用户信息', '/use
 INSERT INTO `t_permission` VALUES ('15', 'user:remove', '删除用户信息', '/user/deleteUser', '', '删除用户信息');
 INSERT INTO `t_permission` VALUES ('16', 'role:get', '查询角色信息', '/role/getRoleList', '', '获取角色列表');
 INSERT INTO `t_permission` VALUES ('17', 'role:add', '添加角色权限', '/role/addOrUpdateRoleAndPermission', '', '添加角色和角色权限');
+INSERT INTO `t_permission` VALUES ('18', 'bookCategoryData:get', '查询图书类别分析', '/book/getBookCategoryData', '', '获取图书类别分析数据');
+INSERT INTO `t_permission` VALUES ('19', 'bookPressData:get', '查询出版社分析', '/book/getBookPressData', '', '获取出版社分析数据');
 
 -- ----------------------------
 -- Table structure for t_publisher
@@ -237,10 +250,10 @@ CREATE TABLE `t_publisher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pub_name` varchar(255) NOT NULL COMMENT '出版社名称',
   `pub_addr` varchar(255) DEFAULT NULL COMMENT '联系地址',
-  `pub_phone` varchar(11) NOT NULL COMMENT '联系电话',
+  `pub_phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
   `pub_count` int(11) DEFAULT NULL COMMENT '图书本书',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='出版社信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COMMENT='出版社信息';
 
 -- ----------------------------
 -- Records of t_publisher
@@ -250,6 +263,10 @@ INSERT INTO `t_publisher` VALUES ('2', '江苏南京出版社', '江苏省南京
 INSERT INTO `t_publisher` VALUES ('3', '重庆博文出版社', '重庆市沙坪坝区小龙坎正街77号', '02365583555', '7770');
 INSERT INTO `t_publisher` VALUES ('4', '重庆理工大学出版社', '重庆市巴南区红光大道69号', '17603338789', '99999');
 INSERT INTO `t_publisher` VALUES ('5', '北京合作共赢出版社', '北京市房山区银音街道中段78号', '01065534888', '199658');
+INSERT INTO `t_publisher` VALUES ('6', '电子工业出版社', null, null, null);
+INSERT INTO `t_publisher` VALUES ('7', '人民邮电出版社', null, null, null);
+INSERT INTO `t_publisher` VALUES ('8', '中共武汉市汉南区委党史办公室', null, null, null);
+INSERT INTO `t_publisher` VALUES ('9', '知识产权出版社', null, null, null);
 
 -- ----------------------------
 -- Table structure for t_role
@@ -261,14 +278,15 @@ CREATE TABLE `t_role` (
   `available` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否可用',
   `description` varchar(255) DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'admin', '\0', '管理员');
-INSERT INTO `t_role` VALUES ('2', 'user', '', '普通用户');
-INSERT INTO `t_role` VALUES ('3', 'test', '', '测试账号');
+INSERT INTO `t_role` VALUES ('1', 'admin', '\0', '超级管理员角色');
+INSERT INTO `t_role` VALUES ('4', 'shopkeeper', '', '店长、除角色权限管理外其它权限都有');
+INSERT INTO `t_role` VALUES ('5', 'distributor', '', '分销员、只能分销图书（添加订单）');
+INSERT INTO `t_role` VALUES ('6', 'shopboy', '', '店员角色、可以查看图书相关信息，便于管理');
 
 -- ----------------------------
 -- Table structure for t_role_permission
@@ -281,35 +299,51 @@ CREATE TABLE `t_role_permission` (
   KEY `pk_permission_id` (`permission_id`),
   CONSTRAINT `pk_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `t_permission` (`id`),
   CONSTRAINT `t_role_permission_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `t_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_role_permission
 -- ----------------------------
 INSERT INTO `t_role_permission` VALUES ('1', '1');
-INSERT INTO `t_role_permission` VALUES ('2', '1');
+INSERT INTO `t_role_permission` VALUES ('4', '1');
+INSERT INTO `t_role_permission` VALUES ('5', '1');
+INSERT INTO `t_role_permission` VALUES ('6', '1');
 INSERT INTO `t_role_permission` VALUES ('1', '2');
+INSERT INTO `t_role_permission` VALUES ('4', '2');
 INSERT INTO `t_role_permission` VALUES ('1', '3');
+INSERT INTO `t_role_permission` VALUES ('4', '3');
 INSERT INTO `t_role_permission` VALUES ('1', '4');
+INSERT INTO `t_role_permission` VALUES ('4', '4');
 INSERT INTO `t_role_permission` VALUES ('1', '5');
-INSERT INTO `t_role_permission` VALUES ('2', '5');
+INSERT INTO `t_role_permission` VALUES ('4', '5');
 INSERT INTO `t_role_permission` VALUES ('1', '6');
-INSERT INTO `t_role_permission` VALUES ('2', '6');
+INSERT INTO `t_role_permission` VALUES ('4', '6');
+INSERT INTO `t_role_permission` VALUES ('5', '6');
 INSERT INTO `t_role_permission` VALUES ('1', '7');
+INSERT INTO `t_role_permission` VALUES ('4', '7');
+INSERT INTO `t_role_permission` VALUES ('5', '7');
 INSERT INTO `t_role_permission` VALUES ('1', '8');
-INSERT INTO `t_role_permission` VALUES ('2', '8');
+INSERT INTO `t_role_permission` VALUES ('4', '8');
 INSERT INTO `t_role_permission` VALUES ('1', '9');
+INSERT INTO `t_role_permission` VALUES ('4', '9');
 INSERT INTO `t_role_permission` VALUES ('1', '10');
+INSERT INTO `t_role_permission` VALUES ('4', '10');
 INSERT INTO `t_role_permission` VALUES ('1', '11');
-INSERT INTO `t_role_permission` VALUES ('2', '11');
 INSERT INTO `t_role_permission` VALUES ('1', '12');
-INSERT INTO `t_role_permission` VALUES ('2', '12');
+INSERT INTO `t_role_permission` VALUES ('4', '12');
 INSERT INTO `t_role_permission` VALUES ('1', '13');
+INSERT INTO `t_role_permission` VALUES ('4', '13');
 INSERT INTO `t_role_permission` VALUES ('1', '14');
+INSERT INTO `t_role_permission` VALUES ('4', '14');
 INSERT INTO `t_role_permission` VALUES ('1', '15');
+INSERT INTO `t_role_permission` VALUES ('4', '15');
 INSERT INTO `t_role_permission` VALUES ('1', '16');
-INSERT INTO `t_role_permission` VALUES ('2', '16');
+INSERT INTO `t_role_permission` VALUES ('4', '16');
 INSERT INTO `t_role_permission` VALUES ('1', '17');
+INSERT INTO `t_role_permission` VALUES ('1', '18');
+INSERT INTO `t_role_permission` VALUES ('4', '18');
+INSERT INTO `t_role_permission` VALUES ('1', '19');
+INSERT INTO `t_role_permission` VALUES ('4', '19');
 
 -- ----------------------------
 -- Table structure for t_user
@@ -324,15 +358,15 @@ CREATE TABLE `t_user` (
   `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_user_index` (`username`) USING BTREE COMMENT 'user_name唯一索引'
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', '管理员', 'bb4ddf91bd2d054a266564e84a683694', '43442676c74ae59f219c2d87fd6bad52', '', 'admin');
-INSERT INTO `t_user` VALUES ('2', '普通用户', 'a735b96199226d9d40a8f6b27d305aa8', 'e6ec8e78f1d07cc4a687be4a0c3b8400', '', 'user');
-INSERT INTO `t_user` VALUES ('3', '普通用户2', 'b31d340fb4dcfd1c96b6fa6de6f3a772', '877007b5b8d6918ac2ebc38ab2898086', '\0', 'user1');
-INSERT INTO `t_user` VALUES ('4', '测试账户', 'f73d30aa6583dfaac9234d96f89dc29f', '60cd54a928cbbcbb6e7b5595bab46a9e', '\0', 'test');
+INSERT INTO `t_user` VALUES ('1', '超级管理员', 'bb4ddf91bd2d054a266564e84a683694', '43442676c74ae59f219c2d87fd6bad52', '', 'admin');
+INSERT INTO `t_user` VALUES ('5', '店长', 'a442cec040f63578b582a29303ce09e2', 'c4caa8820139cc06c7505cc2d0c8f284', '', 'shopkeeper');
+INSERT INTO `t_user` VALUES ('6', '沙坪坝分销员', '8eeb4518b51153efddee0efa78381bfd', 'd8bb811cee7136efae9cd7f15fcc530f', '', 'distributor');
+INSERT INTO `t_user` VALUES ('7', '普通店员-王彪彪', 'd1048e873c63f6683a1e058ac5911afb', 'a5d2cc971ed0d781fd48325625250c62', '\0', 'shopboy');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -351,15 +385,15 @@ CREATE TABLE `t_user_role` (
 -- Records of t_user_role
 -- ----------------------------
 INSERT INTO `t_user_role` VALUES ('1', '1');
-INSERT INTO `t_user_role` VALUES ('2', '2');
-INSERT INTO `t_user_role` VALUES ('3', '3');
-INSERT INTO `t_user_role` VALUES ('3', '4');
+INSERT INTO `t_user_role` VALUES ('4', '5');
+INSERT INTO `t_user_role` VALUES ('5', '6');
+INSERT INTO `t_user_role` VALUES ('6', '7');
 
 -- ----------------------------
 -- View structure for view_book_category_publisher
 -- ----------------------------
 DROP VIEW IF EXISTS `view_book_category_publisher`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_book_category_publisher` AS select `book`.`id` AS `id`,`book`.`book_name` AS `book_name`,`book`.`book_price` AS `book_price`,`book`.`book_author` AS `book_author`,`book`.`book_repertorySize` AS `book_repertorySize`,`pub`.`pub_name` AS `pub_name`,`bcm`.`category_name` AS `category_name`,`book`.`book_pub` AS `book_pub`,`book`.`book_category` AS `book_category` from ((`t_book` `book` join `t_book_category_meta` `bcm` on((`bcm`.`id` = `book`.`book_category`))) join `t_publisher` `pub` on((`pub`.`id` = `book`.`book_pub`))) order by `book`.`id` desc ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_book_category_publisher` AS select `book`.`id` AS `id`,`book`.`book_isbn` AS `book_isbn`,`book`.`book_name` AS `book_name`,`book`.`book_price` AS `book_price`,`book`.`book_author` AS `book_author`,`book`.`book_repertorySize` AS `book_repertorySize`,`pub`.`pub_name` AS `pub_name`,`bcm`.`category_name` AS `category_name`,`book`.`book_pub` AS `book_pub`,`book`.`book_category` AS `book_category` from ((`t_book` `book` join `t_book_category_meta` `bcm` on((`bcm`.`id` = `book`.`book_category`))) join `t_publisher` `pub` on((`pub`.`id` = `book`.`book_pub`))) order by `book`.`id` desc ;
 
 -- ----------------------------
 -- View structure for view_disorder_book_distributor
