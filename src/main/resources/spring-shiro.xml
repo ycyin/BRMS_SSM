@@ -55,6 +55,11 @@
                 /logout=logout
                 <!--anon 表示匿名访问，不需要认证以及授权-->
                 /main/login=anon
+                <!--配置swagger资源不被拦截，这里由于集成了Shiro，需要在Shiro过滤中配置-->
+                /swagger-ui.html =anon
+                /webjars/** =anon
+                /v2/** = anon
+                /swagger-resources/** = anon
                 <!--authc表示需要认证 没有进行身份认证是不能进行访问的,这里使用的是自定义过滤器-->
                 /** =authc
             </value>

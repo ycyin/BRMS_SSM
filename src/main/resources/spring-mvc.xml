@@ -65,4 +65,19 @@
 
     </bean>
 
+    <!--swagger-->
+    <!--将静态资源交由默认的servlet处理-->
+    <mvc:default-servlet-handler />
+    <!--向容器自动注入配置-->
+    <context:annotation-config />
+    <!--自动扫描，使springMVC认为包下用了@controller注解的类是控制器-->
+    <!--前面配置过了-->
+
+    <!--将你的SwaggerConfig配置类注入-->
+    <bean class="com.yyc.swagger.SwaggerConfig"/>
+    <!--配置swagger资源不被拦截，这里由于集成了Shiro，需要在Shiro过滤中配置-->
+<!--    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />-->
+<!--    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />-->
+
+
 </beans>  
