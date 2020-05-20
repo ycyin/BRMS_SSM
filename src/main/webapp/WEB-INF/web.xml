@@ -27,7 +27,7 @@
     <!--CORS过滤器-->
     <filter>
         <filter-name>ACAFilter</filter-name>
-        <filter-class>com.yyc.filter.ACAFilter</filter-class>
+        <filter-class>com.yyc.filter.AcaFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>ACAFilter</filter-name>
