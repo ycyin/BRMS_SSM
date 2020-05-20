@@ -95,7 +95,8 @@
             <Filters><!-- 此Filter意思是，只输出debug级别的数据-->
                 <!-- DENY，日志将立即被抛弃不再经过其他过滤器；
                        NEUTRAL，有序列表里的下个过滤器过接着处理日志；
-                       ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
+                       ACCEPT，日志会被立即处理，不再经过剩余过滤器。
+                       ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF-->
                 <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
@@ -112,6 +113,7 @@
                 <SizeBasedTriggeringPolicy size="2MB"/>
             </Policies>
             <Filters>
+                <!--  ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF -->
                 <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
                 <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             </Filters>
@@ -156,6 +158,7 @@
             <appender-ref ref="console_err_appender"/>
             <appender-ref ref="trace_appender"/>
             <appender-ref ref="debug_appender"/>
+            <appender-ref ref="info_appender"/>
             <appender-ref ref="warn_appender"/>
             <appender-ref ref="error_appender"/>
         </root>
