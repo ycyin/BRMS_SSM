@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 自定义异常捕获，主要捕获没有权限异常
+ * 自定义异常捕获，捕获没有权限异常：UnauthorizedException和AuthorizationException
+ *
  * @author yyc
  */
 public class NoPermissionException extends SimpleMappingExceptionResolver {

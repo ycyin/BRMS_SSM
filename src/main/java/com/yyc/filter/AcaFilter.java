@@ -52,21 +52,18 @@ public class AcaFilter implements Filter {
         }
         // 这里不能写*，*代表接受所有域名访问，如写*则下面一行代码Allow-Credentials无效。谨记
         resp.setHeader("Access-Control-Allow-Origin", origin);
-        // 允许携带Cookie
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        // 允许携带Cookie(前端withCredentials = true带Cookie时必须设置此项）
+        // resp.setHeader("Access-Control-Allow-Credentials", "true")
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         resp.setHeader("Access-Control-Max-Age", "3600");
         // 允许前端发送的请求头类型，比如 axios.defaults.headers.common['Token'] =  getToken(); 这里就写上Token
         resp.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin,Token");
-
         if ("OPTIONS".equals(req.getMethod())) {
             resp.setStatus(200);
             return;
         }
-
         chain.doFilter(req, resp);
-
-        logger.info("ACAFilter："+"to access control allow origin");
+        logger.info("跨域请求处理：{}","To access control allow origin");
     }
  
     /**

@@ -3,7 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-
     <!-- 用户授权信息Cache -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager" >
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
@@ -23,15 +22,21 @@
         </property>
     </bean>
 
+    <!-- 禁用掉会话调度器 -为了配合使用JWT -->
+    <bean id="sessionManager" class="org.apache.shiro.session.mgt.DefaultSessionManager">
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
+    </bean>
+
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="myRealm"/>
         <property name="cacheManager" ref="cacheManager" />
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="realm" ref="myRealm"/>
     </bean>
 
 
     <!--自定义的filter bean-->
-    <bean id="shiroLoginFilter" class="com.yyc.filter.ShiroLoginFilter"/>
+    <bean id="shiroAuthcFilter" class="com.yyc.filter.ShiroAuthcFilter"/>
 
     <!-- Shiro过滤器 核心-->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
@@ -40,7 +45,7 @@
 
         <property name="filters">
             <map>
-                <entry key="authc" value-ref="shiroLoginFilter" />
+                <entry key="authc" value-ref="shiroAuthcFilter" />
             </map>
         </property>
 
@@ -52,16 +57,16 @@
         <!-- Shiro连接约束配置,即过滤链的定义 -->
         <property name="filterChainDefinitions">
             <value>
-                /logout=logout
+                /logout = logout
                 <!--anon 表示匿名访问，不需要认证以及授权-->
-                /main/login=anon
+                /main/login = anon
                 <!--配置swagger资源不被拦截，这里由于集成了Shiro，需要在Shiro过滤中配置-->
-                /swagger-ui.html =anon
-                /webjars/** =anon
+                /swagger-ui.html = anon
+                /webjars/** = anon
                 /v2/** = anon
                 /swagger-resources/** = anon
                 <!--authc表示需要认证 没有进行身份认证是不能进行访问的,这里使用的是自定义过滤器-->
-                /** =authc
+                /** = authc
             </value>
         </property>
 

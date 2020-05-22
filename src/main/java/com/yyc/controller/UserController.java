@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author: yyc
  * @create: 2020-03-11 11:00
  **/
-//@RequiresRoles("admin")
 @Controller
 @RequestMapping(value="/user")
 public class UserController {

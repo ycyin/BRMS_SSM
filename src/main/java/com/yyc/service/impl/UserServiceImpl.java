@@ -1,12 +1,15 @@
 package com.yyc.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.yyc.dao.ISysPermissionMapper;
 import com.yyc.dao.ISysRoleMapper;
 import com.yyc.dao.IUserInfoMapper;
 import com.yyc.dto.UserDTO;
 import com.yyc.entity.SysPermission;
 import com.yyc.entity.UserInfo;
+import com.yyc.shiro.MyAuthenticationToken;
 import com.yyc.utils.GeneratePasswordAndSalt;
+import com.yyc.utils.JwtUtils;
 import com.yyc.vo.RespMsg;
 import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.LoginVo;
@@ -138,7 +141,9 @@ public class UserServiceImpl implements UserService {
 	public Object login(LoginVo login) {
 		String loginname = login.getLoginname().trim();
 		String password = login.getPassword().trim();
-		Boolean rememberme = login.getRememberme();
+		UserInfo user = new UserInfo(loginname,password);
+		// 生成token 有效时间 600 秒
+		String jwtToken = JwtUtils.createJWT(600,JSON.toJSONString(user));
 		String errmessage = "";
 		List<String> roleNames = null;
 		List<String> permissions = null;
@@ -150,22 +155,25 @@ public class UserServiceImpl implements UserService {
 		// 2、判断当前用户是否登录
 		// if (currentUser.isAuthenticated() == false) {
 		// 3、将用户名和密码,是否登记住我，封装到UsernamePasswordToken
-		UsernamePasswordToken token = new UsernamePasswordToken(loginname, password, rememberme);
+		//UsernamePasswordToken token = new UsernamePasswordToken(loginname, password, rememberme);
+		// 封装到自定义Token
+		MyAuthenticationToken token = new MyAuthenticationToken(jwtToken);
 		// 4、认证
 		try {
 			// 传到MyShiroRealm类中的方法进行认证
 			currentUser.login(token);
-			Session session = currentUser.getSession();
-			session.setAttribute("loginname", loginname);
-//			// 认证成功，返回角色信息
+//			Session session = currentUser.getSession();
+//			session.setAttribute("loginname", loginname);
+			//			session.setAttribute("role", roleNames);
+//			// 设置会话过期时间，2小时
+//			session.setTimeout(1000 * 60 * 60 * 2);
+			// 认证成功，返回角色信息
 			roleNames = sysRoleMapper.findRoleNameByUsername(loginname);
 			permissions = sysPermissionMapper.findPermissionsByRoleNames(roleNames);
 			userName = userInfoMapper.findNameByUsername(loginname);
 			permissionNames = sysPermissionMapper.findPermissionNamesByRoleNames(roleNames);
-			session.setAttribute("role", roleNames);
-			// 设置会话过期时间，2小时
-			session.setTimeout(1000 * 60 * 60 * 2);
 			HashMap data = new HashMap();
+			data.put("token",jwtToken);
 			data.put("username",userName);
 			data.put("loginname", loginname);
 			data.put("rolenames", roleNames);

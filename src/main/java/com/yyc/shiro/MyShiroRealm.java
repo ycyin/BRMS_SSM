@@ -1,9 +1,12 @@
 package com.yyc.shiro;
 
+import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.yyc.dao.ISysPermissionMapper;
 import com.yyc.dao.ISysRoleMapper;
 import com.yyc.entity.UserInfo;
 import com.yyc.service.UserService;
+import com.yyc.utils.JwtUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -29,11 +32,12 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         logger.info("开始权限配置-->MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        logger.info("正在鉴权的用户信息：{}",principal.toString());
         UserInfo userInfo  = (UserInfo)principal.getPrimaryPrincipal();
-        logger.info("用户名--->"+userInfo.getUsername());
-        sysRoleMapper.findRoleByUsername(userInfo.getUsername()).stream().forEach(
+        String username = userInfo.getUsername();
+        sysRoleMapper.findRoleByUsername(username).stream().forEach(
                 sysRole -> {
-                    logger.info("角色ID--->"+sysRole.getId());
+                    logger.info("正在鉴权的用户角色ID：{}",sysRole.getId());
                     authorizationInfo.addRole(sysRole.getRole());
                     sysPermissionMapper.findPermissionByRoleId(sysRole.getId()).stream().forEach(
                             sysPermission -> {
@@ -43,42 +47,55 @@ public class MyShiroRealm extends AuthorizingRealm {
                 }
         );
 
-        logger.info("当前登录用户" + userInfo.getUsername() + "具有的角色:" + authorizationInfo.getRoles());
-        logger.info("当前登录用户" + userInfo.getUsername() + "具有的权限：" + authorizationInfo.getStringPermissions());
-        
+        logger.info("当前登录用户：{},具有的角色:{},具有的权限：{}",userInfo.getUsername(),authorizationInfo.getRoles(),authorizationInfo.getStringPermissions());
         return authorizationInfo;
     }
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         logger.info("开始验证身份-->method:doGetAuthenticationInfo");
-    	//获取用户的输入的账号.
-//        String username = (String)token.getPrincipal();
-//        System.out.println(token.getCredentials());
-    	
     	// 将token转换成UsernamePasswordToken
-    	UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-    	// 从转换后的token中获取登录名
-    	String username = upToken.getUsername();
+//    	UsernamePasswordToken upToken = (UsernamePasswordToken) token;
+        // 从转换后的token中获取登录名
+//        String username = upToken.getUsername();
+        // 转换为自定义Token
+        MyAuthenticationToken mat = (MyAuthenticationToken) token;
+        String username = (String) mat.getPrincipal();
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
         UserInfo userInfo = userService.findByUsername(username);
-        logger.info("----->>userInfo="+userInfo);
+        logger.info("正在验证身份的用户信息：{}",userInfo);
         if(userInfo == null){
-            throw new UnknownAccountException();// 用户不存在
+            // 用户不存在异常
+            throw new UnknownAccountException();
         }else if(userInfo.getState() == 0) {
-            throw  new LockedAccountException();// 账户锁定
+            // 账户锁定异常
+            throw  new LockedAccountException();
         }
 
         
         ByteSource salt = ByteSource.Util.bytes(userInfo.getCredentialsSalt());
         
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                userInfo, //用户
-                userInfo.getPassword(), //密码
-                salt,//salt=username+salt
-                getName()  //realm name
+                // 用户信息
+                userInfo,
+                // 密码
+                userInfo.getPassword(),
+                // 盐值salt=username+salt
+                salt,
+                // realm name
+                getName()
         );
         return authenticationInfo;
+    }
+
+    /**
+     * 覆写这个方法以支持自定义的AuthenticationToken
+     * @param token
+     * @return
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token != null && token instanceof MyAuthenticationToken;
     }
 }
