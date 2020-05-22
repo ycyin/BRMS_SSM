@@ -24,7 +24,7 @@ import java.io.IOException;
  * /@WebFilter(urlPatterns = "/*",filterName = "ACAFilter")
  */
 public class AcaFilter implements Filter {
-    private static Logger logger = LoggerFactory.getLogger(AcaFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(AcaFilter.class);
 
     /**
      * 初始化
@@ -36,11 +36,6 @@ public class AcaFilter implements Filter {
  
     /**
      * 过滤
-     * @param request
-     * @param response
-     * @param chain
-     * @throws IOException
-     * @throws ServletException
      */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

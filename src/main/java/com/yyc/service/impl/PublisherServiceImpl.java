@@ -13,16 +13,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @program: SSM
- * @description: 出版社
- * @author: yyc
- * @create: 2019-12-05 21:28
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 出版社
+ ***************************************
+ */
 @Service("publisherService")
 public class PublisherServiceImpl implements PublisherService {
+    private final PublisherMapper publisherMapper;
+
     @Autowired
-    private PublisherMapper publisherMapper;
+    public PublisherServiceImpl(PublisherMapper publisherMapper) {
+        this.publisherMapper = publisherMapper;
+    }
+
     @Override
     public RespMsg getSelectValueAndLabel() {
         List<Publisher> publishers = this.publisherMapper.selectAllPublisher();

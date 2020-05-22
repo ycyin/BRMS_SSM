@@ -6,13 +6,12 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 
-/**
- * @program: SSM
- * @description: 图书信息对应的DTO
- * @author: yyc
- * @create: 2019-12-03 14:44
- **/
-
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 图书信息对应的DTO
+ ***************************************
+ */
 @ContentRowHeight(15)
 @HeadRowHeight(15)
 @ColumnWidth(12)

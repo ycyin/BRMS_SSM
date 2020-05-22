@@ -30,15 +30,11 @@ public class ShiroAuthcFilter extends FormAuthenticationFilter {
     /**
      * 在访问controller（url）前判断是否登录、是否有权限；
      * 没有登录返回json，鉴权则交给shiro处理，没有权限会抛出UnauthorizedException或AuthorizationException
-     *
-     * @param request
-     * @param response
      * @return true-继续往下执行，false-该filter过滤器已经处理，不继续执行其他过滤器
-     * @throws Exception
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        logger.info("--正在执行ShiroAuthcFilter-onAccessDenied方法进行认证鉴权操作-------------------");
+        logger.info("登录认证授权处理：正在执行ShiroAuthcFilter-onAccessDenied方法进行认证鉴权操作-------------------");
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 
@@ -53,9 +49,9 @@ public class ShiroAuthcFilter extends FormAuthenticationFilter {
                 // 从解码后的Token中获取用户信息
                 String userInfoJson = Optional.ofNullable(jwt.getIssuer()).orElse("FAILED");
                 // 验证jwt的有效性
-                DecodedJWT verifyJWT = JwtUtils.verifyJWT(token, userInfoJson);
+                DecodedJWT verifyJwt = JwtUtils.verifyJWT(token, userInfoJson);
                 // 验证jwtToken有效
-                if (null != verifyJWT) {
+                if (null != verifyJwt) {
                     logger.info("jwt认证成功，当前Token信息：{},用户信息：{}", token, userInfoJson);
                     // 鉴权去
                     return executeLogin(request, response);
@@ -78,7 +74,7 @@ public class ShiroAuthcFilter extends FormAuthenticationFilter {
     }
 
     @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         // 获取请求header中的Token
         String jwtToken = httpServletRequest.getHeader("Token");

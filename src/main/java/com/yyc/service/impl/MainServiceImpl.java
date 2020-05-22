@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @program: SSM
- * @description:
- * @author: yyc
- * @create: 2020-05-02 19:05
- **/
+
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明:
+ ***************************************
+ */
 @Service("mainService")
 public class MainServiceImpl implements MainService {
     private BookMapper bookMapper;

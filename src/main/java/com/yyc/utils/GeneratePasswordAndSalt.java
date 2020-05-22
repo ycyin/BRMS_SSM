@@ -1,19 +1,17 @@
 package com.yyc.utils;
 
-import com.yyc.service.impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.lang.model.element.NestingKind;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @program: SSM
- * @description: 生成数据库存储的密码和盐值
- * @author: yyc
- * @create: 2020-03-13 14:58
- **/
+
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 生成数据库存储的密码和盐值工具类
+ ***************************************
+ */
 public class GeneratePasswordAndSalt {
     private final static Logger logger = LoggerFactory.getLogger(GeneratePasswordAndSalt.class);
 

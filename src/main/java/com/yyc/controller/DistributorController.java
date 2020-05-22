@@ -8,18 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @program: SSM
- * @description: 分销商
- * @author: yyc
- * @create: 2019-12-05 20:11
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 分销商
+ ***************************************
+ */
 @Controller
 @RequestMapping("/distributor")
 public class DistributorController {
+    private final DistributorService distributorService;
 
     @Autowired
-    private DistributorService distributorService;
+    public DistributorController(DistributorService distributorService) {
+        this.distributorService = distributorService;
+    }
 
     @RequiresPermissions("distributor:get")
     @RequestMapping("/getDistributorSelectValueAndLabel")

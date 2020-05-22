@@ -9,20 +9,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @program: SSM
- * @description: 权限信息
- * @author: yyc
- * @create: 2020-03-19 17:05
- **/
-
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 权限信息
+ ***************************************
+ */
 @Controller
 @RequestMapping(value="/permission")
 public class PermissionController {
 
+    private final PermissionService permissionService;
 
     @Autowired
-    private PermissionService permissionService;
+    public PermissionController(PermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
 
     @RequiresPermissions("permiss:get")
     @RequestMapping("/getAllPermission")

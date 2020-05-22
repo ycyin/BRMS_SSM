@@ -8,19 +8,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @program: SSM
- * @description: 出版社
- * @author: yyc
- * @create: 2019-12-05 21:34
- **/
-
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 出版社
+ ***************************************
+ */
 @Controller
 @RequestMapping("/publisher")
 public class PublisherController {
+    private final PublisherService publisherService;
 
     @Autowired
-    private PublisherService publisherService;
+    public PublisherController(PublisherService publisherService) {
+        this.publisherService = publisherService;
+    }
 
     @RequiresPermissions("publisher:get")
     @RequestMapping("/getPublisherServiceSelectValueAndLabel")

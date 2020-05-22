@@ -9,21 +9,20 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.Date;
 
-/**
- * JWT工具类
- * @author yyc
+
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: JWT工具类
+ ***************************************
  */
 public class JwtUtils {
     private final static Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     /**
      * 创建JWT
-     * @param expiresTime
-     * @param userId
-     * @return
      */
     public static String createJWT(long expiresTime,String userId) {
 
@@ -47,9 +46,6 @@ public class JwtUtils {
 
     /**
      * 验证JWT
-     * @param token
-     * @param userInfo
-     * @return
      */
     public static DecodedJWT verifyJWT(String token,String userInfo) {
         DecodedJWT jwt = null;
@@ -70,8 +66,6 @@ public class JwtUtils {
 
     /**
      * JWT解码
-     * @param token
-     * @return
      */
     public static DecodedJWT decodedJWT(String token){
         DecodedJWT jwt = null;

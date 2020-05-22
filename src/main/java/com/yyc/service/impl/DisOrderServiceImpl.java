@@ -22,24 +22,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-/**
- * @program: SSM
- * @description: 分销订单
- * @author: yyc
- * @create: 2019-11-22 17:17
- **/
-
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 分销订单
+ ***************************************
+ */
 @Service("disOrderService")
 public class DisOrderServiceImpl implements DisOrderService {
 
     private static Logger logger = LoggerFactory.getLogger(DisOrderServiceImpl.class);
 
+    private final DisOrderMapper disOrderMapper;
+    private final BookMapper bookMapper;
+    private final DisOrderDTOMapper disOrderDTOMapper;
+
     @Autowired
-    private DisOrderMapper disOrderMapper;
-    @Autowired
-    private BookMapper bookMapper;
-    @Autowired
-    private DisOrderDTOMapper disOrderDTOMapper;
+    public DisOrderServiceImpl(DisOrderMapper disOrderMapper, BookMapper bookMapper, DisOrderDTOMapper disOrderDTOMapper) {
+        this.disOrderMapper = disOrderMapper;
+        this.bookMapper = bookMapper;
+        this.disOrderDTOMapper = disOrderDTOMapper;
+    }
 
     @Transactional
     @Override

@@ -1,10 +1,12 @@
 package com.yyc.vo;
 
-/**
- * 返回结果信息枚举类
- * @author yyc
- */
 
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 返回结果信息枚举类
+ ***************************************
+ */
 public  enum ResultEnum {
         UNKNOW_ERROR(500,"未知错误"),
         UNAUTHORIZED(401,"您无权限进行当前操作,请联系管理员！"),

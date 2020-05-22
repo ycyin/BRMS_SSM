@@ -10,18 +10,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @program: SSM
- * @description: 权限
- * @author: yyc
- * @create: 2020-03-19 17:00
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 权限
+ ***************************************
+ */
 @Service("permissionServiceImpl")
 public class PermissionServiceImpl implements PermissionService {
 
 
+    private final ISysPermissionMapper iSysPermissionMapper;
+
     @Autowired
-    ISysPermissionMapper iSysPermissionMapper;
+    public PermissionServiceImpl(ISysPermissionMapper iSysPermissionMapper) {
+        this.iSysPermissionMapper = iSysPermissionMapper;
+    }
+
     /**
      * 获取所有权限信息，
      * @return
@@ -34,8 +39,9 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public RespMsg getPermissionIdsByRoleId(Integer roleId) {
-        if (roleId == null || roleId == 0)
+        if (roleId == null || roleId == 0){
             return new RespMsg(ResultEnum.HAS_NULL);
+        }
         List<Integer> permissionIds = this.iSysPermissionMapper.findPermissionIdsByRoleId(roleId);
         return new RespMsg(ResultEnum.SELECT_SUCCESS,permissionIds);
     }

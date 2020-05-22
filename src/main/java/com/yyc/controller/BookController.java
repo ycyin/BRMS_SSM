@@ -1,7 +1,5 @@
 package com.yyc.controller;
 
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson.JSON;
 import com.yyc.entity.Book;
 import com.yyc.service.BookCategoryMetaService;
 import com.yyc.service.BookService;
@@ -19,19 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author yyc
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 图书管理
+ ***************************************
  */
 @RestController
 @RequestMapping("/book")
 public class BookController {
-    private static Logger logger = LoggerFactory.getLogger(BookController.class);
-
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+    private final BookService bookService;
+    private final BookCategoryMetaService bookCategoryMetaService;
     @Autowired
-    private BookService bookService;
-
-    @Autowired
-    private BookCategoryMetaService bookCategoryMetaService;
+    public BookController(BookService bookService, BookCategoryMetaService bookCategoryMetaService) {
+        this.bookService = bookService;
+        this.bookCategoryMetaService = bookCategoryMetaService;
+    }
 
 
     /**

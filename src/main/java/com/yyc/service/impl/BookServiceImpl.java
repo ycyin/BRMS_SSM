@@ -37,14 +37,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明:
+ ***************************************
+ */
 @Service("bookService")
 public class BookServiceImpl implements BookService {
     private static Logger logger = LoggerFactory.getLogger(BookServiceImpl.class);
 
-    private BookMapper bookMapper;
-    private BookDTOMapper bookDTOMapper;
-    private BookCategoryMetaMapper bcmMapper;
-    private PublisherMapper pubMapper;
+    private final BookMapper bookMapper;
+    private final BookDTOMapper bookDTOMapper;
+    private final BookCategoryMetaMapper bcmMapper;
+    private final PublisherMapper pubMapper;
 
     @Autowired
     public BookServiceImpl(BookMapper bookMapper, BookDTOMapper bookDTOMapper, BookCategoryMetaMapper bcmMapper, PublisherMapper pubMapper) {

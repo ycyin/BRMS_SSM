@@ -2,34 +2,36 @@ package com.yyc.controller;
 
 import com.yyc.service.UserService;
 import com.yyc.vo.RespMsg;
-import com.yyc.vo.ResultEnum;
 import com.yyc.vo.request.UserVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @program: SSM
- * @description: 用户管理控制层
- * @author: yyc
- * @create: 2020-03-11 11:00
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 用户管理控制层
+ ***************************************
+ */
 @Controller
 @RequestMapping(value="/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@RequiresPermissions("user:get")
     @RequestMapping(value="/getUserList")
     @ResponseBody
     public RespMsg getUserList(){
-		return  this.userService.getALLUser();
+		return  this.userService.getAllUser();
     }
 
 	@RequiresPermissions("user:add")

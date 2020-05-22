@@ -13,17 +13,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @program: SSM
- * @description: 图书类别元信息
- * @author: yyc
- * @create: 2019-12-05 21:29
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 图书类别元信息
+ ***************************************
+ */
 @Service("bookCategoryMetaService")
 public class BookCategoryMetaServiceImpl implements BookCategoryMetaService {
 
+    private final BookCategoryMetaMapper bookCategoryMetaMapper;
     @Autowired
-    private BookCategoryMetaMapper bookCategoryMetaMapper;
+    public BookCategoryMetaServiceImpl(BookCategoryMetaMapper bookCategoryMetaMapper) {
+        this.bookCategoryMetaMapper = bookCategoryMetaMapper;
+    }
+
     @Override
     public RespMsg getSelectValueAndLabel() {
         List<BookCategoryMeta> bookCategoryMeta = this.bookCategoryMetaMapper.selectAllBookCategoryMeta();

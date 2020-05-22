@@ -1,17 +1,22 @@
 package com.yyc.dto;
 
-/**
- * @program: SSM
- * @description: 用户基本信息DTO
- * @author: yyc
- * @create: 2020-03-11 15:15
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 用户基本信息DTO
+ ***************************************
+ */
 public class UserDTO {
-    private Integer id;//用户ID
-    private String nickName;//用户名
-    private byte state;//用户状态
-    private String userName;//登录名
-    private String role;//用户角色
+    /** 用户ID */
+    private Integer id;
+    /** 用户名 */
+    private String nickName;
+    /** 用户状态 */
+    private byte state;
+    /** 登录名 */
+    private String userName;
+    /** 用户角色 */
+    private String role;
 
     public Integer getId() {
         return id;

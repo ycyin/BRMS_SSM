@@ -12,20 +12,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @program: SSM
- * @description: 分销订单
- * @author: yyc
- * @create: 2019-11-22 17:05
- **/
-
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 分销订单
+ ***************************************
+ */
 @Controller
 @RequestMapping("/disOrder")
 public class DisOrderController {
-    private static Logger logger = LoggerFactory.getLogger(DisOrderController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DisOrderController.class);
+    private final DisOrderService disOrderService;
 
     @Autowired
-    private DisOrderService disOrderService;
+    public DisOrderController(DisOrderService disOrderService) {
+        this.disOrderService = disOrderService;
+    }
 
     @RequiresPermissions("disOrder:add")
     @RequestMapping("/addOrder")

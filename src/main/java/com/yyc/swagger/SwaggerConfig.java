@@ -12,10 +12,16 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: swagger API文档配置类
+ ***************************************
+ */
 @WebAppConfiguration
 @EnableSwagger2
 @EnableWebMvc
-@ComponentScan(basePackages = "com.yyc.controller")//扫描control所在的package请修改为你control所在package
+@ComponentScan(basePackages = "com.yyc.controller")
 public class SwaggerConfig {
     @Bean
     public Docket api() {

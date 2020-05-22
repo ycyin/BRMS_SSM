@@ -14,11 +14,6 @@
     <sql id="book_list">
     id,book_isbn, book_name, book_price, book_author,book_repertorySize,book_pub,book_category
     </sql>
-    <select id="selectAllBook" resultMap="book">
-        select
-        <include refid="book_list"/>
-        from t_book
-    </select>
     <select id="selectAllBook2" resultMap="book">
         select
         <include refid="book_list"/>

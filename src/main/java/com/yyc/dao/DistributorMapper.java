@@ -4,18 +4,23 @@ import com.yyc.entity.Distributor;
 
 import java.util.List;
 
-/**
- * @program: SSM
- * @description: 分销商Mapper
- * @author: yyc
- * @create: 2019-12-05 19:54
- **/
+
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 分销商Mapper
+ ***************************************
+ */
 public interface DistributorMapper {
+    /**
+     * 查询所有的分销商信息
+     * @return 所有分销商信息列表
+     */
     List<Distributor> selectAllDistributor();
 
     /**
      * 统计分销商总数
-     * @return
+     * @return 分销商总数
      */
     Integer selectCountAll();
 }

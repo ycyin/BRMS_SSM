@@ -18,21 +18,25 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @program: SSM
- * @description: 角色、角色权限
- * @author: yyc
- * @create: 2020-03-20 14:51
- **/
+
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 角色、角色权限
+ ***************************************
+ */
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
     private static Logger logger = LoggerFactory.getLogger(RoleServiceImpl.class);
 
-    @Autowired
-    private ISysRoleMapper roleMapper;
-    @Autowired
-    private ISysPermissionMapper permissMapper;
+    private final ISysRoleMapper roleMapper;
+    private final ISysPermissionMapper permissMapper;
 
+    @Autowired
+    public RoleServiceImpl(ISysRoleMapper roleMapper, ISysPermissionMapper permissMapper) {
+        this.roleMapper = roleMapper;
+        this.permissMapper = permissMapper;
+    }
 
 
     @Transactional

@@ -17,7 +17,7 @@ import com.yyc.vo.request.UserVo;
 public interface UserService {
 
 
-	RespMsg getALLUser();
+	RespMsg getAllUser();
 //
 	RespMsg modifyUser(UserVo userVo);
 //

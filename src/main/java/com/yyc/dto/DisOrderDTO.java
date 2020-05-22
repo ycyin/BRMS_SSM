@@ -2,23 +2,33 @@ package com.yyc.dto;
 
 import java.util.Date;
 
-/**
- * @program: SSM
- * @description: 分销订单——对应数据库中的view_disorder_book_distributor视图
- * @author: yyc
- * @create: 2019-11-26 10:26
- **/
+/**************************************
+ * @author 尹以操 E-mail:34782655@qq.com
+ * @version 创建/修改时间：
+ * 类说明: 分销订单——对应数据库中的view_disorder_book_distributor视图
+ ***************************************
+ */
 public class DisOrderDTO {
-    private int id;//订单id
-    private String disName;//分销商名
-    private String bookName;//书名
-    private String operateUserName;//操作员名
-    private int orderNumber;//订单数量
-    private double orderPrice;//订单单价
-    private double orderTotalPrice;//订单总价
-    private String orderStatus;//订单状态
-    private Date orderDate;//订单时间
-    private Date orderEndDate;//订单结束时间
+    /** 订单id */
+    private int id;
+    /** 分销商名 */
+    private String disName;
+    /** 书名 */
+    private String bookName;
+    /** 操作员名 */
+    private String operateUserName;
+    /** 订单数量 */
+    private int orderNumber;
+    /** 订单单价 */
+    private double orderPrice;
+    /** 订单总价 */
+    private double orderTotalPrice;
+    /** 订单状态 */
+    private String orderStatus;
+    /** 订单时间 */
+    private Date orderDate;
+    /** 订单结束时间 */
+    private Date orderEndDate;
 
     public int getId() {
         return id;
