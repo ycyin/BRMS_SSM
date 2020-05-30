@@ -138,8 +138,8 @@ public class UserServiceImpl implements UserService {
 		String password = login.getPassword().trim();
 		// 将用户名和密码封装到实体对象
 		UserInfo user = new UserInfo(loginname,password);
-		// 生成token 有效时间 600 秒
-		String jwtToken = JwtUtils.createJWT(600,JSON.toJSONString(user));
+		// 生成token 有效时间 1200 秒
+		String jwtToken = JwtUtils.createJWT(1200,JSON.toJSONString(user));
 		// 将JWT TOKEN封装到自定义MyAuthenticationToken
 		MyAuthenticationToken token = new MyAuthenticationToken(jwtToken);
 		String errmessage = "";
